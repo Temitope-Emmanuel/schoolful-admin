@@ -214,29 +214,54 @@ interface ICustomForm {
     rule:string;
 }
 
-const CustomDateCreator: React.FC<ICustomDateCreator> = ({ customForm, close, handleCustomForm }) => {
-    interface CustomDateCreatorForm extends ICustomForm {
-        ends: "never" | "on" | "after" | string
-    }
-
-    interface IWeek {
-        [key: string]: string
-    }
-
-    const enumsToArray = (enumArg: any): IWeek => {
-        let arrayObjects = {}
-        for (const [propertyKey, propertyValue] of Object.entries(enumArg)) {
-            if (!Number.isNaN(Number(propertyKey))) {
-                continue;
-            }
-            arrayObjects = {
-                ...arrayObjects,
-                [propertyKey]: propertyValue
-            };
+const changeToRecurringString = (argObj:any) => {
+    let recurringString = "RRULE:"
+    // eslint-disable-next-line
+    Object.entries(argObj).map((item,idx) => {
+        if(idx > 0){
+            recurringString = recurringString + `;${item[0]}=${item[1]}`
+        }else{
+            recurringString = recurringString + `${item[0]}=${item[1]}`
         }
-        return arrayObjects
-    }
+    })
+    return recurringString
+}
 
+const enumsToArray = (enumArg: any): IWeek => {
+    let arrayObjects = {}
+    for (const [propertyKey, propertyValue] of Object.entries(enumArg)) {
+        if (!Number.isNaN(Number(propertyKey))) {
+            continue;
+        }
+        arrayObjects = {
+            ...arrayObjects,
+            [propertyKey]: propertyValue
+        };
+    }
+    return arrayObjects
+}
+
+const getDaysInMonth = (month: number, year: number): number[] => {
+    const date = new Date(Date.UTC(year, month, 1));
+    const days = [];
+    while (date.getUTCMonth() === month) {
+        days.push(date.getUTCDate());
+        date.setUTCDate(date.getUTCDate() + 1);
+    }
+    return days;
+}
+
+interface CustomDateCreatorForm extends ICustomForm {
+    ends: "never" | "on" | "after" | string
+}
+
+interface IWeek {
+    [key: string]: string
+}
+
+
+
+const CustomDateCreator: React.FC<ICustomDateCreator> = ({ customForm, close, handleCustomForm }) => {
     const [byDay, setByDay] = React.useState<any>("MONDAYS")
     const dateMapped = Object.keys(WEEKLY)
     const weekObject = enumsToArray(WEEKLY)
@@ -263,21 +288,8 @@ const CustomDateCreator: React.FC<ICustomDateCreator> = ({ customForm, close, ha
             ...(values.FREQ === Recurring.MONTHLY && { BYMONTHDAY: values.BYMONTHDAY }),
             ...(values.ends === "on" &&
             // eslint-disable-next-line
-             { UNTIL: (new Date(values.UNTIL!)).toISOString().replace(/\:|\-|\./gi,"").substring(0,15).concat("Z") }),
-             ...(values.ends === "after" && { COUNT: values.COUNT })
-        }
-
-        const changeToRecurringString = (argObj:any) => {
-            let recurringString = "RRULE:"
-            // eslint-disable-next-line
-            Object.entries(argObj).map((item,idx) => {
-                if(idx > 0){
-                    recurringString = recurringString + `;${item[0]}=${item[1]}`
-                }else{
-                    recurringString = recurringString + `${item[0]}=${item[1]}`
-                }
-            })
-            return recurringString
+            { UNTIL: (new Date(values.UNTIL!)).toISOString().replace(/\:|\-|\./gi,"").substring(0,15).concat("Z") }),
+            ...(values.ends === "after" && { COUNT: values.COUNT })
         }
         
         handleCustomForm({
@@ -286,8 +298,10 @@ const CustomDateCreator: React.FC<ICustomDateCreator> = ({ customForm, close, ha
         })
         close()
     }
+
     const initialValue = {
         ...customForm,
+        COUNT:1,
         UNTIL: new Date(currentDate.getFullYear(), (currentDate.getMonth() + 1), currentDate.getDate()),
         ends: "after"
     }
@@ -296,16 +310,6 @@ const CustomDateCreator: React.FC<ICustomDateCreator> = ({ customForm, close, ha
     })
 
     const group = getRootProps()
-
-    const getDaysInMonth = (month: number, year: number): number[] => {
-        const date = new Date(Date.UTC(year, month, 1));
-        const days = [];
-        while (date.getUTCMonth() === month) {
-            days.push(date.getUTCDate());
-            date.setUTCDate(date.getUTCDate() + 1);
-        }
-        return days;
-    }
 
 
     return (
@@ -456,6 +460,11 @@ const initialValues = {
 }
 
 type TypeForm = typeof initialValues
+const changeToTime = (arg: string) => {
+    const parts = arg.split(/:/);
+    const timePeriodMillis = (parseInt(parts[0], 10) * 60 * 1000) + (parseInt(parts[1], 10) * 1000);
+    return timePeriodMillis
+}
 
 const Create = () => {
     const classes = useStyles()
@@ -509,11 +518,6 @@ const Create = () => {
     const handleSubmit = (values: TypeForm, { ...actions }: any) => {
         actions.setSubmitting(true)
         const { title, detail,startDate, endDate, timeEnd, timeStart, repeat } = values
-        const changeToTime = (arg: string) => {
-            const parts = arg.split(/:/);
-            const timePeriodMillis = (parseInt(parts[0], 10) * 60 * 1000) + (parseInt(parts[1], 10) * 1000);
-            return timePeriodMillis
-        }
 
         const time = allDay ?
         {
@@ -553,6 +557,13 @@ const Create = () => {
             speaker:values.speaker,
             ...(image.base64 && { bannerUrl: image.base64 }),
         }
+        if(repeat === Recurring.CUSTOM){
+            const findFreq = scheduleObj.recurrence?.split(";")[1].split("=")
+            if(findFreq?.length){
+                newActivity.recuring = findFreq[findFreq?.length - 1]
+            }
+        }
+        console.log(newActivity)
         activityService.createActivity(newActivity).then(payload => {
             actions.setSubmitting(false)
             toast({
@@ -628,17 +639,24 @@ const Create = () => {
                             }
                             // For handling toggling of the custom dialog 
                             const handleChange = (e: React.SyntheticEvent<HTMLSelectElement>) => {
-                                console.log(e.currentTarget.value)
                                 if (e.currentTarget.value === "7") {
                                     // For Toggling the custom dialog
                                     handleDialog()
+                                    formikProps.setValues({
+                                        ...formikProps.values,
+                                        repeat:Recurring.CUSTOM
+                                    })
                                 } else if(e.currentTarget.value === "WEEKDAY"){
-                                // For setting the rule for the weekday 
-                                setSchedule({
-                                    ...schedule,
-                                    FREQ:(e.currentTarget.value as any),
-                                    rule:`RRULE:FREQ=WEEKLY;WKST=SU;BYWEEKDAY=MO,TU,WE,TH,FR`
-                                 })   
+                                    // For setting the rule for the weekday 
+                                    setSchedule({
+                                        ...schedule,
+                                        FREQ:(e.currentTarget.value as any),
+                                        rule:`RRULE:FREQ=WEEKLY;WKST=SU;BYWEEKDAY=MO,TU,WE,TH,FR`
+                                    })   
+                                    formikProps.setValues({
+                                        ...formikProps.values,
+                                        repeat:Recurring.WEEKDAY
+                                    })
                                 }else if(e.currentTarget.value === "WEEKLY"){
                                     // For setting the by weekday for the weekly
                                     setSchedule({
@@ -738,12 +756,10 @@ const Create = () => {
                                                 </FormControl>
                                             </HStack>
                                         </Stack>
-
                                         <VStack align="center"
                                             width="100%">
                                             <NormalSelect name="repeat" placeholder=""
                                                 onChange={handleChange} value={formikProps.values.repeat} >
-                                                {/* <option value={Recurring.NOREPEAT}>Does not Repeat</option> */}
                                                 <option value={Recurring.DAILY}>Daily</option>
                                                 <option value={Recurring.WEEKLY}>Weekly on {showLongDate(formikProps.values.startDate)}</option>
                                                 <option value={Recurring.MONTHLY}>Monthly on {showLongDate(formikProps.values.startDate)}</option>

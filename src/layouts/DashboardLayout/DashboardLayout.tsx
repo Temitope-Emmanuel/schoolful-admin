@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     optionContainer: {
-      marginTop:theme.spacing(3),
+      marginTop: theme.spacing(3),
       "& a": {
         textDecoration: "none",
         "& > div": {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& p": {
         margin: ".5rem 0",
-        fontFamily:"MulishRegular"
+        fontFamily: "MulishRegular"
       },
       "& svg": {
         marginRight: ".5rem"
@@ -81,7 +81,24 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "flex-start",
       paddingTop: "5rem",
-      alignItems: "center"
+      alignItems: "center",
+      overflowY: "scroll",
+      overscrollBehavior: "contain",
+      "&::-webkit-scrollbar": {
+        width: "10px",
+        overflow: "scroll",
+        position: "absolute"
+      },
+      "&::-webkit-scrollbar-track": {
+        boxShadow: "inset 0 0 6px rgb(215, 218, 221)",
+        // background:primary,
+        borderRadius: "3px"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        borderRadius: "10px",
+        background: "rgba(116, 125, 131, 0.61)",
+        boxShadow: "inset 0 0 6px rgba(215, 218, 221, 0.726)"
+      },
     },
     content: {
       flexGrow: 1,

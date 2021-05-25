@@ -27,6 +27,7 @@ import { PaymentButton } from "components/PaymentButton"
 import { IAdvertSetting } from "core/models/Advert"
 import axios from "axios"
 import * as advertDraftHelper from "./advertUtil"
+import { } from "react-paystack"
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -104,8 +105,8 @@ const Create = () => {
     const [minDateTo, setMinDateTo] = React.useState(() => (new Date((new Date()).setDate(currentDate.getDate() + 1))))
     const [currentAdvertSetting, setCurrentAdvertSetting] = React.useState<IAdvertSetting>()
     const [difference, setDifference] = React.useState<number>(1)
-    const [submitting,setSubmitting] = React.useState(false)
-    const currentChurch = useSelector((state: AppState) => state.system.currentChurch) 
+    const [submitting, setSubmitting] = React.useState(false)
+    const currentChurch = useSelector((state: AppState) => state.system.currentChurch)
     const [amount, setAmount] = React.useState(1000)
     const [image, setImage] = React.useState({
         base64: "",
@@ -118,7 +119,7 @@ const Create = () => {
 
     const cancelToken = axios.CancelToken.source()
     const getPaymentReference = (amount: number) => {
-        if(submitting){
+        if (submitting) {
             generateReference({
                 amount,
                 organizationId: currentChurch.churchID as number,
@@ -193,12 +194,12 @@ const Create = () => {
 
     React.useEffect(() => {
         calculateAmountAndDifference({
-            startDate:date.startDate,
-            endDate:date.endDate,
-            perDay:currentAdvertSetting?.perDay as number
+            startDate: date.startDate,
+            endDate: date.endDate,
+            perDay: currentAdvertSetting?.perDay as number
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[date])
+    }, [date])
 
     React.useEffect(() => {
         if (currentAdvertSetting?.howLong) {
@@ -207,7 +208,7 @@ const Create = () => {
             setMinDateTo(newMinimumDifference)
             setDate({
                 ...date,
-                endDate:newMinimumDifference
+                endDate: newMinimumDifference
             })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -234,7 +235,7 @@ const Create = () => {
                 dateTo: values.dateTo.toJSON(),
                 churchId: Number(params.churchId),
                 audience: "isInternal",
-                settingsId:currentAdvertSetting?.id,
+                settingsId: currentAdvertSetting?.id,
                 status: 1,
                 ...(image && { advertUrl: image.base64 })
             }
@@ -312,10 +313,9 @@ const Create = () => {
             setDate({ ...date, [name]: e })
         }
     }
-    const setUpSubmit = (func:any) => {
-        // setSubmitting(true)
-        // Promise.resolve(getPaymentReference(amount)).then(func)
+    const setUpSubmit = (func: any) => {
     }
+    let handleChange:any;
 
 
     return (
@@ -329,16 +329,18 @@ const Create = () => {
                     validationSchema={validationScheme}
                 >
                     {(formikProps: FormikProps<TypeForm>) => {
-                        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-                            const file = e.target.files![0]
-                            if (file) {
-                                const reader = new FileReader();
-                                reader.onloadend = function () {
-                                    setImage({ ...image, base64: (reader.result as string), name: file.name })
+                        if(!handleChange){
+                            handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                                const file = e.target.files![0]
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = function () {
+                                        setImage({ ...image, base64: (reader.result as string), name: file.name })
+                                    }
+                                    reader.readAsDataURL(file)
+                                    const { advertUrl, ...newError } = formikProps.errors
+                                    formikProps.setErrors(newError)
                                 }
-                                reader.readAsDataURL(file)
-                                const { advertUrl, ...newError } = formikProps.errors
-                                formikProps.setErrors(newError)
                             }
                         }
                         return (
@@ -381,8 +383,8 @@ const Create = () => {
                                                     </option>
                                                 ))}
                                             </NormalSelect>
-
-                                            <NormalInput ml={3} width="100%" name="link" placeholder="Input Link for Advert" />
+                                            <NormalInput ml={3} width="100%" name="link"
+                                             placeholder="Input Link for Advert" />
                                         </Box>
                                         <VStack align="flex-start" w="100%">
                                             <Stack my={5} w="100%" justify="space-between" direction={["column", "row"]} align="center">
@@ -401,14 +403,17 @@ const Create = () => {
                                                         <Text color="inputColor" mr={["43px", "initial"]} >{`${difference}d`}</Text>
                                                     </HStack>
                                                 </VStack>
-                                                <VStack ml="auto">
-                                                    <Heading fontSize="1rem" color="tertiary" whiteSpace="nowrap">
-                                                        Amount Due
-                                                    </Heading>
-                                                    <Text color="tertiary" fontSize="1.25rem" fontWeight={600}>
-                                                        ₦{amount}
-                                                    </Text>
-                                                </VStack>
+                                                {
+                                                    amount &&
+                                                    <VStack ml="auto">
+                                                        <Heading fontSize="1rem" color="tertiary" whiteSpace="nowrap">
+                                                            Amount Due
+                                                        </Heading>
+                                                        <Text color="tertiary" fontSize="1.25rem" fontWeight={600}>
+                                                            ₦{amount}
+                                                        </Text>
+                                                    </VStack>
+                                                }
                                             </Stack>
                                         </VStack>
                                     </VStack>
@@ -416,11 +421,11 @@ const Create = () => {
                                         width="100%">
                                         <PaymentButton
                                             paymentCode={transactRef}
-                                            onSuccess={setUpSubmit(handlePaymentAndSubmission(formikProps.handleSubmit))} amount={amount * 100}
-                                            onClose={handlePaymentClose} onFailure={handleFailure}
+                                            onSuccess={setUpSubmit(handlePaymentAndSubmission(formikProps.handleSubmit))}
+                                            onClose={handlePaymentClose} onFailure={handleFailure} amount={amount * 100}
                                         >
-                                            <Button px={5} py={2} 
-                                            disabled={formikProps.isSubmitting || submitting || !formikProps.dirty || !formikProps.isValid}
+                                            <Button px={5} py={2}
+                                                disabled={formikProps.isSubmitting || submitting || !formikProps.dirty || !formikProps.isValid}
                                                 isLoading={formikProps.isSubmitting} loadingText="Creating New Advert">
                                                 Pay to publish
                                             </Button>
@@ -443,6 +448,8 @@ const Create = () => {
         </VStack>
     )
 }
+
+
 
 
 export default Create

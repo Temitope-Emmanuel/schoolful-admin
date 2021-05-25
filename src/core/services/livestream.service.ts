@@ -90,6 +90,12 @@ class Gapi {
             subtitle: `Error:${err.message}`,
           });
         });
+    }).catch((err:any) => {
+      this.toast({
+        messageType:"error",
+        title:"Unable to complete action",
+        subtitle:`Error:${err.message}`
+      })
     });
   };
 

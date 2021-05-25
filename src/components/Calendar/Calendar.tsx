@@ -188,9 +188,7 @@ const EventDialog: React.FC<IEventDialog> = ({ currentEvent,updateEvent,setEvent
         setEvent(null)
       }
       await updateEvent(updatedActivity,setSubmitToFalse)
-      console.log(isSubmitting)
     }
-    console.log(isSubmitting)
 
 
   return (
@@ -290,54 +288,9 @@ const Calendar: React.FC<IProps> = ({ events,updateEvent }) => {
     }
   }, [currentEvent])
 
-  console.log(state.currentEvents)
-  // const handleWeekendsToggle = () => {
-  //   setState({
-  //     ...state,
-  //     weekendsVisible: !state.weekendsVisible
-  //   })
-  // }
   const handleEvents = (evt: EventApi[]) => {
     setState({ ...state, currentEvents: evt })
   }
-  // function renderSidebarEvent(event: EventApi) {
-  //   return (
-  //     <li key={event.id}>
-  //       <b>{formatDate(event.start!, { year: 'numeric', month: 'short', day: 'numeric' })}</b>
-  //       <i>{event.title}</i>
-  //     </li>
-  //   )
-  // }
-  // const renderSidebar = () => {
-  //   return (
-  //     <div className='demo-app-sidebar'>
-  //       <div className='demo-app-sidebar-section'>
-  //         <h2>Instructions</h2>
-  //         <ul>
-  //           <li>Select dates and you will be prompted to create a new event</li>
-  //           <li>Drag, drop, and resize events</li>
-  //           <li>Click an event to delete it</li>
-  //         </ul>
-  //       </div>
-  //       <div className='demo-app-sidebar-section'>
-  //         <label>
-  //           <input
-  //             type='checkbox'
-  //             checked={state.weekendsVisible}
-  //             onChange={handleWeekendsToggle}
-  //           ></input>
-  //               toggle weekends
-  //             </label>
-  //       </div>
-  //       <div className='demo-app-sidebar-section'>
-  //         <h2>All Events ({state.currentEvents.length})</h2>
-  //         <ul>
-  //           {state.currentEvents.map(renderSidebarEvent)}
-  //         </ul>
-  //       </div>
-  //     </div>
-  //   )
-  // }
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     const title = prompt("Please enter a new title for your event")
     let calendarApi = selectInfo.view.calendar
@@ -356,21 +309,7 @@ const Calendar: React.FC<IProps> = ({ events,updateEvent }) => {
   }
   const handleEventClick = (clickInfo: EventClickArg) => {
     setCurrentEvent(clickInfo)
-    // alert("event clicked",JSON.stringify(clickInfo,null,2))
-    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //     clickInfo.event.remove()
-    //   }
   }
-  // const renderEventContent = (eventContent: EventContentArg) => {
-
-  //   return(
-  //     <Flex bgColor="#383838" cursor="pointer" borderLeft={`10px solid ${primary}`} borderRadius="6px" >
-  //       <Text fontSize="1rem" color="white">
-  //           {eventContent.event.title}
-  //       </Text>
-  //   </Flex>
-  //   )
-  // }
   return (
     <>
       <div className={classes.root}>

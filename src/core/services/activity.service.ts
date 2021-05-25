@@ -8,7 +8,11 @@ const baseUrl = process.env.REACT_APP_SERVER_URL
 export const createActivity = async (arg:IActivity):Promise<IResponse<IActivity>> => {
     const url = `${baseUrl}/Activity/CreateActivity`
     try{
-        const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
+        const config:AxiosRequestConfig = {headers:{
+            "Content-Type":"application/json-patch+json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }}
         const response = await axios.post(url,arg,config)
         return response.data
     }catch(err){

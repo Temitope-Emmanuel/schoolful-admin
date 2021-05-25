@@ -109,7 +109,6 @@ const Create = () => {
         setIsStreamed(!isStreamed)
     }
 
-    console.log({isStreamed})
 
     const [image, setImage] = React.useState({
         name: "",
@@ -185,8 +184,6 @@ const Create = () => {
             })
         }
 
-console.log({streamState})
-
     const handleSubmit = (values: IForm, { ...actions }: any) => {
         actions.setSubmitting(true)
         const { title, detail, speaker, startDate, endDate, timeEnd, timeStart } = values
@@ -218,34 +215,22 @@ console.log({streamState})
         }
 
         activityService.createEvent(newEvent).then( async payload => {
-            
-            // if(isStreamed){             
-                await handleCreateStream({
-                    title,
-                    description:detail,
-                    scheduledStartTime:time.startDateTime,
-                    scheduledEndTime:time.endDateTime,
-                    eventId:payload.data.eventId as number
-                }).then(() => {
-                    actions.setSubmitting(false)
-                    actions.resetForm()
-                    history.push(`/church/${params.churchId}/dashboard`)
-                    toast({
-                        title: 'New Event has been created',
-                        subtitle: "",
-                        messageType: MessageType.SUCCESS
-                    })
+            await handleCreateStream({
+                title,
+                description:detail,
+                scheduledStartTime:time.startDateTime,
+                scheduledEndTime:time.endDateTime,
+                eventId:payload.data.eventId as number
+            }).then(() => {
+                actions.setSubmitting(false)
+                actions.resetForm()
+                history.push(`/church/${params.churchId}/dashboard`)
+                toast({
+                    title: 'New Event has been created',
+                    subtitle: "",
+                    messageType: MessageType.SUCCESS
                 })
-            // }else{
-            //     actions.setSubmitting(false)
-            //     actions.resetForm()
-            //     history.push(`/church/${params.churchId}/dashboard`)
-            //     toast({
-            //         title: 'New Event has been created',
-            //         subtitle: "",
-            //         messageType: MessageType.SUCCESS
-            //     })
-            // }
+            })
         }).catch(err => {
             actions.setSubmitting(false)
             toast({
