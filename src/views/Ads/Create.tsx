@@ -27,7 +27,7 @@ import { PaymentButton } from "components/PaymentButton"
 import { IAdvertSetting } from "core/models/Advert"
 import axios from "axios"
 import * as advertDraftHelper from "./advertUtil"
-import { } from "react-paystack"
+import {PaystackButton,PaystackConsumer} from "react-paystack"
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -87,7 +87,8 @@ const initialValues = {
     dateTo: new Date((new Date()).setDate(currentDate.getDate() + 1)),
     advertUrl: ""
 }
-
+// pk_test_16b8b5841010340ec569b7719e165c8b165a2809
+// Faithful-f71b6d7d-a97c-464c-9a4b-63a4aee1c7d1-3DIOJ
 type TypeForm = typeof initialValues
 
 const Create = () => {
@@ -95,6 +96,7 @@ const Create = () => {
     const history = useHistory()
     const toast = useToast()
     const classes = useStyles()
+    const currentUser = useSelector((state:AppState) => state.system.currentUser)
     const [advertSetting, setAdvertSetting] = React.useState<IAdvertSetting[]>([])
     // The current start date
     const [date, setDate] = React.useState({
@@ -118,29 +120,37 @@ const Create = () => {
     })
 
     const cancelToken = axios.CancelToken.source()
-    const getPaymentReference = (amount: number) => {
-        if (submitting) {
-            generateReference({
-                amount,
-                organizationId: currentChurch.churchID as number,
-                organizationType: "church",
-                paymentGatewayType: Payment.PAYSTACK,
-                purpose: Purpose.ADVERT,
-            }, cancelToken).then(payload => {
+    const getPaymentReference = (func:any) => () => {
+        generateReference({
+            amount,
+            organizationId: currentChurch.churchID as number,
+            organizationType: "church",
+            paymentGatewayType: Payment.PAYSTACK,
+            purpose: Purpose.ADVERT,
+        }, cancelToken).then(payload => {
+            Promise.resolve(() => {
                 setTransactRef({
                     reference: payload.data.reference,
                     publicKey: payload.data.publicKey
                 })
-            }).catch(err => {
-                if (axios.isCancel(err)) {
-                    toast({
-                        title: "Unable to Get Church Reference",
-                        messageType: MessageType.ERROR,
-                        subtitle: `Error: ${err}`
-                    })
+                return{
+                    reference: payload.data.reference,
+                    publicKey: payload.data.publicKey
                 }
+            }).then(payload => {
+                console.log({payload})
+                console.log({func})
+                func()
             })
-        }
+        }).catch(err => {
+            if (axios.isCancel(err)) {
+                toast({
+                    title: "Unable to Get Church Reference",
+                    messageType: MessageType.ERROR,
+                    subtitle: `Error: ${err}`
+                })
+            }
+        })
     }
 
     const findDuration = (arg: "Daily" | "Weekly" | "Monthly" | "Quarterly" | "Annually" | "Yearly") => {
@@ -188,7 +198,6 @@ const Create = () => {
         const difference = Math.round(((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)))
         const newAmount = Math.round(difference * perDay)
         setDifference(difference)
-        getPaymentReference(newAmount)
         setAmount(newAmount)
     }
 
@@ -261,8 +270,8 @@ const Create = () => {
         }
     }
 
-    const handlePaymentAndSubmission = (func: any) => (refCode: any) => {
-        toggleSubmitting()
+    const handlePaymentAndSubmission = (func:any) => (refCode: any) => {
+        // toggleSubmitting()
         verifyTransaction(Payment.PAYSTACK, refCode.reference).then(payload => {
             toast({
                 title: "Sermon Payment Successful",
@@ -313,9 +322,23 @@ const Create = () => {
             setDate({ ...date, [name]: e })
         }
     }
-    const setUpSubmit = (func: any) => {
-    }
     let handleChange:any;
+    const config = {
+        reference:transactRef.reference,
+        email: currentUser.email,
+        amount:amount*100,
+        publicKey:transactRef.publicKey,
+        metadata:{
+            custom_field:([currentUser.fullname,
+                currentUser.phoneNumber,currentUser.email] as any)
+        }
+    };
+
+    const componentProps = {
+        ...config,
+        text: 'Pay',
+        onClose: handlePaymentClose
+    };
 
 
     return (
@@ -419,17 +442,17 @@ const Create = () => {
                                     </VStack>
                                     <Stack direction={["column", "row"]} spacing={2}
                                         width="100%">
-                                        <PaymentButton
-                                            paymentCode={transactRef}
-                                            onSuccess={setUpSubmit(handlePaymentAndSubmission(formikProps.handleSubmit))}
-                                            onClose={handlePaymentClose} onFailure={handleFailure} amount={amount * 100}
-                                        >
-                                            <Button px={5} py={2}
-                                                disabled={formikProps.isSubmitting || submitting || !formikProps.dirty || !formikProps.isValid}
-                                                isLoading={formikProps.isSubmitting} loadingText="Creating New Advert">
-                                                Pay to publish
-                                            </Button>
-                                        </PaymentButton>
+                                        <PaystackConsumer {...componentProps} reference={transactRef.reference} 
+                                        onSuccess={handlePaymentAndSubmission(formikProps.handleSubmit)} >
+                                            {({initializePayment}:any) => (
+                                                <Button px={5} py={2} onClick={getPaymentReference(initializePayment)}
+                                                    // disabled={formikProps.isSubmitting || submitting 
+                                                    //     || !formikProps.dirty || !formikProps.isValid}
+                                                    isLoading={formikProps.isSubmitting} loadingText="Creating New Advert">
+                                                    Pay to publish
+                                                </Button>
+                                            )}
+                                        </PaystackConsumer>
                                         <Button onClick={saveAdvertToDraft(formikProps.values)} variant="outline" >
                                             Save To draft
                                             </Button>

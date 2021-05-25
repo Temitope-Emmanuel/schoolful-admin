@@ -33,7 +33,7 @@ const PaymentButton:React.FC<IPaymentButton> = ({onSuccess,onClose,paymentCode,a
     const initializePayment = usePaystackPayment(config);
     
     const handleSubmit = () => {
-        console.log("initialiing payment")
+        console.log("initialiling payment")
         initializePayment(onSuccess, onClose)
     }
     // const onPaymentClose = () => {
