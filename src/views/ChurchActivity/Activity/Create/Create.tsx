@@ -563,7 +563,6 @@ const Create = () => {
                 newActivity.recuring = findFreq[findFreq?.length - 1]
             }
         }
-        console.log(newActivity)
         activityService.createActivity(newActivity).then(payload => {
             actions.setSubmitting(false)
             toast({

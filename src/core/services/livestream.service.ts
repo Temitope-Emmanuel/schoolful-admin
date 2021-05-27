@@ -76,7 +76,7 @@ class Gapi {
 
   // Loads the google script
   private load = () => {
-    this.state = "starting";
+    // this.state = "starting";
     this.gapi.load("client:auth2", () => {
       this.gapi.auth2
         .init({ client_id: config.googleClientId })
@@ -90,13 +90,14 @@ class Gapi {
             subtitle: `Error:${err.message}`,
           });
         });
-    }).catch((err:any) => {
-      this.toast({
-        messageType:"error",
-        title:"Unable to complete action",
-        subtitle:`Error:${err.message}`
-      })
-    });
+    })
+    // .catch((err:any) => {
+    //   this.toast({
+    //     messageType:"error",
+    //     title:"Unable to complete action",
+    //     subtitle:`Error:${err.message}`
+    //   })
+    // });
   };
 
   // Load the API for creating the broadcast
