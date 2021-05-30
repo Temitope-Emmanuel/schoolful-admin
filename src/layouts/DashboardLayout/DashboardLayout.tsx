@@ -206,14 +206,15 @@ const DashboardLayout: React.FC<IProps> = (props) => {
             <Logo white={false} />
           </Flex>
           <Flex flex={4} justify="flex-end">
-            <Heading color="primary" fontFamily="MulishRegular" fontSize="1rem" whiteSpace="nowrap" display={["none", "initial"]}>
+            <Heading color="primary" fontFamily="MulishRegular" fontSize="1rem"
+             whiteSpace="nowrap" display={["none", "initial"]}>
               {pageTitle}
             </Heading>
           </Flex>
           <Spacer flex={8} />
           <Flex mr={["auto", "10"]} align="center" justifyContent="space-around"
             flex={2} >
-            <Icon as={CgBell} boxSize="1.82rem" color="black" />
+            {/* <Icon as={CgBell} boxSize="1.82rem" color="black" /> */}
             <Menu>
               <MenuButton>
                 <Avatar border="2px solid #B603C9"

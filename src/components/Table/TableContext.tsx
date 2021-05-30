@@ -8,6 +8,12 @@ export interface TableOptions {
     dialog:{
         open:boolean;
         handleToggle:() => void
+    },
+    pagination: {
+        page: number;
+        setPage: (evt: unknown, newPage: number) => void;
+        rowsPerPage: number;
+        setRowPerPage: (evt: React.ChangeEvent<HTMLInputElement>) => void
     }
 }
 
@@ -34,6 +40,17 @@ interface IProps {}
 export const TableContextProvider:React.FC<IProps> = ({children}) => {
     const [input,setInput] = React.useState("")
     const [open,setOpen] = React.useState(false)
+    const [page, setPage] = React.useState(1);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
     
     const handleInputChange = (e:string) => {
         setInput(e)
@@ -53,6 +70,12 @@ export const TableContextProvider:React.FC<IProps> = ({children}) => {
                 dialog:{
                     open,
                     handleToggle
+                },
+                pagination:{
+                    page,
+                    rowsPerPage,
+                    setPage:handleChangePage,
+                    setRowPerPage:handleChangeRowsPerPage
                 }
             }}
         >

@@ -40,7 +40,7 @@ interface IProps {
 const DatePicker:React.FC<IProps> = ({name,value,minDate,showCalendarIcon = false,onChange,...props}) => {
     const classes = useStyles()
     const currentDate = new Date()
-
+    console.log({value})
     return(
         <Flex {...props}>
             <DatePickerComponent name={name} format="MMM dd,y" calendarIcon={showCalendarIcon ? <FaRegCalendarAlt/> : null}

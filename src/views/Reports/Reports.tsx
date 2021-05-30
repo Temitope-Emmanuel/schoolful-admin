@@ -151,8 +151,12 @@ const FinancialReport: React.FC<{
         filter: {
             selectedFilter,
             setFilter
+        },
+        pagination:{
+            page,rowsPerPage
         }
     } = useTableService()
+    const [localPage,setLocalPage] = React.useState(0)
     const [displayFinancialReport, setDisplayFinancialReport] = React.useState<any[]>([])
     const handleFinancialDownload = React.useMemo(() => {
         return () => {
@@ -171,6 +175,35 @@ const FinancialReport: React.FC<{
         setFilter(filterFinanceOptions[0])
         setDisplayFinancialReport(demoFinancialReport)
     },[])
+    // const 
+    React.useEffect(() => {
+        if((localPage + 1) === page){
+            getNextDocument()
+        }else if((localPage - 1) === page){
+            getPreviousDocument()
+        }
+        setLocalPage(page)
+    },[page])
+    const getNextDocument = () => {
+        // const foundIdx = allCompanyUser.findIndex(item => item.id === companyUsers[companyUsers.length -1].id)
+        
+        // if(foundIdx){
+        //     setCompanyUsers(allCompanyUser.slice(foundIdx+1,foundIdx+rowsPerPage+1))  
+        // }
+    }
+
+    const getPreviousDocument = () => {
+        // const foundIdx = allCompanyUser.findIndex(item => item.id === companyUsers[0].id)
+        // if(foundIdx){
+        // const start = foundIdx-rowsPerPage
+        // const end = foundIdx
+        // console.log({
+        //     start,
+        //     end
+        // })
+        //     setCompanyUsers(allCompanyUser.slice(start,end))
+        // }
+    }
 
     React.useEffect(() => {
         const testString = new RegExp(selectedFilter, "i")
@@ -178,10 +211,6 @@ const FinancialReport: React.FC<{
         setDisplayFinancialReport([...newDisplay])
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedFilter])
-    React.useEffect(() => {
-        
-        setFilter(selectedFilter)
-    },[selectedFilter])
 
     return (
         <>
@@ -233,8 +262,13 @@ const MemberReport: React.FC<{
         filter: {
             selectedFilter,
             setFilter
+        },
+        pagination:{
+            page,rowsPerPage
         }
     } = useTableService()
+    const [localPage,setLocalPage] = React.useState(0)
+    const [localChurchMember,setLocalChurchMember] = React.useState<IChurchMember[]>([])
     const [displayChurchMember, setDisplayChurchMember] = React.useState<any[]>([])
 
     const handleMemberDownload = React.useMemo(() => {
@@ -252,6 +286,37 @@ const MemberReport: React.FC<{
     }, [churchMember])
 
     React.useEffect(() => {
+        if((localPage + 1) === page){
+            getNextDocument()
+        }else if((localPage - 1) === page){
+            getPreviousDocument()
+        }
+        setLocalPage(page)
+    },[page])
+
+    const getNextDocument = () => {
+        if(localChurchMember.length && churchMember.length){
+            const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[localChurchMember.length -1].personId)
+            
+            if(foundIdx){
+                setLocalChurchMember(churchMember.slice(foundIdx+1,foundIdx+rowsPerPage+1))  
+            }
+        }
+    }
+
+    const getPreviousDocument = () => {
+        if(localChurchMember.length && churchMember.length){
+            const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[0].personId)
+            if(foundIdx){
+            const start = foundIdx-rowsPerPage
+            const end = foundIdx
+                setLocalChurchMember(churchMember.slice(start,end))
+            }
+        }
+    }
+
+    // For searching
+    React.useEffect(() => {
         const testString = new RegExp(inputValue, "i")
         const newDisplay = churchMember.filter((item:any) => {
             return testString.test(item[selectedFilter])
@@ -262,12 +327,21 @@ const MemberReport: React.FC<{
 
     React.useEffect(() => {
         setFilter(filterOptions[0])
-        setDisplayChurchMember(churchMember)
     },[])
+
+    // For setting the local church Member list
     React.useEffect(() => {
-        console.log({selectedFilter})
-        setFilter(selectedFilter)
-    },[selectedFilter])
+        if(churchMember.length){
+            setLocalChurchMember(churchMember)
+        }
+    },[churchMember])
+    React.useEffect(() => {
+        setDisplayChurchMember(localChurchMember)
+    },[localChurchMember])
+    // React.useEffect(() => {
+    //     console.log({selectedFilter})
+    //     setFilter(selectedFilter)
+    // },[selectedFilter])
 
     return (
         <Stack spacing={5} mt={7}

@@ -44,3 +44,28 @@ export const useBreakpoints = () => {
 
   return { baseOnBreakpoints, currentBreakpoints };
 };
+
+
+
+export const idleDetector = (goActive:any,goInActive:any) => {
+  let timeoutID:any;
+
+  function startTimer() {
+      // wait 2 seconds before calling goInactive
+      timeoutID = window.setTimeout(goInActive, 10000);
+  }
+  function resetTimer(e:any) {
+    window.clearTimeout(timeoutID);
+ 
+    goActive();
+  }
+  window.addEventListener("mousemove", resetTimer, false);
+  window.addEventListener("mousedown", resetTimer, false);
+  window.addEventListener("keypress", resetTimer, false);
+  window.addEventListener("DOMMouseScroll", resetTimer, false);
+  window.addEventListener("mousewheel", resetTimer, false);
+  window.addEventListener("touchmove", resetTimer, false);
+  window.addEventListener("MSPointerMove", resetTimer, false);
+
+  startTimer();
+}

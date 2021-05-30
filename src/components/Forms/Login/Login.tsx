@@ -10,16 +10,16 @@ import {Formik,FormikProps} from "formik"
 import {TextInput,PasswordInput} from "components/Input"
 import useToast from "utils/Toast"
 import {login} from "store/System/actions"
+import localforage from "localforage"
 import * as Yup from "yup"
-
 
 interface IForm {
     phoneNo: string;
     password: string;
 }
 
-
-const Signup = () => {
+const Login = () => {
+    const CURRENT_LOCATION = "CURRENT_LOCATION"
     const dispatch = useDispatch()
     const history = useHistory()
     const isAuthenticated = useSelector((state:AppState) => state.system.isAuthenticated)
@@ -44,7 +44,13 @@ const Signup = () => {
         loginPromise.then((currentUser:any) => {
             actions.setSubmitting(false)
             if(currentUser){
-                history.push(`/church/${currentUser.churchId}/dashboard`)
+                localforage.getItem(CURRENT_LOCATION).then(payload => {
+                    if(payload){
+                        history.push(payload as any)
+                    }else{
+                        history.push(`/church/${currentUser.churchId}/dashboard`)
+                    }
+                })
             }
         })
     }
@@ -94,4 +100,4 @@ const Signup = () => {
         )
 }
 
-export default Signup
+export default Login

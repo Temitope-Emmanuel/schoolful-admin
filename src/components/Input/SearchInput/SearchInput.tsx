@@ -23,8 +23,6 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
 const SearchInput:React.FC<IProps> = ({value,setValue,placeholder,...props}) => {
     const classes = useStyles()
 
-    console.log({placeholder})
-
     return (
         <Flex  {...props}>
             <InputGroup className={classes.root}>
