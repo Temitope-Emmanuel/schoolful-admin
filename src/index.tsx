@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import "assets/styles/index.scss"
 import App from './App';
+import { Router } from "react-router-dom"
+import history from "utils/history"
 import * as serviceWorker from './serviceWorker';
-import {ChakraProvider} from "@chakra-ui/react"
-import {ThemeProvider} from "@material-ui/core"
-import {ChakraTheme,MaterialTheme} from "theme"
+import { ChakraProvider } from "@chakra-ui/react"
+import { ThemeProvider } from "@material-ui/core"
+import { ChakraTheme, MaterialTheme } from "theme"
 import configureStore from "store"
-import {Provider} from "react-redux"
+import { Provider } from "react-redux"
 import * as auth from "utils/auth"
-import {configureAxios} from "core/services/interceptor.service"
+import { configureAxios } from "core/services/interceptor.service"
 
 
 const store = configureStore();
@@ -20,17 +21,19 @@ auth.init(store)
 const Root = () => (
   <React.StrictMode>
     <Provider store={store} >
-        <ChakraProvider theme={ChakraTheme} >
-            <ThemeProvider theme={MaterialTheme}> 
-              <App />
-            </ThemeProvider>
-        </ChakraProvider>
+      <ChakraProvider theme={ChakraTheme} >
+        <ThemeProvider theme={MaterialTheme}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </ThemeProvider>
+      </ChakraProvider>
     </Provider>
   </React.StrictMode>
 )
 
 ReactDOM.render(
-  <Root/>,
+  <Root />,
   document.getElementById('root')
 );
 

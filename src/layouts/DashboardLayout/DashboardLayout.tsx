@@ -10,13 +10,13 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
-import { CgBell, CgProfile } from 'react-icons/cg'
 import { Logo } from "components/Logo"
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from "react-redux"
 import { FiLogOut } from "react-icons/fi"
 import { GiHamburgerMenu } from "react-icons/gi"
 import { getChurch, logout } from "store/System/actions"
+import {CgProfile} from "react-icons/cg"
 import useToast from "utils/Toast"
 import useParams from "utils/params"
 import { AppState } from 'store';
@@ -138,8 +138,6 @@ export const dashboardMenu = [
   { icon: FaCalendarCheck, name: "Booking/Request", link: "/booking" }
 ]
 
-
-
 const DashboardLayout: React.FC<IProps> = (props) => {
   const location = useLocation()
   const activeLink = location.pathname
@@ -158,15 +156,6 @@ const DashboardLayout: React.FC<IProps> = (props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  // const handleDesktopToggle = () => {
-  //   setDesktopOpen(!desktopOpen)
-  // };
-
-  React.useEffect(() => {
-    dispatch(getChurch(toast))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const signOut = () => {
     dispatch(logout())
   }

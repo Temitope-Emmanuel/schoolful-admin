@@ -14,7 +14,7 @@ import { setPageTitle } from "store/System/actions"
 import { Table, TableRow } from "components/Table"
 import { SearchInput } from "components/Input"
 import { getUserByRoleAndChurchId } from "core/services/account.service"
-import {getChurchMember} from "core/services/church.service"
+import { getChurchMember } from "core/services/church.service"
 import useToast from "utils/Toast"
 import useParams from "utils/params"
 import { IChurchMember } from "core/models/ChurchMember"
@@ -134,15 +134,14 @@ interface IFinance {
 }
 
 type ReportKey = keyof IChurchMember
-const filterOptions: ReportKey[] = ["email", "fullname", "username","phoneNumber"]
+const filterOptions: ReportKey[] = ["email", "fullname", "username", "phoneNumber"]
 
 type FinanceKey = keyof IFinance
 const filterFinanceOptions: FinanceKey[] = ["amount", "email", "username"]
 
 const FinancialReport: React.FC<{
     demoFinancialReport: any[];
-    inputValue:string;
-    setFilter:(arg:string) => void
+    inputValue: string;
 }> = React.memo(({ demoFinancialReport }) => {
     const {
         dialog: {
@@ -152,11 +151,11 @@ const FinancialReport: React.FC<{
             selectedFilter,
             setFilter
         },
-        pagination:{
-            page,rowsPerPage
+        pagination: {
+            page, rowsPerPage
         }
     } = useTableService()
-    const [localPage,setLocalPage] = React.useState(0)
+    const [localPage, setLocalPage] = React.useState(0)
     const [displayFinancialReport, setDisplayFinancialReport] = React.useState<any[]>([])
     const handleFinancialDownload = React.useMemo(() => {
         return () => {
@@ -174,19 +173,19 @@ const FinancialReport: React.FC<{
     React.useEffect(() => {
         setFilter(filterFinanceOptions[0])
         setDisplayFinancialReport(demoFinancialReport)
-    },[])
+    }, [])
     // const 
     React.useEffect(() => {
-        if((localPage + 1) === page){
+        if ((localPage + 1) === page) {
             getNextDocument()
-        }else if((localPage - 1) === page){
+        } else if ((localPage - 1) === page) {
             getPreviousDocument()
         }
         setLocalPage(page)
-    },[page])
+    }, [page])
     const getNextDocument = () => {
         // const foundIdx = allCompanyUser.findIndex(item => item.id === companyUsers[companyUsers.length -1].id)
-        
+
         // if(foundIdx){
         //     setCompanyUsers(allCompanyUser.slice(foundIdx+1,foundIdx+rowsPerPage+1))  
         // }
@@ -252,9 +251,8 @@ const FinancialReport: React.FC<{
 const MemberReport: React.FC<{
     churchMember: IChurchMember[];
     notBaseBreakpoint: boolean;
-    inputValue:string;
-    setTextFilter:(arg:string) => void
-}> = React.memo(({ churchMember, notBaseBreakpoint,inputValue,setTextFilter }) => {
+    inputValue: string;
+}> = React.memo(({ churchMember, notBaseBreakpoint, inputValue }) => {
     const {
         dialog: {
             handleToggle
@@ -263,12 +261,12 @@ const MemberReport: React.FC<{
             selectedFilter,
             setFilter
         },
-        pagination:{
-            page,rowsPerPage
+        pagination: {
+            page, rowsPerPage
         }
     } = useTableService()
-    const [localPage,setLocalPage] = React.useState(0)
-    const [localChurchMember,setLocalChurchMember] = React.useState<IChurchMember[]>([])
+    const [localPage, setLocalPage] = React.useState(0)
+    const [localChurchMember, setLocalChurchMember] = React.useState<IChurchMember[]>([])
     const [displayChurchMember, setDisplayChurchMember] = React.useState<any[]>([])
 
     const handleMemberDownload = React.useMemo(() => {
@@ -286,31 +284,30 @@ const MemberReport: React.FC<{
     }, [churchMember])
 
     React.useEffect(() => {
-        if((localPage + 1) === page){
+        if ((localPage + 1) === page) {
             getNextDocument()
-        }else if((localPage - 1) === page){
+        } else if ((localPage - 1) === page) {
             getPreviousDocument()
         }
         setLocalPage(page)
-    },[page])
+    }, [page])
 
     const getNextDocument = () => {
-        if(localChurchMember.length && churchMember.length){
-            const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[localChurchMember.length -1].personId)
-            
-            if(foundIdx){
-                setLocalChurchMember(churchMember.slice(foundIdx+1,foundIdx+rowsPerPage+1))  
+        if (localChurchMember.length && churchMember.length) {
+            const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[localChurchMember.length - 1].personId)
+            if (foundIdx) {
+                setLocalChurchMember(churchMember.slice(foundIdx + 1, foundIdx + rowsPerPage + 1))
             }
         }
     }
 
     const getPreviousDocument = () => {
-        if(localChurchMember.length && churchMember.length){
+        if (localChurchMember.length && churchMember.length) {
             const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[0].personId)
-            if(foundIdx){
-            const start = foundIdx-rowsPerPage
-            const end = foundIdx
-                setLocalChurchMember(churchMember.slice(start,end))
+            if (foundIdx) {
+                const start = foundIdx - rowsPerPage
+                const end = foundIdx
+                setLocalChurchMember(churchMember.slice(start, end))
             }
         }
     }
@@ -318,30 +315,26 @@ const MemberReport: React.FC<{
     // For searching
     React.useEffect(() => {
         const testString = new RegExp(inputValue, "i")
-        const newDisplay = churchMember.filter((item:any) => {
+        const newDisplay = churchMember.filter((item: any) => {
             return testString.test(item[selectedFilter])
         })
         setDisplayChurchMember(newDisplay)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFilter,inputValue])
+    }, [selectedFilter, inputValue])
 
     React.useEffect(() => {
         setFilter(filterOptions[0])
-    },[])
+    }, [])
 
     // For setting the local church Member list
     React.useEffect(() => {
-        if(churchMember.length){
+        if (churchMember.length) {
             setLocalChurchMember(churchMember)
         }
-    },[churchMember])
+    }, [churchMember])
     React.useEffect(() => {
         setDisplayChurchMember(localChurchMember)
-    },[localChurchMember])
-    // React.useEffect(() => {
-    //     console.log({selectedFilter})
-    //     setFilter(selectedFilter)
-    // },[selectedFilter])
+    }, [localChurchMember])
 
     return (
         <Stack spacing={5} mt={7}
@@ -357,12 +350,12 @@ const MemberReport: React.FC<{
                     />
                 </Flex>
                 {
-                    churchMember.length ? 
-                    <Button variant="link" color="tertiary" onClick={handleMemberDownload}
-                        textDecoration="underline" fontSize="0.875rem" >
-                        Download Excel File
-                    </Button> : 
-                    undefined
+                    churchMember.length ?
+                        <Button variant="link" color="tertiary" onClick={handleMemberDownload}
+                            textDecoration="underline" fontSize="0.875rem" >
+                            Download Excel File
+                    </Button> :
+                        undefined
                 }
             </HStack>
             <Table rowLength={displayChurchMember.length}
@@ -386,7 +379,7 @@ const Reports = () => {
     const breakpoint = useBreakpoint()
     const dispatch = useDispatch()
     const notBaseBreakpoint = breakpoint !== "base"
-    const [filter,setFilter] = React.useState("")
+    const [filter, setFilter] = React.useState("")
     const [demoFinancialReport, setDemoFinancialReport] = React.useState([])
     const [inputText, setInputText] = React.useState("")
     const [churchMember, setChurchMember] = React.useState<IChurchMember[]>([])
@@ -401,25 +394,25 @@ const Reports = () => {
         cancelToken?: CancelTokenSource
     }) => {
         getChurchMember(params.churchId as any)
-        // getUserByRoleAndChurchId({
-        //     churchId: params.churchId as any,
-        //     count,
-        //     page,
-        //     role: "ChurchMember",
-        //     cancelToken: cancelToken
-        // })
-        .then(payload => {
-            setChurchMember(payload.data)
-            // setChurchMember(payload.data.records)
-        }).catch(err => {
-            if (!axios.isCancel(err)) {
-                toast({
-                    messageType: "error",
-                    subtitle: `Error:${err}`,
-                    title: "Unable to completed get user request"
-                })
-            }
-        })
+            getUserByRoleAndChurchId({
+                churchId: params.churchId as any,
+                count,
+                page,
+                role: "ChurchMember",
+                cancelToken: cancelToken
+            })
+            .then(payload => {
+                setChurchMember(payload.data.records)
+                // setChurchMember(payload.data.records)
+            }).catch(err => {
+                if (!axios.isCancel(err)) {
+                    toast({
+                        messageType: "error",
+                        subtitle: `Error:${err}`,
+                        title: "Unable to completed get user request"
+                    })
+                }
+            })
     }
     const getChurchTransaction = ({
         cancelToken, page, take
@@ -447,6 +440,8 @@ const Reports = () => {
     }
 
     React.useEffect(() => {
+        dispatch(setPageTitle("Reports"))
+        
         const cancelToken = axios.CancelToken.source()
         churchMemberDetail({
             count: 10,
@@ -461,11 +456,6 @@ const Reports = () => {
         return () => {
             cancelToken.cancel()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    React.useEffect(() => {
-        dispatch(setPageTitle("Reports"))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -508,7 +498,7 @@ const Reports = () => {
                             />
                         </HStack>
                         <TableContextProvider>
-                            <FinancialReport inputValue={inputText} setFilter={setFilter} demoFinancialReport={demoFinancialReport} />
+                            <FinancialReport inputValue={inputText} demoFinancialReport={demoFinancialReport} />
                         </TableContextProvider>
                     </TabPanel>
                     <TabPanel mt={{ sm: "3", md: "10" }} ml={{ md: "3" }}>
@@ -524,7 +514,8 @@ const Reports = () => {
                             />
                         </HStack>
                         <TableContextProvider>
-                            <MemberReport inputValue={inputText} setTextFilter={setFilter} churchMember={churchMember} notBaseBreakpoint={notBaseBreakpoint} />
+                            <MemberReport inputValue={inputText}
+                                churchMember={churchMember} notBaseBreakpoint={notBaseBreakpoint} />
                         </TableContextProvider>
                     </TabPanel>
                 </TabPanels>

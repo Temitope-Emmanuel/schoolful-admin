@@ -104,7 +104,6 @@ const FilterDialog: React.FC<{
 })
 
 
-
 interface ToolbarFunctionsProps {
     filterOptions: string[];
     numSelected?:number;
@@ -114,8 +113,6 @@ interface IProps extends ToolbarFunctionsProps {
     heading: any[];
     rowLength: number;
 }
-
-
 
 const CustomizedTables: React.FC<IProps> = ({ children, heading, rowLength,filterOptions }) => {
     const classes = useStyles();
