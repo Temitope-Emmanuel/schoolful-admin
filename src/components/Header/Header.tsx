@@ -67,7 +67,7 @@ interface IPropsModal {
 }
 
 interface IState {
-  country: ICountry[]
+  // country: ICountry[]
   state: IStateResponse[]
   city: ICity[]
 }
@@ -78,7 +78,7 @@ const SearchChurch:React.FC<IPropsModal> = ({handleClose}) => {
   const toast = useToast()
   const [denomination, setDenomination] = React.useState<IDenomination[]>([])
   const [location, setLocation] = React.useState<IState>({
-      country: [],
+      // country: [],
       city: [],
       state: []
   })
@@ -90,14 +90,13 @@ const SearchChurch:React.FC<IPropsModal> = ({handleClose}) => {
   React.useEffect(() => {
       const getCountry = async (toast: ToastFunc) => {
           try {
-              return await utilityService.getCountry().then(payload => {
-                  const foundCountry = payload.data.find(item => item.countryID === 160)
-                  // setCountry([foundCountry as ICountry,...payload.data.filter(item => item.countryID !== 160)])
-                  setLocation({
-                      ...location, country:
-                          [foundCountry as ICountry, ...payload.data.filter(item => item.countryID !== 160)]
-                  })
-              })
+              // return await utilityService.getCountry().then(payload => {
+              //     const foundCountry = payload.data.find(item => item.countryID === 160)
+              //     setLocation({
+              //         ...location, country:
+              //             [foundCountry as ICountry, ...payload.data.filter(item => item.countryID !== 160)]
+              //     })
+              // })
           } catch (err) {
               toast({
                   messageType: MessageType.WARNING,

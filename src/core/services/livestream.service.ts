@@ -71,7 +71,15 @@ class Gapi {
     this.state = state
     this.setState = setState
     this.toast = toast
-    this.load();
+    if(this.gapi){
+      this.load();
+    }else{
+      this.toast({
+        messageType: "error",
+        title: "Unable to complete google api loading",
+        subtitle: `Error:Google api is not ready yet`,
+      });
+    }
   }
 
   // Loads the google script

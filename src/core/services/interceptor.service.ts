@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '.'
 
 export const configureAxios = () => {
     axios.interceptors.response.use(
@@ -12,6 +12,7 @@ export const configureAxios = () => {
             }
             return response
         },
+        // For changing the err message
         error => {
             if(!error) throw Error('There was an error. Please try again later');
             const {response} = error;

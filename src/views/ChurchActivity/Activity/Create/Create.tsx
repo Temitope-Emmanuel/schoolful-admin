@@ -44,17 +44,6 @@ const useStyles = makeStyles((theme) => createStyles({
             marginTop: "auto !important",
             marginBottom: "auto !important"
         }
-    },
-    dateContainer: {
-        // marginRight: theme.spacing(2),
-        // "& > *": {
-        //     // padding: ".7rem 1.7rem !important",
-        //     // paddingLeft: ".4rem !important",
-        //     borderRadius: "3px",
-        //     "& select": {
-        //         appearance: "none"
-        //     }
-        // }
     }
 }))
 
@@ -710,14 +699,13 @@ const Create = () => {
                                                     <HStack width={["50"]} className={classes.mainDateContainer}>
                                                         <DatePicker name="startDate" minDetail="month" format="MMM dd,y"
                                                             onChange={onChange("startDate")} value={formikProps.values.startDate}
-                                                            className={classes.dateContainer}
                                                         />
                                                         {
                                                             !allDay &&
                                                             <Box ml="3" >
                                                                 <TimePicker onChange={onChange("timeStart")} clearIcon={<NoIcon />}
                                                                     value={formikProps.values.timeStart} format="hh:mm a"
-                                                                    className={classes.dateContainer} disableClock={true}
+                                                                    disableClock={true}
                                                                 />
                                                             </Box>
                                                         }
@@ -725,15 +713,15 @@ const Create = () => {
                                                     <Icon as={isDesktop ? BiRightArrowAlt : BiDownArrowAlt} />
                                                     <HStack width={['50']} className={classes.mainDateContainer}>
                                                         <DatePicker name="endDate" minDetail="month" minDate={formikProps.values.startDate}
-                                                            className={classes.dateContainer} calendarIcon={null} format="MMM dd,y"
+                                                            calendarIcon={null} format="MMM dd,y" clearIcon={null}
                                                             onChange={onChange("endDate")} value={formikProps.values.endDate}
-                                                            clearIcon={null} />
+                                                            />
                                                         {
                                                             !allDay &&
                                                             <Box ml="3" >
                                                                 <TimePicker onChange={onChange("timeEnd")} clearIcon={<NoIcon />}
                                                                     value={formikProps.values.timeEnd} format="hh:mm a"
-                                                                    className={classes.dateContainer} disableClock={true}
+                                                                    disableClock={true}
                                                                 />
                                                             </Box>
                                                         }

@@ -40,39 +40,39 @@ const Activity = () => {
     const [churchEvent, setChurchEvent] = React.useState<IEvent[]>([])
     const [calendarEvent,setCalendarEvent] = React.useState<EventInput[]>([])
     const [showCalendar,setShowCalendar] = React.useState(false)
+    const cancelToken = axios.CancelToken.source()
 
+    const getChurchActivity = async () => {
+        activityService.getChurchActivity(params.churchId,cancelToken).then(payload => {
+            const newChurchActivity = payload.data.map((item) => ({
+                ...item,
+                schedule:JSON.parse(item.schedule)
+            }))
+            setChurchActivity(newChurchActivity)
+        }).catch(err => {
+            if(!axios.isCancel(err)){
+                toast({
+                    title: "Unable to get Church Activity",
+                    subtitle: `Error : ${err}`,
+                    messageType: MessageType.ERROR
+                })
+            }
+        })
+    }
+    const getChurchEvent = async () => {
+        activityService.getChurchEvent(params.churchId,cancelToken).then(payload => {
+            setChurchEvent(payload.data)
+        }).catch(err => {
+            if(!axios.isCancel(err)){
+                toast({
+                    title: "Unable to get Church Event",
+                    subtitle: `Error : ${err}`,
+                    messageType: MessageType.ERROR
+                })
+            }
+        })
+    }
     React.useEffect(() => {
-        const cancelToken = axios.CancelToken.source()
-        const getChurchActivity = async () => {
-            activityService.getChurchActivity(params.churchId,cancelToken).then(payload => {
-                const newChurchActivity = payload.data.map((item) => ({
-                    ...item,
-                    schedule:JSON.parse(item.schedule)
-                }))
-                setChurchActivity(newChurchActivity)
-            }).catch(err => {
-                if(!axios.isCancel(err)){
-                    toast({
-                        title: "Unable to get Church Activity",
-                        subtitle: `Error : ${err}`,
-                        messageType: MessageType.ERROR
-                    })
-                }
-            })
-        }
-        const getChurchEvent = async () => {
-            activityService.getChurchEvent(params.churchId,cancelToken).then(payload => {
-                setChurchEvent(payload.data)
-            }).catch(err => {
-                if(!axios.isCancel(err)){
-                    toast({
-                        title: "Unable to get Church Event",
-                        subtitle: `Error : ${err}`,
-                        messageType: MessageType.ERROR
-                    })
-                }
-            })
-        }
         getChurchActivity()
         getChurchEvent()
         return () => {
@@ -110,6 +110,7 @@ const Activity = () => {
         setCalendarEvent(calendarEvents)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[churchEvent,churchActivity])
+    
     // Updated Church Event
     const updateChurchEvent = (updatedEvent:IEvent,idx:number) => {
             const filteredEvent = [...churchEvent]

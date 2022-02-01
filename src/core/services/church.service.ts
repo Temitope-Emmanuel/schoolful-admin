@@ -58,6 +58,7 @@ export const getChurchDenomination = async ():Promise<IResponse<IDenomination[]>
         const url = `${baseUrl}/getDenomination`
 
         const response = await axios.get(url)
+        console.log('this is the response.data',response.data)
         return response.data
     }catch(err){
         throw err

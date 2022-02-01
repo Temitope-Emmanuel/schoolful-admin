@@ -18,7 +18,7 @@ import { IUpdateChurchForm } from "core/models/Church"
 import { getChurchDenomination } from "core/services/church.service"
 import { IDenomination } from "core/models/Denomination"
 import { IState, ICity, ICountry } from "core/models/Location"
-import { getState, getCity, getCountry } from "core/services/utility.service"
+import { getState, getCity } from "core/services/utility.service"
 import { generateReference, verifyTransaction } from "core/services/payment.service"
 import { primary } from "theme/palette"
 import { Payment, Purpose } from "core/enums/Payment"
@@ -90,7 +90,7 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
     const [city, setCity] = React.useState<ICity[]>([])
     const [country, setCountry] = React.useState<ICountry[]>([])
     const getStateApi = (countryID: number) => {
-        getState(countryID).then(statePayload => {
+        getState().then(statePayload => {
             const foundState = statePayload.data.find(item => item.stateID === currentChurch.stateID)
             if (foundState) {
                 setState([foundState as IState, ...statePayload.data.filter(item => item.stateID !== currentChurch.stateID)])
@@ -132,18 +132,18 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
     React.useEffect(() => {
         const cancelToken = axios.CancelToken.source()
         if (currentChurch.churchID) {
-            const getCountryApi = () => {
-                getCountry().then(payload => {
-                    const foundCountry = payload.data.find(item => item.countryID === currentChurch.countryID)
-                    setCountry([foundCountry as ICountry, ...payload.data.filter(item => item.countryID !== currentChurch.countryID)])
-                }).catch(err => {
-                    toast({
-                        title: "Unable to Get Country",
-                        subtitle: `Error:${err}`,
-                        messageType: MessageType.ERROR
-                    })
-                })
-            }
+            // const getCountryApi = () => {
+            //     getCountry().then(payload => {
+            //         const foundCountry = payload.data.find(item => item.countryID === currentChurch.countryID)
+            //         setCountry([foundCountry as ICountry, ...payload.data.filter(item => item.countryID !== currentChurch.countryID)])
+            //     }).catch(err => {
+            //         toast({
+            //             title: "Unable to Get Country",
+            //             subtitle: `Error:${err}`,
+            //             messageType: MessageType.ERROR
+            //         })
+            //     })
+            // }
             const getDenominationApi = () => {
                 getChurchDenomination().then(payload => {
                     const foundDenomination = payload.data.find(item => item.denominationID === Number(currentChurch.denominationId))
@@ -181,7 +181,7 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
 
             }
             apiCall()
-            getCountryApi()
+            // getCountryApi()
             getDenominationApi()
         }
         return () => {

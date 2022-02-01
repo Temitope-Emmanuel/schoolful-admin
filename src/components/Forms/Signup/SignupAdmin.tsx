@@ -88,7 +88,6 @@ const useStyles = makeStyles(theme => createStyles({
 }))
 
 interface IState {
-    country: ICountry[]
     state: IStateResponse[]
     city: ICity[]
 }
@@ -104,7 +103,7 @@ export const createChurchValidation = () => (
         address: Yup.string().min(20, "Address is too short").required("An address is required").required("Address is required"),
         city: Yup.string().notOneOf(["Select City", "0"]).required("City should be from the Listed"),
         state: Yup.string().notOneOf(["Select State", "0"]).required("State is required"),
-        country: Yup.string().notOneOf(["Select Your Country"]).required("Country is required"),
+        // country: Yup.string().notOneOf(["Select Your Country"]).required("Country is required"),
         acceptedTerms: Yup.boolean().oneOf([true], "You need to Agree to our terms and condition")
             .required("You need to agree to our terms and condition")
     }))
@@ -182,7 +181,7 @@ const SignupAdmin = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
     const [location, setLocation] = React.useState<IState>({
-        country: [],
+        // country: [],
         city: [],
         state: []
     })
@@ -214,20 +213,16 @@ const SignupAdmin = () => {
     const [denomination, setDenomination] = React.useState<IDenomination[]>([])
 
     React.useEffect(() => {
-        const getCountry = async (toast: ToastFunc) => {
+        const getState = async () => {
             try {
-                return await utilityService.getCountry().then(payload => {
-                    const foundCountry = payload.data.find(item => item.countryID === 160)
-                    // setCountry([foundCountry as ICountry,...payload.data.filter(item => item.countryID !== 160)])
-                    setLocation({
-                        ...location, country:
-                            [foundCountry as ICountry, ...payload.data.filter(item => item.countryID !== 160)]
-                    })
+                utilityService.getState().then(data => {
+                    setLocation({ ...location, state: data.data })
                 })
             } catch (err) {
                 toast({
-                    messageType: MessageType.WARNING,
-                    subtitle: "Unable to get Country"
+                    title: "Unable to get state",
+                    subtitle: `Error:${err}`,
+                    messageType: MessageType.WARNING
                 })
             }
         }
@@ -243,7 +238,7 @@ const SignupAdmin = () => {
                 })
             }
         }
-        getCountry(toast)
+        getState()
         getDenomination(toast)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -492,19 +487,6 @@ const SignupAdmin = () => {
                                     onSubmit={submitNewChurchForm}
                                 >
                                     {(formikProps: FormikProps<IChurchForm>) => {
-                                        const getState = async (countryId: number) => {
-                                            try {
-                                                utilityService.getState(countryId).then(data => {
-                                                    setLocation({ ...location, state: data.data })
-                                                })
-                                            } catch (err) {
-                                                toast({
-                                                    title: "Unable to get state",
-                                                    subtitle: `Error:${err}`,
-                                                    messageType: MessageType.WARNING
-                                                })
-                                            }
-                                        }
                                         const getCity = async (cityId: number) => {
                                             try {
                                                 utilityService.getCity(cityId).then(data => {
@@ -532,14 +514,14 @@ const SignupAdmin = () => {
                                                                     ))}
                                                                 </Select>
                                                                 <TextInput name="address" placeholder="Church Address" />
-                                                                <Select name="country" placeholder="Select Your Country"
+                                                                {/* <Select name="country" placeholder="Select Your Country"
                                                                     val={Number(formikProps.values.country)} func={getState} >
                                                                     {location.country.map((item, idx) => (
                                                                         <option key={idx} value={item.countryID}>
                                                                             {item.name}
                                                                         </option>
                                                                     ))}
-                                                                </Select>
+                                                                </Select> */}
                                                                 <Select name="state" placeholder="Select State"
                                                                     val={Number(formikProps.values.state)} func={getCity}>
                                                                     {location.state.map((item, idx) => (
