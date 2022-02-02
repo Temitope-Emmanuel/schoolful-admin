@@ -1,18 +1,13 @@
 import axios,{AxiosRequestConfig,CancelTokenSource} from "axios"
-import {IActivity} from "core/models/Activity"
+import {IActivity, ISchedule} from "core/models/Activity"
 import {IResponse} from "core/models/Response"
 import {IEvent} from "core/models/Event"
 
 const baseUrl = process.env.REACT_APP_SERVER_URL
 
-export const createActivity = async (arg:IActivity):Promise<IResponse<IActivity>> => {
+export const createActivity = async (arg:IActivity<string>):Promise<IResponse<IActivity<string>>> => {
     const url = `${baseUrl}/Activity/CreateActivity`
     try{
-        const config:AxiosRequestConfig = {headers:{
-            "Content-Type":"application/json-patch+json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }}
         const response = await axios.post(url,arg)
         return response.data
     }catch(err){
@@ -20,7 +15,7 @@ export const createActivity = async (arg:IActivity):Promise<IResponse<IActivity>
     }
 }
 
-export const updateActivity = async (arg:Partial<IActivity>):Promise<IResponse<IActivity>> => {
+export const updateActivity = async (arg:Partial<IActivity<string>>):Promise<IResponse<IActivity<string>>> => {
     const url = `${baseUrl}/Activity/UpdateActivity`
     try{
         const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
@@ -31,7 +26,7 @@ export const updateActivity = async (arg:Partial<IActivity>):Promise<IResponse<I
     }
 }
 
-export const getChurchActivity = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<IActivity[]>> => {
+export const getChurchActivity = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<IActivity<string>[]>> => {
     const url = `${baseUrl}/Activity/GetChurchActivityByChurchID/${churchId}`
     try{
         const config:AxiosRequestConfig = {headers:{Accept:"text/plain"},cancelToken:cancelToken.token}
@@ -45,7 +40,6 @@ export const getChurchActivity = async (churchId:string,cancelToken:CancelTokenS
 export const createEvent = async (arg:IEvent):Promise<IResponse<IEvent>> => {
     try{
         const url = `${baseUrl}/Activity/CreateEvents`
-        const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
         const response = await axios.post(url,arg)
         return response.data
     }catch(err){

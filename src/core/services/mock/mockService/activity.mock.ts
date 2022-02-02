@@ -22,6 +22,29 @@ export const activityMock = (mock: MockAdapter) => {
     data:[]
   })
 
+  mock.onPost(`${baseUrl}/Activity/CreateActivity`).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:{
+      activityID:'',
+      schedule:'',
+      recuring:'',
+    }
+  })
+
+  mock.onPost( `${baseUrl}/Activity/CreateEvents`).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:{
+      eventId:'',
+      schedule:'',
+      startDateTime:'',
+      endDateTime:'',
+  }
+  })
+
 }
 
 // export const createActivity = async (arg:IActivity):Promise<IResponse<IActivity>> => {

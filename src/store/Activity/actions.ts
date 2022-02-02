@@ -34,7 +34,7 @@ export function LoadActivitiesForChurch (churchId:string,cancelToken:CancelToken
     }
 }
 
-export function createNewActivity (newActivity:IActivity,toast:ToastFunc){
+export function createNewActivity (newActivity:IActivity<string>,toast:ToastFunc){
     return async (dispatch:Dispatch) => {
         try{
             return await activityService.createActivity(newActivity).then(payload => {
@@ -50,7 +50,7 @@ export function createNewActivity (newActivity:IActivity,toast:ToastFunc){
         }
     }
 }
-export function updateActivity (updateActivity:IActivity,toast:ToastFunc){
+export function updateActivity (updateActivity:IActivity<string>,toast:ToastFunc){
     return async (dispatch:Dispatch) => {
         try{
             return await activityService.updateActivity(updateActivity).then(payload => {

@@ -214,14 +214,16 @@ const Create = () => {
             ...time
         }
 
+        console.log('this is the event', {newEvent})
         activityService.createEvent(newEvent).then( async payload => {
-            await handleCreateStream({
-                title,
-                description:detail,
-                scheduledStartTime:time.startDateTime,
-                scheduledEndTime:time.endDateTime,
-                eventId:payload.data.eventId as number
-            }).then(() => {
+            // Add the event to youtube
+            // await handleCreateStream({
+            //     title,
+            //     description:detail,
+            //     scheduledStartTime:time.startDateTime,
+            //     scheduledEndTime:time.endDateTime,
+            //     eventId:payload.data.eventId as number
+            // }).then(() => {
                 actions.setSubmitting(false)
                 actions.resetForm()
                 history.push(`/church/${params.churchId}/dashboard`)
@@ -230,7 +232,7 @@ const Create = () => {
                     subtitle: "",
                     messageType: MessageType.SUCCESS
                 })
-            })
+            // })
         }).catch(err => {
             actions.setSubmitting(false)
             toast({
@@ -255,7 +257,6 @@ const Create = () => {
             reader.readAsDataURL(file)
         }
     }
-
 
     const goBack = () => {
         history.goBack()

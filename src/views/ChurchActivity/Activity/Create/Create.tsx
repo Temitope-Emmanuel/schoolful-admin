@@ -537,7 +537,7 @@ const Create = () => {
             // For setting the bymonthday for the monthly
             scheduleObj.recurrence = `RRULE:FREQ=MONTHLY;WKST=SU;BYMONTHDAY=${startDate.getDate()}`
         }
-        const newActivity: IActivity = {
+        const newActivity: IActivity<string> = {
             title,
             description: detail,
             recuring: repeat,
@@ -552,6 +552,7 @@ const Create = () => {
                 newActivity.recuring = findFreq[findFreq?.length - 1]
             }
         }
+
         activityService.createActivity(newActivity).then(payload => {
             actions.setSubmitting(false)
             toast({

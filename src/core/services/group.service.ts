@@ -1,11 +1,8 @@
-import axios,{AxiosRequestConfig} from "axios"
+import axios from "axios"
 import {IResponse} from "core/models/Response"
 import {IGroup,ICreateGroupMember,IGroupMember} from "core/models/Group"
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Church`
-
-
-const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
 
 export const createGroup = async (newGroup:IGroup):Promise<IResponse<IGroup>> => {
     try{
@@ -24,7 +21,7 @@ export const createGroup = async (newGroup:IGroup):Promise<IResponse<IGroup>> =>
 }
 export const getGroupByChurch = async (churchId:string):Promise<IResponse<IGroup[]>> => {
     try{
-        const url = `${baseUrl}/getSocietyByChurch?churchId=${churchId}`
+        const url = `${baseUrl}/getSocietyByChurch/${churchId}`
         const response = await axios.get(url)
         return response.data
     }catch(err){

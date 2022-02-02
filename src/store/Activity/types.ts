@@ -2,7 +2,7 @@ import {IActivity} from "core/models/Activity"
 import {IEvent} from "core/models/Event"
 
 export interface ActivityState {
-    activities:IActivity[];
+    activities:IActivity<string>[];
     events:IEvent[]
 }
 
@@ -21,19 +21,19 @@ export enum ActionTypes {
 //#region Action creator for Activity
 export interface LoadActivitiesForChurchAction {
     type:ActionTypes.LOAD_ACTIVITIES_FOR_CHURCH,
-    payload:IActivity[]
+    payload:IActivity<string>[]
 }
 export interface UpdateActivityAction {
     type:ActionTypes.UPDATE_ACTIVITY,
-    payload:IActivity
+    payload:IActivity<string>
 }
 export interface CreateActivityAction {
     type:ActionTypes.CREATE_ACTIVITY,
-    payload:IActivity
+    payload:IActivity<string>
 }
 export interface DeleteActivityAction {
     type:ActionTypes.DELETE_ACTIVITY,
-    payload:IActivity
+    payload:IActivity<string>
 }
 //#endregion
 

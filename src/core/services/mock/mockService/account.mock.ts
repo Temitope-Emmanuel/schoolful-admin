@@ -9,13 +9,22 @@ export const accountMock = (mock: MockAdapter) => {
     isSuccessful:true,
     message:'',
     data:{
-        staffID: '123455',
+      staffID: '123455',
+    }
+  })
+  
+  const getStaffUrl = `${baseUrl}/GetStaffByChurch`;
+  mock.onGet(new RegExp(`${getStaffUrl}/*`)).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:{
+      staffID: '123455',
     }
   })
 }
 
 
-// const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
 // export const createChurchMember = async (newChurchMember:IChurchMember):Promise<IResponse<IChurchMember>> => {
 //     try{
 //         const url = `${baseUrl}/createChurchMembers`

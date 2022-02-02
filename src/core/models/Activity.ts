@@ -9,9 +9,9 @@ export interface ISchedule {
     attendee:string[]
 }
 
-type ScheduleType = string | ISchedule | null
+type ScheduleType = string | ISchedule
 
-export interface IActivity<T extends ScheduleType = string> extends IBaseModel  {
+export interface IActivity<T extends ScheduleType> extends IBaseModel  {
     activityID?:number;
     schedule:T;
     recuring:string;

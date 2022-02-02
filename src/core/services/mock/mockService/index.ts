@@ -3,12 +3,14 @@ import {utilityMock} from './utility.mock'
 import {churchMock} from './church.mock'
 import {accountMock} from './account.mock'
 import {userMock} from './user.mock';
-import { activityMock } from "./activity.mock";
+import {activityMock} from "./activity.mock";
+import {groupMock} from "./group.mock";
 
 export const initFunction = (mock:MockAdapter) => {
-    utilityMock(mock);
+    userMock(mock);
     churchMock(mock);
     accountMock(mock);
-    userMock(mock);
+    utilityMock(mock);
     activityMock(mock);
+    groupMock(mock);
 }

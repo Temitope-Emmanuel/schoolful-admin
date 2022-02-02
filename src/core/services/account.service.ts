@@ -34,7 +34,7 @@ export const createStaff = async(newStaff:IChurchMember):Promise<IResponse<IStaf
 
 export const getStaffByChurch = async (churchId:number,cancelToken:CancelTokenSource):Promise<IResponse<IStaff[]>> => {
     try{
-        const url = `${baseUrl}/GetStaffByChurch?churchId=${churchId}`
+        const url = `${baseUrl}/GetStaffByChurch/${churchId}`
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
         })
