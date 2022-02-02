@@ -1,10 +1,12 @@
 import MockAdapter from "axios-mock-adapter/types"
+import { ChurchStatus } from "core/enums/Church"
 import denomination from '../data/denomination.json'
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Church`
 
 export const churchMock = (mock: MockAdapter) => {
-  
+
+  // Get Denomination
   mock.onGet(`${baseUrl}/getDenomination`).reply(200, {
     status:200,
     isSuccessful:true,
@@ -12,37 +14,31 @@ export const churchMock = (mock: MockAdapter) => {
     data:denomination
   })
 
+  // Create church
   mock.onPost(`${baseUrl}/createChurch`).reply(200, {
     status:200,
     isSuccessful:true,
     message:'',
     data:[]
   })
-  
 
+  // Get Church
+  const getChurchUrl = `${baseUrl}/getchurchbyId`;
+  const url = new RegExp(`${getChurchUrl}/*`);
+
+  mock.onGet(url).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:{
+      churchBarner:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80',
+      status:ChurchStatus.ACTIVE,
+      email:'church@gmail.com',
+      country:'Nigeria',
+      priestName:'Priest Name',
+    }
+  })
 }
-
-// export const getChurchById = async (churchId:number,cancelToken?:CancelTokenSource) : Promise<IResponse<IChurch>> => {
-//     try{
-//         const url = `${baseUrl}/getchurchbyId?churchId=${churchId}`
-//         const response = await axios.get(url,{
-//             ...(cancelToken && {cancelToken:cancelToken.token})
-//         })
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
-
-// export const createChurch = async (createChurch:IChurchResponse):Promise<IResponse<IChurchResponse>> => {
-//     try{
-//         const url = `${baseUrl}/createChurch`
-//         const response = await axios.post(url,createChurch)
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
 
 // export const activateChurch = async (churchId:number):Promise<IResponse<IChurchResponse>> => {
 //     try{

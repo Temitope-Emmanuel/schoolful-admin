@@ -13,7 +13,7 @@ const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Church`
 
 export const getChurchById = async (churchId:number,cancelToken?:CancelTokenSource) : Promise<IResponse<IChurch>> => {
     try{
-        const url = `${baseUrl}/getchurchbyId?churchId=${churchId}`
+        const url = `${baseUrl}/getchurchbyId/${churchId}`
         const response = await axios.get(url,{
             ...(cancelToken && {cancelToken:cancelToken.token})
         })

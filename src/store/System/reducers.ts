@@ -1,5 +1,6 @@
 import { SystemState, Action, ActionTypes } from "./types"
 import isEmpty from "lodash/isEmpty"
+import { ChurchStatus } from "core/enums/Church"
 
 const defaultChurchForm = {
     address:"",
@@ -9,7 +10,7 @@ const defaultChurchForm = {
     name:"",
     state:'',
     church:'',
-    status:1,
+    status:ChurchStatus.ACTIVE,
     city:'',
     churchBarner:""
 }
@@ -50,8 +51,7 @@ const initialState: SystemState = {
         country:"",
         state:"",
         city: "",
-        statusString: "",
-        status:1,
+        status:ChurchStatus.ACTIVE,
         churchBarner:""
     },
     form:{

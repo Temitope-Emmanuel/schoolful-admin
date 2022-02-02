@@ -2,13 +2,11 @@ import {IChurchResponse} from "./ChurchResponse"
 import {ChurchStatus} from "core/enums/Church"
 
 export interface IChurch extends IChurchResponse {
-    statusString?:string;
     churchBarner:string;
-    status:number;
+    status:ChurchStatus;
     email?:string;
     country?:string;
     priestName?:string;
-    churchMotto?:string
 }
 
 export interface IUpdateChurchForm extends IChurch {

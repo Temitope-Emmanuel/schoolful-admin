@@ -32,6 +32,7 @@ import {tertiary} from "theme/palette"
 import axios from "axios"
 import { SubscriptionByChurch } from "core/models/subscription"
 import {NoContent} from "components/NoContent"
+import { ChurchStatus } from "core/enums/Church"
 
 
 
@@ -208,7 +209,6 @@ const Dashboard = () => {
         { name: 2020, Members: 89, Events: 48, Finances: 18, newMembers: 90 }
     ]
     
-    
     const defaultSubscription:SubscriptionByChurch = {
         churchId:0,
         duration:0,
@@ -355,7 +355,7 @@ const Dashboard = () => {
                     </Box>
                 </Box>
                 <Box pt={["1", "10"]} px={{sm:"5", md:"8"}} >
-                    {currentChurch.status === 2 &&
+                    {currentChurch.status !== ChurchStatus.ACTIVE &&
                         <Flex direction={{ base: "column-reverse", md: "row" }}
                             my={12}  minHeight="7rem" width={["95%","100%"]}>
                             <Flex p={4} className={`${classes.verificationContainer} ${classes.boxShadownContainer}`}>
@@ -417,9 +417,9 @@ const Dashboard = () => {
                                 </DashboardCard>
                                 <DashboardCard heading="Church Verification Status" color="green.500">
                                     <HStack>
-                                        <DotIcon color={currentChurch.status === 1 ? "#68D391" : "#151C4D"} />
+                                        <DotIcon color={currentChurch.status === ChurchStatus.ACTIVE ? "#68D391" : "#151C4D"} />
                                         <Text color="tertiary" mt="0px !important" fontSize="1rem" >
-                                            {currentChurch.statusString}
+                                            {currentChurch.status}
                                         </Text>
                                     </HStack>
                                 </DashboardCard>

@@ -32,7 +32,7 @@ export const updateActivity = async (arg:Partial<IActivity>):Promise<IResponse<I
 }
 
 export const getChurchActivity = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<IActivity[]>> => {
-    const url = `${baseUrl}/Activity/GetChurchActivity?churchId=${churchId}`
+    const url = `${baseUrl}/Activity/GetChurchActivityByChurchID/${churchId}`
     try{
         const config:AxiosRequestConfig = {headers:{Accept:"text/plain"},cancelToken:cancelToken.token}
         const response = await axios.get(url)
@@ -65,7 +65,7 @@ export const updateEvent = async (arg:Partial<IEvent>):Promise<IResponse<IEvent>
 }
 
 export const getChurchEvent = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<IEvent[]>> => {
-    const url = `${baseUrl}/Activity/GetChurchEvent?churchId=${churchId}`
+    const url = `${baseUrl}/Event/GetChurchEventByChurchID=${churchId}`
     try{
         const config:AxiosRequestConfig = {headers:{Accept:"text/plain"},cancelToken:cancelToken.token}
         const response = await axios.get(url)
