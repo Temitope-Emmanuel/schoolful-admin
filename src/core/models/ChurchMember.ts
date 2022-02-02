@@ -11,9 +11,9 @@ export interface IChurchMember {
     lastname: string;
     othername?: string;
     genderID?: number;
-    countryID?: number;
-    stateID?: number;
-    cityID?: number;
+    country?: string;
+    state?: string;
+    city?: string;
     personTypeID?: number;
     dateOfBirth?: Date | string;
     contact_address?: string;

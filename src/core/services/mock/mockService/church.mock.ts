@@ -5,7 +5,20 @@ const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Church`
 
 export const churchMock = (mock: MockAdapter) => {
   
-  mock.onGet(`${baseUrl}/getDenomination`).reply(200, denomination)
+  mock.onGet(`${baseUrl}/getDenomination`).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:denomination
+  })
+
+  mock.onPost(`${baseUrl}/createChurch`).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:[]
+  })
+  
 
 }
 

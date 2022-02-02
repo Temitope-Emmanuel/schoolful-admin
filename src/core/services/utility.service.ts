@@ -27,7 +27,7 @@ export const getGroupPosition = async ():Promise<IResponse<ILeaderPosition[]>> =
     }
 }
 
-export const getCity = async (stateId:number):Promise<IResponse<ICity[]>> => {
+export const getCity = async (stateId:string):Promise<IResponse<string[]>> => {
     try{
         const url = `${baseUrl}/city/${stateId}`
         const response = await axios.get(url)

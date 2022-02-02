@@ -4,12 +4,13 @@ import isEmpty from "lodash/isEmpty"
 const defaultChurchForm = {
     address:"",
     cityID:0,
-    countryID:0,
+    country:'',
     denominationId:0,
     name:"",
-    stateID:0,
-    churchID:0,
+    state:'',
+    church:'',
     status:1,
+    city:'',
     churchBarner:""
 }
 
@@ -20,7 +21,7 @@ const defaultUserForm = {
     lastname:"",
     password:"",
     phoneNumber:null,
-    username:""
+    username:"",
 }
 
 const initialState: SystemState = {
@@ -46,10 +47,9 @@ const initialState: SystemState = {
         address: "",
         churchLogo:"",
         denominationId: 0,
-        countryID: 0,
         country:"",
-        stateID:0,
-        cityID: 0,
+        state:"",
+        city: "",
         statusString: "",
         status:1,
         churchBarner:""

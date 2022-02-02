@@ -91,14 +91,14 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
     const [country, setCountry] = React.useState<ICountry[]>([])
     const getStateApi = (countryID: number) => {
         getState().then(statePayload => {
-            const foundState = statePayload.data.find(item => item.stateID === currentChurch.stateID)
+            const foundState = statePayload.data.find(item => item.state === currentChurch.state)
             if (foundState) {
-                setState([foundState as IState, ...statePayload.data.filter(item => item.stateID !== currentChurch.stateID)])
+                setState([foundState as IState, ...statePayload.data.filter(item => item.state !== currentChurch.state)])
             } else {
-                setState([...statePayload.data.filter(item => item.stateID !== currentChurch.stateID)])
+                setState([...statePayload.data.filter(item => item.state !== currentChurch.state)])
             }
         }).then(() => {
-            getCityAPI(currentChurch.stateID)
+            getCityAPI(currentChurch.state)
         }).catch(err => {
             toast({
                 title: "Unable to Get State Detail",
@@ -108,15 +108,15 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
         })
     }
 
-    const getCityAPI = (stateID: number) => {
-        getCity(stateID).then(cityPayload => {
+    const getCityAPI = (state: string) => {
+        getCity(state).then(cityPayload => {
             if (cityPayload.data.length > 0) {
-                const foundCity = cityPayload.data.find(item => item.cityID === currentChurch.cityID)
-                if (foundCity) {
-                    setCity([foundCity as ICity, ...cityPayload.data.filter(item => item.cityID !== currentChurch.cityID)])
-                } else {
-                    setCity([...cityPayload.data.filter(item => item.cityID !== currentChurch.cityID)])
-                }
+                const foundCity = cityPayload.data.find(item => item === currentChurch.city)
+                // if (foundCity) {
+                //     setCity([foundCity as ICity, ...cityPayload.data.filter(item => item.cityID !== currentChurch.cityID)])
+                // } else {
+                //     setCity([...cityPayload.data.filter(item => item.cityID !== currentChurch.cityID)])
+                // }
             } else {
                 setCity([])
             }
@@ -226,8 +226,8 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
         history.push(`/church/${params.churchId}/dashboard`)
     }
     const {
-        address, denominationId, stateName, priestName,
-        churchID, countryID, stateID, cityID, name: churchName
+        address, denominationId, priestName,
+        churchID, name: churchName
     } = currentChurch
 
     const initialValues: IUpdateChurchForm = {
@@ -236,24 +236,22 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
         denominationId: denominationId,
         email: currentUser.email as string,
         landmark: "",
-        stateName,
+        state: currentChurch.state,
         churchMotto: "",
         name: churchName,
-        country: String(countryID),
+        country: currentChurch.country,
         priestName,
         churchID,
-        countryID,
-        stateID,
-        cityID
+        city:currentChurch.city
     }
     const handleSubmit = (values: IUpdateChurchForm, { ...actions }: any) => {
         actions.setSubmitting(true)
         const newChurch = {
             name: values.name,
             churchID: currentChurch.churchID,
-            stateID: Number(values.stateID),
-            cityID: Number(values.cityID),
-            countryID: Number(values.countryID),
+            state: values.state,
+            city: values.city,
+            country: values.country,
             address: values.address,
             denominationId: Number(values.denominationId),
             priestName: values.priestName,
@@ -307,7 +305,7 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
                             </Select>
                             <Select name="countryID" placeholder=""
                                 label="Select Country" mr="auto"
-                                val={Number(formikProps.values.countryID)} func={getStateApi}
+                                val={formikProps.values.country} func={getStateApi}
                                 className={classes.selectContainer} >
                                 {country.map((item, idx) => (
                                     <option key={item.countryID} value={item.countryID} >
@@ -317,10 +315,10 @@ const VerificationForm: React.FC<IProps> = ({ align, handleSuccess, handleClose,
                             </Select>
                             <Select name="stateID" placeholder=""
                                 label="Select State" mr="0"
-                                val={Number(formikProps.values.stateID)} func={getCityAPI}
+                                val={formikProps.values.state} func={getCityAPI}
                                 className={classes.selectContainer} >
                                 {state.map((item, idx) => (
-                                    <option key={item.stateID} value={item.stateID} >
+                                    <option key={item.state} value={item.state} >
                                         {item.name}
                                     </option>
                                 ))}

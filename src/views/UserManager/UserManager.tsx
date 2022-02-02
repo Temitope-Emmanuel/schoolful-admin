@@ -201,9 +201,9 @@ const AddStaff: React.FC<IAddStaff> = ({ updateStaff, closeDialog }) => {
             email,
             firstname,
             lastname,
-            countryID:church.countryID,
-            stateID:church.stateID,
-            cityID:church.cityID,
+            country:church.country,
+            state:church.state,
+            city:church.city,
             personTypeID: 3,
             enteredBy: "ChurchAdmin",
             role,
@@ -479,9 +479,9 @@ const ChangeStaff: React.FC<IChangeStaffProps> = ({ updateStaff, closeDialog,...
             email,
             firstname,
             lastname,
-            countryID: church.countryID,
-            stateID: church.stateID,
-            cityID: church.cityID,
+            country: church.country,
+            state: church.state,
+            city: church.city,
             personTypeID: 3,
             enteredBy: "ChurchAdmin",
             churchId: Number(church.churchID),
@@ -489,8 +489,6 @@ const ChangeStaff: React.FC<IChangeStaffProps> = ({ updateStaff, closeDialog,...
             ...(image.base64 && {picture_url:image.base64}),
             societies: [],
             societyPosition: [],
-            // claim:"",
-            // role:"newer"
         }
         const newRole = churchRoles.find(item => item.name === values.role)
         // Change The Detail on the Staff data

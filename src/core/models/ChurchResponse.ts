@@ -12,9 +12,6 @@ export interface IChurchResponse {
     deanaryId?:number;
     provinceId?:number;
     regionId?:number;
-    stateName?:string;
-    cityName?:string;
-    countryID:number;
-    stateID:number;
-    cityID:number;
+    state:string;
+    city:string;
 }

@@ -1,10 +1,26 @@
 import MockAdapter from "axios-mock-adapter/types"
 import states from '../data/states.json'
+import cities from '../data/cities.json'
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Utility`
 export const utilityMock = (mock: MockAdapter) => {
   
-  mock.onGet(`${baseUrl}/getStates`).reply(200, states)
+  mock.onGet(`${baseUrl}/getStates`).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:states
+  })
+  
+  const getStatesUri = `${baseUrl}/city`;
+  const url = new RegExp(`${getStatesUri}/*`);
+
+  mock.onGet(url).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:cities
+  })
 
 }
 

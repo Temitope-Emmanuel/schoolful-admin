@@ -89,7 +89,7 @@ const useStyles = makeStyles(theme => createStyles({
 
 interface IState {
     state: IStateResponse[]
-    city: ICity[]
+    city: string[]
 }
 
 const phoneRegExp = /^[0]\d{10}$/
@@ -194,9 +194,8 @@ const SignupAdmin = () => {
     const [churchForm, setChurchForm] = React.useState({
         submitted: false,
         churchID: 0,
-        stateID: 0,
-        countryID: 0,
-        cityID: 0
+        state: '',
+        city: ''
     })
     const [userForm, setUserForm] = React.useState<IChurchMemberForm>(
         JSON.parse(localStorage.getItem(userFormKey) || JSON.stringify(defaultUserForm)))
@@ -226,7 +225,7 @@ const SignupAdmin = () => {
                 })
             }
         }
-        const getDenomination = async (toast: ToastFunc) => {
+        const getDenomination = async () => {
             try {
                 return await churchService.getChurchDenomination().then(data => {
                     setDenomination(data.data)
@@ -239,7 +238,7 @@ const SignupAdmin = () => {
             }
         }
         getState()
-        getDenomination(toast)
+        getDenomination()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     React.useEffect(() => {
@@ -294,7 +293,7 @@ const SignupAdmin = () => {
     // for creating a new church member
     const createNewUser = async (actions: any, userForm: IChurchMemberForm, churchValue: typeof churchForm) => {
         const { email, firstname, lastname, genderID, password, phoneNumber } = userForm
-        const { countryID, stateID, cityID, churchID } = churchValue
+        const { state, city, churchID } = churchValue
         const newUser: IChurchMember = {
             username: String(phoneNumber),
             password,
@@ -303,13 +302,11 @@ const SignupAdmin = () => {
             firstname,
             lastname,
             genderID:(genderID as any).value,
-            countryID,
-            stateID,
-            cityID,
+            state,
+            city,
             personTypeID: 3,
             enteredBy: "ChurchAdmin",
             churchId: churchID,
-            isDataCapture: false,
             societies: [],
             societyPosition: []
         }
@@ -360,9 +357,8 @@ const SignupAdmin = () => {
         actions.setSubmitting(true)
         const newChurch: IChurchResponse = {
             name: values.name,
-            stateID: Number(values.state),
-            cityID: Number(values.city),
-            countryID: Number(values.country),
+            state: values.state,
+            city: values.city,
             address: values.address,
             denominationId: Number(values.denominationId),
             churchMotto: values.churchMotto,
@@ -388,10 +384,9 @@ const SignupAdmin = () => {
             actions.resetForm()
             setChurchForm({
                 submitted: true,
-                countryID: payload.data.countryID,
                 churchID: payload.data.churchID!,
-                stateID: payload.data.stateID,
-                cityID: payload.data.cityID,
+                state: payload.data.state,
+                city: payload.data.city,
             })
             // For creating a new church Staff
             createNewUser(actions, userForm, { ...newChurch, churchID: (payload.data.churchID as number), submitted: true })
@@ -424,7 +419,6 @@ const SignupAdmin = () => {
     }
 
     const genderOptions = [{option:"Male",value:1},{option:"Female",value:2}]
-
     return (
         <>
             <MinorLoginLayout showLogo={true}>
@@ -487,9 +481,9 @@ const SignupAdmin = () => {
                                     onSubmit={submitNewChurchForm}
                                 >
                                     {(formikProps: FormikProps<IChurchForm>) => {
-                                        const getCity = async (cityId: number) => {
+                                        const getCity = async (cityName: string) => {
                                             try {
-                                                utilityService.getCity(cityId).then(data => {
+                                                utilityService.getCity(cityName).then(data => {
                                                     setLocation({ ...location, city: data.data })
                                                 })
                                             } catch (err) {
@@ -514,26 +508,19 @@ const SignupAdmin = () => {
                                                                     ))}
                                                                 </Select>
                                                                 <TextInput name="address" placeholder="Church Address" />
-                                                                {/* <Select name="country" placeholder="Select Your Country"
-                                                                    val={Number(formikProps.values.country)} func={getState} >
-                                                                    {location.country.map((item, idx) => (
-                                                                        <option key={idx} value={item.countryID}>
-                                                                            {item.name}
-                                                                        </option>
-                                                                    ))}
-                                                                </Select> */}
                                                                 <Select name="state" placeholder="Select State"
-                                                                    val={Number(formikProps.values.state)} func={getCity}>
+                                                                    val={formikProps.values.state} func={getCity}
+                                                                >
                                                                     {location.state.map((item, idx) => (
-                                                                        <option key={idx} value={item.stateID} >
+                                                                        <option key={idx} value={item.name} >
                                                                             {item.name}
                                                                         </option>
                                                                     ))}
                                                                 </Select>
                                                                 <Select name="city" placeholder="Select City">
                                                                     {location.city.map((item, idx) => (
-                                                                        <option key={idx} value={item.cityID} >
-                                                                            {item.name}
+                                                                        <option key={idx} value={item} >
+                                                                            {item}
                                                                         </option>
                                                                     ))}
                                                                 </Select>

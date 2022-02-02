@@ -3,14 +3,14 @@ import { IDataCaptureSetting } from "./DataCaptureSetting";
 import {IPerson} from "./Person"
 
 export interface IState {
-    stateID:number;
-    name:string;
-    countryID:number;
+    state:string;
     person:IPerson[];
     city:ICity[];
     church:IChurch;
-    country:ICountry;
+    country:string;
     dataCaptureSetting:IDataCaptureSetting;
+    name: string;
+    capital: string;
 }
 
 export interface ICity {
