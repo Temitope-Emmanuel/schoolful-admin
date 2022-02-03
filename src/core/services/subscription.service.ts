@@ -19,7 +19,7 @@ export const getSubscription = async(cancelToken:CancelTokenSource):Promise<IRes
 }
 export const getSubscriptionById = async(subscriptionId:string,cancelToken?:CancelTokenSource):Promise<IResponse<ISubscription[]>> => {
     try{
-        const url = `${baseUrl}/getSubscriptionById?Id${subscriptionId}`
+        const url = `${baseUrl}/getSubscriptionByID/${subscriptionId}`
         const response = await axios.get(url,{
             ...(cancelToken && {cancelToken:cancelToken.token})
         })
@@ -30,7 +30,7 @@ export const getSubscriptionById = async(subscriptionId:string,cancelToken?:Canc
 }
 export const getSubscriptionByChurchId = async(churchId:string,cancelToken?:CancelTokenSource):Promise<IResponse<SubscriptionByChurch[]>> => {
     try{
-        const url = `${baseUrl}/getSubscriptionsByChurchId?churchId=${churchId}`
+        const url = `${baseUrl}/getSubscriptionsByChurchID/${churchId}`
         const response = await axios.get(url,{
             ...(cancelToken && {cancelToken:cancelToken.token})
         })

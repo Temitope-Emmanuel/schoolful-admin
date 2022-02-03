@@ -230,14 +230,11 @@ const Subscription = () => {
     category: "",
     cost: 0,
     createdAt: new Date(),
-    createdBy: new Date(),
-    features: "",
-    lifetimeDuration: 0,
     name: "",
-    status: 0,
+    status: "Deactivated",
     updatedAt: new Date(),
-    updatedBy: new Date()
   }
+  
   const defaultSubscriptionPlan:SubscriptionByChurch = {
     churchId:0,
     duration:0,
@@ -247,7 +244,7 @@ const Subscription = () => {
     startDate:new Date(),
     subscriptionID:0,
     timeRemaining:0,
-    // subscriptionPlan:[]    
+    subscriptionPlanID:0,  
 }
 
   const classes = useStyles()
@@ -326,16 +323,25 @@ const Subscription = () => {
     setYear(!year)
   }
   const cancelToken = axios.CancelToken.source()
-  const getChurchSubscriptionDetail = () => {
+  const getChurchSubscriptionDetail = (subscriptionPlan: ISubscription[]) => {
     getSubscriptionByChurchId(params.churchId,cancelToken).then((payload) => {
-        setChurchSubscriptionDetail(payload.data)
+      const updatedItem = payload.data.map(item => {
+        const newItem = {
+          ...item,
+          subscriptionPlan:subscriptionPlan.find(plan => plan.subscriptionPlanID === item.subscriptionPlanID)
+        }
+        return(newItem)
+      })  
+      console.log('this is the updatedItem',{updatedItem})
+      setChurchSubscriptionDetail(updatedItem)
     }).catch(err => {})
   }
   React.useEffect(() => {
     dispatch(setPageTitle("Subscription"))
-    const subscriptionApi = () => {
-      getSubscription(cancelToken).then(payload => {
+    const getSubscriptionPlan = () => {
+      return getSubscription(cancelToken).then(payload => {
         setSubscriptionBundle(payload.data)
+        return payload.data
       }).catch(err => {
         if (!axios.isCancel(err)) {
           toast({
@@ -347,11 +353,16 @@ const Subscription = () => {
       })
     }
     
+    getSubscriptionPlan().then((subscriptionPlan) => {
+      if(subscriptionPlan){
+        getChurchSubscriptionDetail(subscriptionPlan)
+      }
+    })
 
-    getChurchSubscriptionDetail()
-    subscriptionApi()  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  console.log({churchSubscriptionDetail})
 
   const handlePaymentAndSubmission = (refCode: any) => {
     verifySubTransaction(Payment.PAYSTACK, refCode.reference,selectedSubscription!.subscriptionPlanID as number).then(payload => {
@@ -361,7 +372,8 @@ const Subscription = () => {
         messageType: MessageType.SUCCESS
       })
       handlePaymentClose()
-      getChurchSubscriptionDetail()
+      // Uncomment to refresh
+      // getChurchSubscriptionDetail()
       setSelectedSubscription({...defaultSubscription})
     }).catch(err => {
       toast({

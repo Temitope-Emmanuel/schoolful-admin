@@ -1,0 +1,167 @@
+[
+    {
+        "subscriptionID": 1,
+        "churchID": 1,
+        "subscriptionPlanID":1,
+        "duration": 43800,
+        "isActive": false,
+        "status": true,
+        "expirationDate": "12/19/2021",
+        "paymentID": "5d7015c1-3417-4058-9e88-df8897f324e3",
+        "startDate": "12/30/2020"
+    },
+    {
+        "subscriptionID": 2,
+        "churchID": 1,
+        "subscriptionPlanID":2,
+        "duration": 43800,
+        "isActive": true,
+        "status": false,
+        "expirationDate": "12/23/2020",
+        "paymentID": "6e72d976-679b-4474-8ca2-e1d940583712",
+        "startDate": "12/24/2021"
+    },
+    {
+        "subscriptionID": 3,
+        "churchID": 1,
+        "subscriptionPlanID":3,
+        "duration": 43800,
+        "isActive": true,
+        "status": true,
+        "expirationDate": "8/24/2021",
+        "paymentID": "2afec08d-e6b2-4fc8-a245-f0b2b3dc2ac9",
+        "startDate": "5/29/2021"
+    },
+    {
+        "subscriptionID": 4,
+        "churchID": 1,
+        "subscriptionPlanID":4,
+        "duration": 43800,
+        "isActive": true,
+        "status": true,
+        "expirationDate": "10/4/2021",
+        "paymentID": "8b243cf3-909b-4d29-8df4-ea7ef66ae9a7",
+        "startDate": "4/26/2021"
+    },
+    {
+        "subscriptionID": 5,
+        "churchID": 1,
+        "subscriptionPlanID":4,
+        "duration": 43800,
+        "isActive": true,
+        "status": false,
+        "expirationDate": "4/18/2021",
+        "paymentID": "1876e04d-3170-4999-bcb5-08e02d1a9f13",
+        "startDate": "1/30/2021"
+    },
+    {
+        "subscriptionID": 6,
+        "churchID": 1,
+        "subscriptionPlanID":2,
+        "duration": 43800,
+        "isActive": true,
+        "status": true,
+        "expirationDate": "12/23/2021",
+        "paymentID": "448e46a5-bdaa-4b79-bd6e-818dee72a05c",
+        "startDate": "1/24/2021"
+    },
+    {
+        "subscriptionID": 7,
+        "churchID": 1,
+        "subscriptionPlanID":1,
+        "duration": 43800,
+        "isActive": false,
+        "status": false,
+        "expirationDate": "10/17/2021",
+        "paymentID": "e5f36ea9-9ece-4f3d-b9a8-92c844cd6bc0",
+        "startDate": "2/24/2021"
+    },
+    {
+        "subscriptionID": 8,
+        "churchID": 1,
+        "subscriptionPlanID":4,
+        "duration": 43800,
+        "isActive": false,
+        "status": true,
+        "expirationDate": "7/22/2021",
+        "paymentID": "7b4f261e-2d30-492a-908c-ad02c14fbe76",
+        "startDate": "2/19/2021"
+    },
+    {
+        "subscriptionID": 9,
+        "churchID": 1,
+        "subscriptionPlanID":3,
+        "duration": 43800,
+        "isActive": false,
+        "status": true,
+        "expirationDate": "7/1/2021",
+        "paymentID": "6e2062f9-f963-42b2-8547-71b56fc227dc",
+        "startDate": "9/13/2021"
+    },
+    {
+        "subscriptionID": 10,
+        "churchID": 1,
+        "subscriptionPlanID":1,
+        "duration": 43800,
+        "isActive": true,
+        "status": true,
+        "expirationDate": "5/14/2021",
+        "paymentID": "be92e403-ba60-4210-937d-ed31c177cfa4",
+        "startDate": "10/4/2021"
+    },
+    {
+        "subscriptionID": 11,
+        "churchID": 1,
+        "subscriptionPlanID":3,
+        "duration": 43800,
+        "isActive": true,
+        "status": false,
+        "expirationDate": "11/8/2021",
+        "paymentID": "073a8a9d-7d1e-46f2-adc8-ddae5564932e",
+        "startDate": "2/23/2021"
+    },
+    {
+        "subscriptionID": 12,
+        "churchID": 1,
+        "subscriptionPlanID":3,
+        "duration": 43800,
+        "isActive": true,
+        "status": true,
+        "expirationDate": "6/15/2021",
+        "paymentID": "21d06b0b-a9de-4584-b526-13d981c35899",
+        "startDate": "11/27/2020"
+    },
+    {
+        "subscriptionID": 13,
+        "churchID": 1,
+        "subscriptionPlanID":2,
+        "duration": 43800,
+        "isActive": true,
+        "status": true,
+        "expirationDate": "9/3/2021",
+        "paymentID": "65d1acb8-08a1-4089-ae0a-fbfab476b158",
+        "startDate": "11/8/2021"
+    },
+    {
+        "subscriptionID": 14,
+        "churchID": 1,
+        "subscriptionPlanID":4,
+        "duration": 43800,
+        "isActive": false,
+        "status": true,
+        "expirationDate": "7/19/2021",
+        "paymentID": "196f5472-556d-4ffd-9c27-3bc774c30072",
+        "startDate": "11/11/2020"
+    },
+    {
+        "subscriptionID": 15,
+        "churchID": 1,
+        "subscriptionPlanID":2,
+        "duration": 43800,
+        "isActive": false,
+        "status": false,
+        "expirationDate": "7/14/2021",
+        "paymentID": "3d49e677-4001-474e-a067-2df03ebc6d5f",
+        "startDate": "10/14/2021"
+    }
+]

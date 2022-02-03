@@ -10,12 +10,7 @@ export const generateReference = async (
   cancelToken: CancelTokenSource
 ): Promise<IResponse<PaymentResponse>> => {
   try {
-    const society = `&societyId=${arg.societyId}`;
-    const url = `${baseUrl}/generateReference?paymentGatewayType=${
-      arg.paymentGatewayType
-    }&organizationId=${arg.organizationId}&amount=${arg.amount}&purpose=${
-      arg.purpose
-    }&organizationType=${arg.organizationType}${arg.societyId ? society : ""}`;
+    const url = `${baseUrl}/generateReference`;
     const response = await axios.get(url, {
       cancelToken: cancelToken.token,
     });

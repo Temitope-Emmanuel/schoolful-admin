@@ -215,9 +215,9 @@ const Dashboard = () => {
         expirationDate:new Date(),
         isActive:false,
         paymentId:null,
+        subscriptionPlanID:0,
         startDate:new Date(),
         subscriptionID:0,
-        timeRemaining:0 
     }
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -257,7 +257,6 @@ const Dashboard = () => {
         setOpen(!open)
     }
 
-    
     React.useEffect(() => {
         if(churchSubscriptionDetail[0]){
             const currentSub = churchSubscriptionDetail[0]

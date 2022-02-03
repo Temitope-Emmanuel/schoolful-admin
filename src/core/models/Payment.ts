@@ -7,7 +7,6 @@ export interface Payment {
     organizationType:"church" | "charity";
     organizationId:number;
     purpose:Purpose;
-    societyId?:string
 }
 
 export interface PaymentResponse {

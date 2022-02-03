@@ -2,14 +2,10 @@ export interface ISubscription {
     subscriptionPlanID?:number;
     name:string;
     category:string;
-    features:string;
     cost:number;
     createdAt:Date;
     updatedAt:Date;
-    createdBy:Date;
-    updatedBy:Date;
-    status:number;
-    lifetimeDuration:0;
+    status:'Active' | 'Deactivated';
 }
 export interface SubscriptionByChurch {
     churchId:number;
@@ -19,6 +15,7 @@ export interface SubscriptionByChurch {
     paymentId:null | string;
     startDate:Date;
     subscriptionID:number;
+    subscriptionPlanID:number;
     timeRemaining?:number;
     subscriptionPlan?:ISubscription
 }

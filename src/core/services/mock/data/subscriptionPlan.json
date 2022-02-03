@@ -1,0 +1,38 @@
+[
+    {
+        "subscriptionPlanID": 1,
+        "name": "libero",
+        "category": "Quarterly",
+        "cost": 1327,
+        "createdAt": "2/27/2021",
+        "updatedAt": "2/27/2021",
+        "status": "Active"
+    },
+    {
+        "subscriptionPlanID": 2,
+        "name": "ullamcorper",
+        "category": "Monthly",
+        "cost": 2268,
+        "createdAt": "12/28/2021",
+        "updatedAt": "12/28/2021",
+        "status": "Active"
+    },
+    {
+        "subscriptionPlanID": 3,
+        "name": "maecenas",
+        "category": "BiWeekly",
+        "cost": 1692,
+        "createdAt": "9/2/2021",
+        "updatedAt": "9/2/2021",
+        "status": "Deactivated"
+    },
+    {
+        "subscriptionPlanID": 4,
+        "name": "pulvinar",
+        "category": "Annually",
+        "cost": 2134,
+        "createdAt": "2/15/2021",
+        "updatedAt": "2/15/2021",
+        "status": "Deactivated"
+    }
+]
