@@ -1,6 +1,7 @@
 import MockAdapter from "axios-mock-adapter/types"
 import states from '../data/states.json'
 import cities from '../data/cities.json'
+import positions from '../data/groupPosition.json'
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Utility`
 export const utilityMock = (mock: MockAdapter) => {
@@ -20,6 +21,13 @@ export const utilityMock = (mock: MockAdapter) => {
     isSuccessful:true,
     message:'',
     data:cities
+  })
+
+  mock.onGet(`${baseUrl}/getAllPosition`).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:positions
   })
 
 }

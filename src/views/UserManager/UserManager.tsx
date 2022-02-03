@@ -448,8 +448,8 @@ const ChangeStaff: React.FC<IChangeStaffProps> = ({ updateStaff, closeDialog,...
 
     const removeFromSelectedClaims = removeFromSelected(selectedStaffClaims, setSelectedStaffClaims, "id")
 
-    const { email, fullname, phoneNumber,role } = currentStaff
-    const name = fullname.split(" ")
+    const { email, fullName, phoneNumber,role } = currentStaff
+    const name = fullName.split(" ")
     const initialValues = {
         email,
         phoneNumber: phoneNumber || null,
@@ -705,12 +705,12 @@ const ChangeStaff: React.FC<IChangeStaffProps> = ({ updateStaff, closeDialog,...
 }
 
 type StaffKey = keyof IStaff
-const filterOptions:StaffKey[] = ["email","fullname","phoneNumber","role"]
+const filterOptions:StaffKey[] = ["email","fullName","phoneNumber","role"]
 
 const UserManager = () => {
     const defaultStaff: IStaff = {
         churchId: 0,
-        fullname: "",
+        fullName: "",
         email: "",
         role: '[""]',
         claim: ""
@@ -850,7 +850,7 @@ const UserManager = () => {
                             <TableRow key={item.staffID || idx} isLoaded={Boolean(item.staffID)}
                              fields={[
                                 <Checkbox/>,<Avatar name="Dan Abrahmov" size={!notBaseBreakpoint ? "sm" : "md"} src="https://bit.ly/dan-abramov" />,
-                                item.fullname, item.email, item.phoneNumber,
+                                item.fullName, item.email, item.phoneNumber,
                                 <HStack spacing={3}>
                                     <IconButton aria-label="edit button" icon={<BiEdit/>} disabled={submitting}
                                      onClick={showPrivileges(item)} />

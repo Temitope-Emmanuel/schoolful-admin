@@ -23,7 +23,7 @@ import {Formik,FormikProps} from "formik"
 import {useSelector,useDispatch} from "react-redux"
 import {setPageTitle} from "store/System/actions"
 import {getGroupPosition} from "core/services/utility.service"
-import {ILeaderPosition} from "core/models/Group"
+import {IPosition} from "core/models/Group"
 import {MessageType} from "core/enums/MessageType"
 import useParams from "utils/params"
 import useToast from "utils/Toast"
@@ -115,7 +115,7 @@ const AddUserToGroup = ({close}:any) => {
     const params = useParams()
     const classes = useStyles(0)
     const toast = useToast()
-    const [position,setPosition] = React.useState<ILeaderPosition[]>()
+    const [position,setPosition] = React.useState<IPosition[]>()
     const [member,setMember] = React.useState<IStaff[]>()
 
     React.useEffect(() => {
@@ -131,11 +131,9 @@ const AddUserToGroup = ({close}:any) => {
                 })
             })
         }
-        const apimemberCall = async () => {
+        const apiMemberCall = async () => {
             await getStaffByChurch(Number(params.churchId),cancelToken).then(payload => {
-                const churchStaff = payload.data.filter(item => !(currentGroup.groupMember?.find(member => member.fullname.split(" ").reverse().join(" ").trim() === item.fullname.trim())))
-                setMember(churchStaff)
-                console.log(churchStaff)
+                setMember(payload.data)
             }).catch(err => {
                 toast({
                     title:"Unable to load Church member",
@@ -145,7 +143,7 @@ const AddUserToGroup = ({close}:any) => {
             })
         }
         apiPositionCall()
-        apimemberCall()
+        apiMemberCall()
         return () => {
             cancelToken.cancel()
         }
@@ -155,7 +153,7 @@ const AddUserToGroup = ({close}:any) => {
     const handleSubmit = (values: IAddUser,actions: any) => {
         actions.setSubmitting(true)
         const newGroupMember = {
-            societies:[currentGroup.societyID!],
+            societies:[currentGroup.groupID!],
             churchId:Number(params.churchId),
             societyPosition:[values.position],
             personId:values.member
@@ -167,11 +165,11 @@ const AddUserToGroup = ({close}:any) => {
     }
     const validationSchema = Yup.object({
         // eslint-disable-next-line no-mixed-operators
-        position:Yup.number().oneOf((position && position.map((item,idx) => item.leadersPositionID) as number[] || []),
+        position:Yup.number().oneOf((position && position.map((item,idx) => item.positionID) as number[] || []),
         `Item must be one of the following ${position?.map((item,idx) => item.position)} `).required(),
         // eslint-disable-next-line no-mixed-operators
-        member:Yup.string().oneOf((member && member.map((item,idx) => item.staffID)|| []),
-        `Item must be one of the following ${member?.map((item,idx) => item.fullname)} `).required()
+        // member:Yup.string().oneOf((member && member.map((item,idx) => item.staffID)|| []),
+        // `Item must be one of the following ${member?.map((item,idx) => item.fullName)} `).required()
     })
     const initialValues = {
         member: "",
@@ -188,36 +186,39 @@ const AddUserToGroup = ({close}:any) => {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
-                    {(formikProps: FormikProps<IAddUser>) => (
-                        <>
-                            <ModalBody color="#F3F3F3" display="flex"
-                                flexDirection="column" alignItems="center">
-                                    <Select name="position" label="Choose Member Position"
-                                        placeholder="Select Group Position" className={classes.select}>
-                                        {position?.map((item,idx) => (
-                                            <option value={item.leadersPositionID} key={idx} >
-                                                {item.position}
-                                            </option>
-                                        ))}
-                                    </Select>
-                                    <Select name="member" label="Add Member"
-                                        placeholder="Choose Member to Add" className={classes.select}>
-                                        {member?.map((item,idx) => (
-                                            <option value={item.staffID} key={idx} >
-                                                {item.fullname}
-                                            </option>
-                                        ))}
-                                    </Select>
-                            </ModalBody>
-                            <ModalFooter display="flex" justifyContent="center">
-                                <Button disabled={formikProps.isSubmitting || !formikProps.dirty || !formikProps.isValid}
-                                 width="45%" onClick={(formikProps.handleSubmit as any)} fontFamily="MulishRegular" >
-                                   {formikProps.isSubmitting ? "Creating a new Group Member" 
-                                   : formikProps.isValid ?  "Add" : "Please fill Form"}
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
+                    {(formikProps: FormikProps<IAddUser>) => {
+                        console.log(formikProps.values)
+                        return(
+                            <>
+                                <ModalBody color="#F3F3F3" display="flex"
+                                    flexDirection="column" alignItems="center">
+                                        <Select name="position" label="Choose Member Position"
+                                            placeholder="Select Group Position" className={classes.select}>
+                                            {position?.map((item,idx) => (
+                                                <option value={item.positionID} key={idx} >
+                                                    {item.position}
+                                                </option>
+                                            ))}
+                                        </Select>
+                                        <Select name="member" label="Add Member"
+                                            placeholder="Choose Member to Add" className={classes.select}>
+                                            {member?.map((item,idx) => (
+                                                <option value={item.staffID} key={idx} >
+                                                    {item.fullName}
+                                                </option>
+                                            ))}
+                                        </Select>
+                                </ModalBody>
+                                <ModalFooter display="flex" justifyContent="center">
+                                    <Button disabled={formikProps.isSubmitting || !formikProps.dirty || !formikProps.isValid}
+                                     width="45%" onClick={(formikProps.handleSubmit as any)} fontFamily="MulishRegular" >
+                                       {formikProps.isSubmitting ? "Creating a new Group Member" 
+                                       : formikProps.isValid ?  "Add" : "Please fill Form"}
+                                    </Button>
+                                </ModalFooter>
+                            </>
+                        )
+                    }}
                 </Formik>
         </ModalContent>
 
@@ -238,13 +239,13 @@ const Group = (props:any) => {
         dispatch(loadGroupForChurch(params.churchId,toast))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
-    const setCurrentGroupMember = (societyId:number) => {
-        dispatch(loadGroupMemberForCurrentGroup(societyId,toast))
+    const setCurrentGroupMember = (groupID:number) => {
+        dispatch(loadGroupMemberForCurrentGroup(groupID,toast))
     }
     React.useEffect(() => {
-        if(!currentGroup.name && groups.length && groups[0].societyID){
-            dispatch(setCurrentGroup(groups[0].societyID))
-            setCurrentGroupMember((groups[0].societyID as number))
+        if(!currentGroup.name && groups.length && groups[0].groupID){
+            dispatch(setCurrentGroup(groups[0].groupID))
+            setCurrentGroupMember((groups[0].groupID as number))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[groups])
@@ -259,8 +260,8 @@ const Group = (props:any) => {
     const handleUpdate = () => {
         dispatch(updateGroup)
     }
-    const handleDelete = (societyID:number) => () => {
-        dispatch(deleteGroup(societyID,toast))
+    const handleDelete = (groupID:number) => () => {
+        dispatch(deleteGroup(groupID,toast))
     }
     
 
@@ -283,10 +284,10 @@ const Group = (props:any) => {
                         {groups.length > 0 ? 
                         groups.map((item,idx) => (
                             <OutlineCard cursor="pointer" key={idx}
-                                onClick={changeActive(item.societyID as number)}
-                                active={currentGroup.societyID === item.societyID} >
-                                <GroupCard member={item.memberCount} imgSrc={item.imageUrl || "https://bit.ly/ryan-florence"}
-                                    active={!item.isDeleted} name={item.name} width="95%"
+                                onClick={changeActive(item.groupID as number)}
+                                active={currentGroup.groupID === item.groupID} >
+                                <GroupCard member={item.groupMember?.length ?? 0} imgSrc={item.imageUrl || "https://bit.ly/ryan-florence"}
+                                    active={true} name={item.name} width="95%"
                                 />
                             </OutlineCard>
                         )) : <Text>No Group Available</Text>}
@@ -320,7 +321,7 @@ const Group = (props:any) => {
                                         <Icon as={FiEdit2}/>
                                         <Text>Edit</Text>
                                     </MenuItem>
-                                    <MenuItem onClick={handleDelete((currentGroup.societyID as number))}>
+                                    <MenuItem onClick={handleDelete((currentGroup.groupID as number))}>
                                         <Icon as={TiCancel}/>
                                         <Text>Delete</Text>
                                     </MenuItem>
@@ -344,12 +345,12 @@ const Group = (props:any) => {
                             Group Members
                         </Heading>
                         <Stack overflowY="auto"
-                            maxHeight={["30vh", "30vh", "75vh", "auto"]}
+                            maxHeight={["30vh", "40vh","auto"]}
                             maxWidth={{md:"sm"}} >
                                 {currentGroup && currentGroup.groupMember && currentGroup.groupMember.length > 0 ? 
                                 currentGroup.groupMember?.map((item,idx) => (
                                     <GroupMemberCard key={idx} imgSrc={item.pictureUrl || "https://bit.ly/ryan-florence"}
-                                     name={(item as any).fullname} position={item.positionName} />
+                                     name={item.fullName} position={item.positionName} />
                                 )) : <Text>No Church Member belongs to this group Yet</Text>
                             }
                         </Stack> {

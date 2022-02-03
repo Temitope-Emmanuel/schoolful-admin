@@ -19,6 +19,7 @@ import { CreateLayout } from "layouts"
 import {MaterialSelect} from "components/Input"
 import axios from "axios"
 import * as Yup from "yup"
+import { IGroup } from "core/models/Group"
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -62,7 +63,7 @@ const defaultStaff:IStaff = {
     churchId: 0,
     claim: [],
     email: "",
-    fullname: "",
+    fullName: "",
     imageUrl: null,
     lastLogin: "",
     phoneNumber: 0,
@@ -121,14 +122,12 @@ const Create = () => {
     })
     const handleSubmit = (values: FormType, { ...actions }: any) => {
         actions.setSubmitting(true)
-        const newGroup = {
+        const newGroup:IGroup = {
+            groupID:10,
             name: values.group,
             description: values.detail,
-            denominationId: 3,
-            churchId: Number(params.churchId),
-            memberCount: values.groupMember.length,
-            ...(image.base64 && { imageUrl: image.base64 }),
-            isDeleted: false
+            churchID: Number(params.churchId),
+            ...(image.base64 && { imageUrl: image.base64 })
         }
         const addMemberToGroup = (newValues: any, cb: any) => {
             const newMembers = values.groupMember.map((item, idx) => (
@@ -212,12 +211,12 @@ const Create = () => {
                                         <NormalInput width="100%" name="group" placeholder="Group Name" />
                                         <MaterialSelect style={{width:"100%"}} name="groupLeader" label="Select Group Leader" 
                                             getSelected={compareStaff}
-                                            options={initialGroupMember} getLabel={(label:IStaff) => label.fullname}
+                                            options={initialGroupMember} getLabel={(label:IStaff) => label.fullName}
                                         />
                                         <MaterialSelect style={{width:"100%"}} name="groupMember"
                                             label="Invite Church Members" multiple={true} 
                                             getSelected={compareStaff}
-                                            options={initialGroupMember} getLabel={(label:IStaff) => label.fullname}
+                                            options={initialGroupMember} getLabel={(label:IStaff) => label.fullName}
                                         />
                                         <Field name="detail" >
                                             {({ field }: FieldProps) => (

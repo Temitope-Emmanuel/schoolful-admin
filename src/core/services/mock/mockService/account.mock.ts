@@ -1,26 +1,24 @@
 import MockAdapter from "axios-mock-adapter/types"
+import staffMember from '../data/staffMember.json'
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Account`
 
 export const accountMock = (mock: MockAdapter) => {
-  
+  // Create Staff
   mock.onPost(`${baseUrl}/createStaff`).reply(200, {
     status:200,
     isSuccessful:true,
     message:'',
-    data:{
-      staffID: '123455',
-    }
+    data:staffMember[0]
   })
-  
+
+  // 
   const getStaffUrl = `${baseUrl}/GetStaffByChurch`;
   mock.onGet(new RegExp(`${getStaffUrl}/*`)).reply(200, {
     status:200,
     isSuccessful:true,
     message:'',
-    data:{
-      staffID: '123455',
-    }
+    data:staffMember
   })
 }
 

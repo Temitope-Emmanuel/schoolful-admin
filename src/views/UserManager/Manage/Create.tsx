@@ -145,7 +145,7 @@ const CreateRole = () => {
                     value.map((item, idx) => {
                         if (item.status === "fulfilled") {
                             toast({
-                                title: `Successfully Added Role to Staff ${values.staffArr[idx].fullname}`,
+                                title: `Successfully Added Role to Staff ${values.staffArr[idx].fullName}`,
                                 subtitle: "",
                                 messageType: "success"
                             })
@@ -210,7 +210,7 @@ const CreateRole = () => {
                                     />
                                     <MaterialSelect style={{width:"100%"}} name="staffArr" label="Invite all Members and groups" 
                                         getSelected={compareStaff} multiple
-                                        options={initialStaff} getLabel={(label:IStaff) => label.fullname}
+                                        options={initialStaff} getLabel={(label:IStaff) => label.fullName}
                                     />
                                     <TextInput name="claim" className={classes.removeInput} />
                                     <TextInput name="staff" className={classes.removeInput} />

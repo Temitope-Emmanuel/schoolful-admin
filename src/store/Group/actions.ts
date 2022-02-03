@@ -65,7 +65,7 @@ export function createNewGroup (newGroup:IGroup,toast:ToastFunc,func?:any){
                     messageType:MessageType.SUCCESS
                 })
                 if(func){
-                    func(payload,history.push(`/church/${newGroup.churchId}/groups`))
+                    func(payload,history.push(`/church/${newGroup.churchID}/groups`))
                 }
             })
         }catch(err){
@@ -128,7 +128,6 @@ export function updateGroup (updatedGroup:IGroup,toast:ToastFunc) {
 export function deleteGroup (deleteGroupId:number,toast:ToastFunc) {
     return async (dispatch:Dispatch,getState:() => AppState) => {
         try{
-            console.log(deleteGroupId)
             await groupService.deleteGroup(deleteGroupId).then(payload => {
                 toast({
                     title:"Success",

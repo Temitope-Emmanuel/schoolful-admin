@@ -1,7 +1,7 @@
 import axios from "."
 import {IResponse} from "core/models/Response"
-import {ICity,IState} from "core/models/Location"
-import {ILeaderPosition} from "core/models/Group"
+import {IState} from "core/models/Location"
+import {IPosition} from "core/models/Group"
 import {IBank} from "core/models/BankAccount"
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Utility`
@@ -17,9 +17,9 @@ export const getState = async ():Promise<IResponse<IState[]>> => {
         throw err
     }
 }
-export const getGroupPosition = async ():Promise<IResponse<ILeaderPosition[]>> => {
+export const getGroupPosition = async ():Promise<IResponse<IPosition[]>> => {
     try{
-        const url = `${baseUrl}/getallLeadersPosition`
+        const url = `${baseUrl}/getAllPosition`
         const response = await axios.get(url)
         return response.data
     }catch(err){

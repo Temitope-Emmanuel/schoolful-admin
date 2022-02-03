@@ -223,7 +223,7 @@ const AddAccount:React.FC<IAddAccountProps> = ({close,addToBankAccount}) => {
     const validationSchema = Yup.object({
         name: Yup.string().min(3,"The Account name is too short").required(),
         accountNumber: Yup.string().min(11,"The Account number is not valid").required(),
-        societyId: Yup.number().oneOf(churchGroup.map((item) => item.societyID),
+        societyId: Yup.number().oneOf(churchGroup.map((item) => item.groupID),
         "Please Select from one of Available Church Groups").required(),
         bankCode: Yup.number().oneOf(bankDetails.map((item) => item.bankCode),
         "Please Select From one the available Banks").required(),
@@ -274,7 +274,7 @@ const AddAccount:React.FC<IAddAccountProps> = ({close,addToBankAccount}) => {
                                     name="accountNumber" placeholder="Enter Account Number" />
                                     <Select name="societyId" placeholder="Select Group For Account" >
                                         {churchGroup.map((item,idx) => (
-                                            <option value={item.societyID} key={item.societyID || idx} >
+                                            <option value={item.groupID} key={item.groupID || idx} >
                                                 {item.name}
                                             </option>
                                         ))}
@@ -542,7 +542,7 @@ const Donation:React.FC<IDonationProps> = ({close,addToDonation,churchAccount}) 
                                         </Select>
                                         <Select placeholder="select Group" name="societyId" >
                                             {churchGroup.map((item,idx) => (
-                                                <option key={item.societyID} value={item.societyID} >
+                                                <option key={item.groupID} value={item.groupID} >
                                                     {item.name}
                                                 </option>
                                             ))}                  
