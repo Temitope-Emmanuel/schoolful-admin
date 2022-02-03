@@ -1,0 +1,37 @@
+[
+    {
+        "bankID": 1,
+        "bankName": "Schamberger LLC",
+        "bankCode": 8825
+    },
+    {
+        "bankID": 2,
+        "bankName": "Marvin LLC",
+        "bankCode": 2013
+    },
+    {
+        "bankID": 3,
+        "bankName": "Ernser Group",
+        "bankCode": 8316
+    },
+    {
+        "bankID": 4,
+        "bankName": "Wisozk, Towne and Lynch",
+        "bankCode": 2394
+    },
+    {
+        "bankID": 5,
+        "bankName": "Zboncak and Sons",
+        "bankCode": 2084
+    },
+    {
+        "bankID": 6,
+        "bankName": "Cole-DuBuque",
+        "bankCode": 2059
+    },
+    {
+        "bankID": 7,
+        "bankName": "Goodwin LLC",
+        "bankCode": 3896
+    }
+]

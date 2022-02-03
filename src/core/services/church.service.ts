@@ -106,7 +106,6 @@ export const getChurchMember = async (churchId:number):Promise<IResponse<IChurch
 export const createChurchBankDetail = async (newBankDetail:IChurchBankDetail) => {
     try{
         const url = `${baseUrl}/createChurchBankDetail`
-        const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
         const response = await axios.post(url,newBankDetail)
         return response.data
     }catch(err){
@@ -115,7 +114,7 @@ export const createChurchBankDetail = async (newBankDetail:IChurchBankDetail) =>
 }
 export const getChurchBankAccount = async (churchId:number,cancelToken:CancelTokenSource):Promise<IResponse<IChurchBankDetail[]>> => {
     try{
-        const url = `${baseUrl}/getchurchBankAccountByChurch?churchId=${churchId}`
+        const url = `${baseUrl}/getchurchBankAccountByChurch/${churchId}`
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
         })

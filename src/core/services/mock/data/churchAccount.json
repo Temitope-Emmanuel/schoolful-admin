@@ -1,0 +1,38 @@
+[
+    {
+        "churchBankID": 1,
+        "bankCode": 6991,
+        "name": "Konstantin Pinkney",
+        "churchID": 601,
+        "accountNumber": 782587,
+        "defaultAccount": true,
+        "bankName": "Zoomlounge"
+    },
+    {
+        "churchBankID": 2,
+        "bankCode": 6848,
+        "name": "Marlow Mithun",
+        "churchID": 568,
+        "accountNumber": 193493,
+        "defaultAccount": false,
+        "bankName": "Photobean"
+    },
+    {
+        "churchBankID": 3,
+        "bankCode": 3355,
+        "name": "Elinor Steanson",
+        "churchID": 452,
+        "accountNumber": 526973,
+        "defaultAccount": false,
+        "bankName": "Centizu"
+    },
+    {
+        "churchBankID": 4,
+        "bankCode": 1829,
+        "name": "Garrard Bullman",
+        "churchID": 529,
+        "accountNumber": 380196,
+        "defaultAccount": false,
+        "bankName": "Roombo"
+    }
+]

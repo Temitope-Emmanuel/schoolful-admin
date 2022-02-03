@@ -9,6 +9,7 @@ import {sermonMock} from "./sermon.mock";
 import {advertMock} from "./advert.mock";
 import {subscriptionMock} from "./subscription.mock";
 import {paymentMock} from "./payment.mock";
+import {donationMock} from "./donation.mock";
 
 export const initFunction = (mock:MockAdapter) => {
     userMock(mock);
@@ -21,4 +22,5 @@ export const initFunction = (mock:MockAdapter) => {
     advertMock(mock);
     subscriptionMock(mock);
     paymentMock(mock);
+    donationMock(mock);
 }

@@ -4,12 +4,11 @@ export interface IBank {
     bankCode:number
 }
 export interface IChurchBankDetail {
-    churchBankId?:number;
+    churchBankID?:number;
     bankCode:string;
     name:string;
     churchId:string;
     accountNumber:string;
-    societyId:number;
     defaultAccount:boolean;
     bankName?:string
 }

@@ -334,10 +334,9 @@ const WithdrawFromAccount:React.FC<IWithdrawAccountProps> = ({close,churchAccoun
         withdrawalToChurch({
             amount:values.amount,
             beneficiary:values.beneficiary,
-            churchBankId:bankAccount.churchBankId as number,
+            churchBankId:bankAccount.churchBankID as number,
             churchId:params.churchId,
             currency:"NGN",
-            societyId:bankAccount.societyId
         }).then((payload) => {
             toast({
                 messageType:"success",
@@ -379,7 +378,7 @@ const WithdrawFromAccount:React.FC<IWithdrawAccountProps> = ({close,churchAccoun
                                             name="amount" placeholder="Enter Amount" />
                                         <Select name="account" placeholder="Select Account" >
                                             {churchAccount.map((item,idx) => (
-                                                <option value={JSON.stringify(item)} key={item.churchBankId || idx } >
+                                                <option value={JSON.stringify(item)} key={item.churchBankID || idx } >
                                                     {item.name}
                                                 </option>
                                             ))}
@@ -399,13 +398,11 @@ const WithdrawFromAccount:React.FC<IWithdrawAccountProps> = ({close,churchAccoun
         </ModalContent>
     )
 }
-
 interface IDonationProps {
     close():void;
     churchAccount:IChurchBankDetail[]
     addToDonation(arg:IDonation):void
 }
-
 
 const Donation:React.FC<IDonationProps> = ({close,addToDonation,churchAccount}) => {
     const classes = donationStyles()
@@ -535,7 +532,7 @@ const Donation:React.FC<IDonationProps> = ({close,addToDonation,churchAccount}) 
                                         name="amount" placeholder="Enter Target Amount" />
                                         <Select placeholder="select Account" name="account" >
                                             {churchAccount.map((item,idx) => (
-                                                <option key={item.churchBankId} value={item.accountNumber} >
+                                                <option key={item.churchBankID} value={item.accountNumber} >
                                                     {item.name}
                                                 </option>
                                             ))}                  
@@ -581,9 +578,7 @@ const Finance = () => {
         churchID:0,
         donationDescription:"",
         donationName:"",
-        donationType:DonationEnum.GROUP_LEVY,
-        societyId:0,
-        expirationDate:new Date()
+        targetAmount:0,
     }
     const defaultChurchAccount:IChurchBankDetail = {
         accountNumber:"",
@@ -591,7 +586,6 @@ const Finance = () => {
         churchId:"",
         defaultAccount:false,
         name:"",
-        societyId:0
     }
     const dispatch = useDispatch()
     const [open,setOpen] = React.useState(false)
@@ -625,10 +619,8 @@ const Finance = () => {
             getChurchBankAccount(Number(params.churchId),cancelToken).then(payload => {
                 getBanks().then(bankPayload => {
                     const newBankAccountDetail = payload.data.map((account) => {
-                        const foundBankDetail = bankPayload.data.find(item => String(item.bankCode) === account.bankCode)
                         return({
                             ...account,
-                            bankName:foundBankDetail?.bankName
                         })
                     })
                     setBankDetail([...bankPayload.data])
@@ -646,6 +638,7 @@ const Finance = () => {
         const getChurchDonationApi = () => {
             donationService.GetDonationByChurch(Number(params.churchId),cancelToken).then(payload =>{ 
                 setDonation(payload.data)
+                console.log('this si the donation',payload.data)
             }).catch(err => {
                 if(!axios.isCancel(err)){
                     toast({
@@ -715,7 +708,7 @@ const Finance = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[accountInput])
 
-    
+ console.log({displayChurchAccount})   
 
     return (
         <>
@@ -740,9 +733,9 @@ const Finance = () => {
                         <Wrap>
                         {displayChurchAccount.length > 0 ?
                         displayChurchAccount.map((item,idx) => (
-                            <WrapItem key={item.churchBankId || idx} >
+                            <WrapItem key={item.churchBankID || idx} >
                                 <ActivityCard>
-                                <FinanceActivity isLoaded={Boolean(item.churchBankId)}
+                                <FinanceActivity isLoaded={Boolean(item.churchBankID)}
                                     heading={item.name}
                                     subHeading={`Account Number: ${item.accountNumber}`}
                                     text={`Bank:${item.bankName}`} />
@@ -773,12 +766,12 @@ const Finance = () => {
                         {
                             displayDonation.length > 0 ?
                             displayDonation.map((item,idx) => (
-                                <WrapItem key={item.donationID || idx} >
+                                <WrapItem key={item.churchDonationID || idx} >
                                     <ActivityCard>
-                                    <FinanceActivity isLoaded={Boolean(item.donationID)}
+                                    <FinanceActivity isLoaded={Boolean(item.churchDonationID)}
                                         text={item.donationDescription} 
                                         subHeading={`Account:${item.donationName}`}
-                                        moreHeading={`Target Amount:₦${(new Date(item.expirationDate)).toLocaleDateString()}`}
+                                        moreHeading={`Target Amount:₦${item.targetAmount}`}
                                         heading={item.donationName} />
                                 </ActivityCard>
                                 </WrapItem>

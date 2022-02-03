@@ -19,7 +19,7 @@ export const AddDonation = async(newDonation:IDonation):Promise<IResponse<IDonat
 
 export const GetDonationByChurch = async (churchId:number,cancelToken:CancelTokenSource):Promise<IResponse<IDonation[]>> => {
     try{
-        const url = `${baseUrl}/GetDonationByChurch?churchId=${churchId}`
+        const url = `${baseUrl}/GetDonationByChurch/${churchId}`
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
         })

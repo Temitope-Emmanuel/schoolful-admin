@@ -80,7 +80,7 @@ export const getChurchOnlyDonationTransactions = async ({
     cancelToken?: CancelTokenSource
 }): Promise<IResponse<any>> => {
   try {
-    const url = `${baseUrl}/GetChurchOnlyDonationTransactions?churchId=${churchId}&page=${page}&take=${take}`;
+    const url = `${baseUrl}/GetChurchOnlyDonationTransactions/${churchId}`;
     const response = await axios.get(url,{
         ...(cancelToken && {cancelToken:cancelToken.token})
     });
@@ -119,17 +119,15 @@ export const withdrawalToChurch = async ({
     churchBankId,
     churchId,
     currency,
-    societyId
 }:{
     beneficiary:string;
     churchId:string;
     churchBankId:number;
     amount:number;
-    societyId:number;
     currency:"NGN"
 }):Promise<IResponse<null>> => {
     try{
-        const url = `${baseUrl}/WithdrawalToChurch?beneficiary=${beneficiary}&churchid=${churchId}&churchBankId=${churchBankId}&amount=${amount}&societyId=${societyId}&currency=${currency}`
+        const url = `${baseUrl}/WithdrawalToChurch/${churchId}`
         const response = await axios.post(url)
         return response.data
     }catch(err){
