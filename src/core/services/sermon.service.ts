@@ -57,7 +57,7 @@ export const getSermonById = async (sermonId:number):Promise<IResponse<ISermon>>
 }
 
 export const getChurchSermon = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<ISermon[]>> => {
-    const url = `${baseUrl}/GetSermonByChurch?churchId=${churchId}`
+    const url = `${baseUrl}/GetSermonByChurchID/${churchId}`
     try{
         const config:AxiosRequestConfig = {headers:{Accept:"text/plain"},cancelToken:cancelToken.token}
         const response = await axios.get(url,config)

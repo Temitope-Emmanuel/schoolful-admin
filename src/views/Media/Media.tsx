@@ -397,7 +397,7 @@ const MusicPlayer: React.FC<IMusicPlayer> = ({ audio, closePlayer, playNext, pla
                 position="absolute" top={0} right={0} onClick={closePlayer}
                 icon={<GiCancel />} />
             <HStack>
-                <ReactHowler src={audio.featureVidAudio || ""} playing={play} />
+                <ReactHowler src={audio.mediaUrl || ""} playing={play} />
                 <IconButton aria-label="previous-song" onClick={playPrevious(audio.idx as number)}
                     disabled={!audio.previous} icon={<BiSkipPreviousCircle />} />
                 <IconButton aria-label="play icon" onClick={handlePlay} icon={play ? <FaRegPauseCircle /> : <FaRegPlayCircle />} />
@@ -429,7 +429,7 @@ const VideoPlayer: React.FC<IVideoPlayer> = ({ video }) => {
                 <MediaWrapper >
                     <VStack>
                         <CustomPause />
-                        <Player autoPlay src={video.featureVidAudio} />
+                        <Player autoPlay src={video.mediaUrl} />
                         <HStack>
                         </HStack>
                     </VStack>
@@ -513,7 +513,7 @@ const Media = () => {
         title: "",
         churchId: 0,
         author: "",
-        authorDesignation: "",
+        mediaType: "text",
         featureDateFrom: new Date(),
         featureDateTo: new Date(),
         sermonContent: "",
@@ -576,9 +576,9 @@ const Media = () => {
     }, [])
 
     React.useEffect(() => {
-        const textSermon = churchSermon.filter((item) => item.featureVidAudio === null)
-        const audioSermon = churchSermon.filter(item => item.featureVidAudio && item.featureVidAudio.indexOf("mp3") > 0)
-        const videoSermon = churchSermon.filter(item => item.featureVidAudio && item.featureVidAudio.indexOf("mp4") > 0)
+        const textSermon = churchSermon.filter((item) => item.mediaType === "text")
+        const audioSermon = churchSermon.filter(item => item.mediaType === "audio")
+        const videoSermon = churchSermon.filter(item =>  item.mediaType === "video")
         setTextSermon(textSermon)
         setAudioSermon(audioSermon)
         setVideoSermon(videoSermon)
@@ -606,7 +606,7 @@ const Media = () => {
     }, [inputValue])
 
     React.useEffect(() => {
-        const videoSermon = churchSermon.filter(item => item.featureVidAudio && item.featureVidAudio.indexOf("mp4") > 0)
+        const videoSermon = churchSermon.filter(item => item.mediaType === "video")
         const testString = new RegExp(videoInputValue, "i")
         const newDisplaySermon = videoSermon.filter(item => testString.test(item.title))
         setVideoSermon([...newDisplaySermon])
@@ -679,7 +679,7 @@ const Media = () => {
             <Slide in={Boolean(currentAudioSermon.sermonID)}>
                 <Flex>
                     {
-                        currentAudioSermon.featureVidAudio && <MusicPlayer closePlayer={resetCurrentAudio}
+                        currentAudioSermon.mediaType !== 'text' && <MusicPlayer closePlayer={resetCurrentAudio}
                             audio={currentAudioSermon} playNext={setNext} playPrevious={setPrevious} />
                     }
                 </Flex>

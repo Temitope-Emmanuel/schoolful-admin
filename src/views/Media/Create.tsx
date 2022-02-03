@@ -27,7 +27,6 @@ interface IForm {
     featureDateTo: Date;
     featureDateFrom: Date;
     sermonContent: string;
-    authorDesignation: string;
 }
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -90,7 +89,6 @@ const Content = () => {
         featureDateTo: currentDate,
         featureDateFrom: new Date((new Date()).setDate(currentDate.getDate() + 5)),
         sermonContent: "",
-        authorDesignation: "",
     })
     const [showForm,setShowForm] = React.useState(false)
     const history = useHistory()
@@ -111,7 +109,6 @@ const Content = () => {
                     title:defaultSermon.title,
                     author:defaultSermon.author || "",
                     sermonContent:defaultSermon.sermonContent,
-                    authorDesignation:defaultSermon.authorDesignation || "",
                     featureDateFrom:new Date(defaultSermon.featureDateFrom),
                     featureDateTo:new Date(defaultSermon.featureDateTo)
                 })
@@ -140,7 +137,7 @@ const Content = () => {
 
 
     const saveSermonToDraft = (values: IForm) => () => {
-        sermonDraftHelper.saveSermonToLocalStorage({ ...values, churchId: Number(params.churchId) }, toast)
+        sermonDraftHelper.saveSermonToLocalStorage({ ...values, churchId: Number(params.churchId), mediaType: 'text' }, toast)
         history.push(`/church/${params.churchId}/media`)
     }
 
@@ -153,11 +150,11 @@ const Content = () => {
     
     const handleSubmit = async (values: IForm, { ...actions }: any) => {
         actions.setSubmitting(true)
-        const { title, author, authorDesignation, featureDateFrom, featureDateTo, sermonContent } = values
+        const { title, author, featureDateFrom, featureDateTo, sermonContent } = values
+        
         const newSermon = {
             title,
             author,
-            authorDesignation,
             featureDateFrom:featureDateFrom.toJSON(),
             featureDateTo:featureDateTo.toJSON(),
             sermonContent,
