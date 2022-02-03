@@ -5,7 +5,8 @@ import {accountMock} from './account.mock'
 import {userMock} from './user.mock';
 import {activityMock} from "./activity.mock";
 import {groupMock} from "./group.mock";
-import { sermonMock } from "./sermon.mock";
+import {sermonMock} from "./sermon.mock";
+import {advertMock} from "./advert.mock";
 
 export const initFunction = (mock:MockAdapter) => {
     userMock(mock);
@@ -15,4 +16,5 @@ export const initFunction = (mock:MockAdapter) => {
     activityMock(mock);
     groupMock(mock);
     sermonMock(mock);
+    advertMock(mock);
 }

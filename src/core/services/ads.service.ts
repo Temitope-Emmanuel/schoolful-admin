@@ -58,7 +58,7 @@ export const getAdvertSetting= async ():Promise<IResponse<IAdvertSetting[]>> => 
 }
 
 export const getAdverts = async (churchId:number,cancelToken:CancelTokenSource):Promise<IResponse<IAdvert[]>> => {
-    const url = `${baseUrl}/getSponsor?churchId=${churchId}`
+    const url = `${baseUrl}/getSponsor/${churchId}`
     try{
         const config:AxiosRequestConfig = {headers:{
             "Accept":"text/plain"

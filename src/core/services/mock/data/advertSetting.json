@@ -1,0 +1,52 @@
+[
+    {
+        "discount": 0.32,
+        "duration": "Daily",
+        "ID": 1,
+        "price": 1441,
+        "status": false,
+        "title": "sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet",
+        "howLong": 1735,
+        "perDay": 5
+    },
+    {
+        "discount": 0.24,
+        "duration": "Weekly",
+        "ID": 2,
+        "price": 1799,
+        "status": false,
+        "title": "hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem",
+        "howLong": 2601,
+        "perDay": 1
+    },
+    {
+        "discount": 0.48,
+        "duration": "Monthly",
+        "ID": 3,
+        "price": 2428,
+        "status": false,
+        "title": "orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed",
+        "howLong": 2325,
+        "perDay": 5
+    },
+    {
+        "discount": 0.13,
+        "duration": "Quarterly",
+        "ID": 4,
+        "price": 2379,
+        "status": false,
+        "title": "lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse",
+        "howLong": 2452,
+        "perDay": 3
+    },
+    {
+        "discount": 0.68,
+        "duration": "Annually",
+        "ID": 5,
+        "price": 2368,
+        "status": false,
+        "title": "lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue",
+        "howLong": 2548,
+        "perDay": 1
+    }
+]

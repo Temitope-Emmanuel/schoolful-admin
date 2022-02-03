@@ -55,9 +55,9 @@ const Ads = () => {
         dateFrom:"",
         dateTo:"",
         advertUrl: "",  
-        churchId:0,
-        audience:""  
+        churchID:0,  
     }
+    
     const dispatch = useDispatch()
     const params = useParams()
     const [adverts,setAdverts] = React.useState<IAdvert[]>(new Array(7).fill(defaultAdvert))

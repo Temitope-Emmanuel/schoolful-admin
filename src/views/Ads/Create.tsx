@@ -24,7 +24,7 @@ import { CreateLayout } from "layouts"
 import { useSelector } from "react-redux"
 import { AppState } from "store"
 import { PaymentButton } from "components/PaymentButton"
-import { IAdvertSetting } from "core/models/Advert"
+import { IAdvert, IAdvertSetting } from "core/models/Advert"
 import axios from "axios"
 import * as advertDraftHelper from "./advertUtil"
 import {PaystackButton,PaystackConsumer} from "react-paystack"
@@ -119,6 +119,8 @@ const Create = () => {
         publicKey: ""
     })
 
+    console.log('this is the advertSetting', {advertSetting})
+
     const cancelToken = axios.CancelToken.source()
     const getPaymentReference = (func:any) => () => {
         generateReference({
@@ -175,6 +177,7 @@ const Create = () => {
     // Set current date detail
     React.useEffect(() => {
         getAdvertSetting().then(payload => {
+            console.log('this is the payload', {payload})
             const changedAdvertSetting = payload.data.map(item => ({
                 ...item,
                 howLong: findDuration(item.duration),
@@ -238,14 +241,11 @@ const Create = () => {
             action.setSubmitting(false)
             return action.setErrors({ advertUrl: "Please Select an Image" })
         } else {
-            const newAdvert = {
+            const newAdvert:IAdvert = {
                 title: values.title,
                 dateFrom: values.dateFrom.toJSON(),
                 dateTo: values.dateTo.toJSON(),
-                churchId: Number(params.churchId),
-                audience: "isInternal",
-                settingsId: currentAdvertSetting?.id,
-                status: 1,
+                churchID: Number(params.churchId),
                 ...(image && { advertUrl: image.base64 })
             }
             createAdvert(newAdvert).then(payload => {
@@ -301,8 +301,8 @@ const Create = () => {
     }
 
     const saveAdvertToDraft = (values: TypeForm) => () => {
-        advertDraftHelper.saveAdvertToLocalStorage({ ...values, audience: "isInternal", churchId: Number(params.churchId) }, toast)
-        history.push(`/church/${params.churchId}/media`)
+        advertDraftHelper.saveAdvertToLocalStorage({ ...values, churchID: Number(params.churchId) }, toast)
+        history.push(`/church/${params.churchId}/ads`)
     }
     const handleSelectChange = (e: React.SyntheticEvent<HTMLSelectElement>) => {
         setCurrentAdvertSetting(JSON.parse(e.currentTarget.value))
