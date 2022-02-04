@@ -44,7 +44,7 @@ export const deleteAnnouncement = async (announcementId:string):Promise<IRespons
 }
 
 export const getAnnouncementByChurch = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<IAnnouncement[]>> => {
-    const url = `${baseUrl}/GetAnnouncementByChurch?churchId=${churchId}`
+    const url = `${baseUrl}/GetAnnouncementByChurch/${churchId}`
     try{
         const config:AxiosRequestConfig = {headers:{
             "Accept":"text/plain"

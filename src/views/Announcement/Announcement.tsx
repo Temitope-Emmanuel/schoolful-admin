@@ -71,7 +71,6 @@ const cardStyles = makeStyles(theme => createStyles({
         fontFamily:"MontserratRegular"
     }
 }))
-
 interface IAnnouncementCard {
     heading:string;
     subheading:string;
@@ -185,7 +184,7 @@ const Announcement = () => {
                          { announcement && announcement.length > 0 ? 
                             announcement?.map((item,idx:number) => (
                                 <WrapItem  key={item.announcementID || idx}>
-                                <AnnouncementCard subheading={`to all:${item.category}`}
+                                <AnnouncementCard subheading={`to all: Church Members`}
                                     heading={item.title} 
                         handleDelete={handleDelete((item.announcementID as string),idx)}
                                     text={item.description} handleEdit={handleEdit(item)}

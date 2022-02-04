@@ -132,7 +132,7 @@ export const dashboardMenu = [
   { icon: BsFillCollectionPlayFill, name: "Subscription", link: "/subscription" },
   { icon: IoMdWallet, name: "Church Finance", link: "/finance" },
   { icon: AiFillFile, name: "Reports", link: "/report" },
-  { icon: FaUserAlt, name: "User Manager", link: "/manager" },
+  // { icon: FaUserAlt, name: "User Manager", link: "/manager" },
   { icon: MdAnnouncement, name: "Announcement", link: "/announcement" },
   { icon: FaPrayingHands, name: "Prayer/Verses", link: "/prayer" },
   { icon: FaCalendarCheck, name: "Booking/Request", link: "/booking" }

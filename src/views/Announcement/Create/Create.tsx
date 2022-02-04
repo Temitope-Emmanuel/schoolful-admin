@@ -15,6 +15,7 @@ import {MessageType} from "core/enums/MessageType"
 import {Button} from "components/Button"
 import {CreateLayout} from "layouts"
 import * as Yup from "yup"
+import { IAnnouncement } from "core/models/Announcement"
 
 interface IForm {
     title:string;
@@ -93,15 +94,11 @@ const Create = () => {
     })
     const handleSubmit = async (values:IForm, {...actions}: any) => {
         actions.setSubmitting(true)
-        const newAnnouncement = {
+        const newAnnouncement: IAnnouncement = {
             title:values.title,
-            category:values.receiver,
-            type:"1",
-            churchId:Number(params.churchId),
+            churchID:Number(params.churchId),
             description:values.announcement,
-            dateEntered:new Date((new Date()).toJSON()),
-            startDate:new Date(values.startDate.toJSON()),
-            expirationDate:new Date(values.expirationDate.toJSON())
+            createdAt:new Date((new Date()).toJSON()),
         }
 
         createAnnouncement(newAnnouncement).then(payload => {
