@@ -37,7 +37,6 @@ const AnnouncementCreate = loadable(() => import("views/Announcement/Create/Crea
 const UpdateChurch = loadable(() => import("views/ChurchActivity/UpdateChurch"))
 const VerifyChurch = loadable(() => import("views/ChurchActivity/VerifyChurch"))
 const Prayer = loadable(() => import("views/Prayer/Prayer"))
-const Booking = loadable(() => import("views/Booking/Booking"))
 const PrayerCreate = loadable(() => import("views/Prayer/Create/Create"))
 const VerseCreate = loadable(() => import("views/Prayer/CreateVerse/CreateVerse"))
 
@@ -209,13 +208,6 @@ const DashboardLayout: React.FC<IProps> = ({ children, ...props }) => {
                                                 exact render={() => (
                                                     <Wrapper>
                                                         <VerseCreate/>
-                                                    </Wrapper>
-                                                )}
-                                            />
-                                            <Route path={`${path}/booking`}
-                                                exact render={() => (
-                                                    <Wrapper>
-                                                        <Booking />
                                                     </Wrapper>
                                                 )}
                                             />

@@ -60,8 +60,7 @@ const dashboardMenu = [
     {icon:AiFillFile,name:"Reports",link:"/report"},
     {icon:FaUserAlt,name:"User Manager",link:"/manager"},
     {icon:MdAnnouncement,name:"Announcement",link:"/announcement"},
-    {icon:FaPrayingHands,name:"Prayer/Verses",link:"/prayer"},
-    {icon:FaCalendarCheck,name:"Booking/Request",link:"/booking"}
+    {icon:FaPrayingHands,name:"Prayer/Verses",link:"/prayer"}
 ]
 
 

@@ -135,7 +135,6 @@ export const dashboardMenu = [
   // { icon: FaUserAlt, name: "User Manager", link: "/manager" },
   { icon: MdAnnouncement, name: "Announcement", link: "/announcement" },
   { icon: FaPrayingHands, name: "Prayer/Verses", link: "/prayer" },
-  { icon: FaCalendarCheck, name: "Booking/Request", link: "/booking" }
 ]
 
 const DashboardLayout: React.FC<IProps> = (props) => {
