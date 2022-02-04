@@ -22,6 +22,7 @@ import axios, { CancelTokenSource } from "axios"
 import { getChurchOnlyDonationTransactions } from "core/services/payment.service"
 import { downloadFile } from "utils/functions"
 import useTableService, { TableContextProvider } from "components/Table/TableContext"
+import { IDonation } from "core/models/Donation"
 
 
 const useStyles = makeStyles((theme) => {
@@ -134,15 +135,16 @@ interface IFinance {
 }
 
 type ReportKey = keyof IChurchMember
-const filterOptions: ReportKey[] = ["email", "fullname", "username", "phoneNumber"]
+const filterOptions: ReportKey[] = ["email", "username", "phoneNumber"]
 
-type FinanceKey = keyof IFinance
-const filterFinanceOptions: FinanceKey[] = ["amount", "email", "username"]
+type FinanceKey = keyof IDonation
+const filterFinanceOptions: FinanceKey[] = ["targetAmount", "donationName", "churchDonationID"]
+
 
 const FinancialReport: React.FC<{
-    demoFinancialReport: any[];
+    financialReport: any[];
     inputValue: string;
-}> = React.memo(({ demoFinancialReport }) => {
+}> = React.memo(({ financialReport }) => {
     const {
         dialog: {
             handleToggle
@@ -156,25 +158,28 @@ const FinancialReport: React.FC<{
         }
     } = useTableService()
     const [localPage, setLocalPage] = React.useState(0)
-    const [displayFinancialReport, setDisplayFinancialReport] = React.useState<any[]>([])
+    const [displayFinancialReport, setDisplayFinancialReport] = React.useState<IDonation[]>([])
     const handleFinancialDownload = React.useMemo(() => {
         return () => {
-            downloadFile(demoFinancialReport.map(item => {
+            downloadFile(financialReport.map(item => {
                 return ({
-                    // id: item.id,
-                    // username:item.username,
-                    // phoneNumber:item.phoneNumber,
-                    // email:item.email,
-                    // address:item.home_address
+                    id: item.id,
+                    username:item.username,
+                    phoneNumber:item.phoneNumber,
+                    email:item.email,
+                    address:item.home_address
                 })
             }), "report")
         }
-    }, [demoFinancialReport])
+    }, [financialReport])
     React.useEffect(() => {
-        setFilter(filterFinanceOptions[0])
-        setDisplayFinancialReport(demoFinancialReport)
-    }, [])
-    // const 
+        if(financialReport.length){
+            console.log({financialReport})
+            setFilter(filterFinanceOptions[0])
+            setDisplayFinancialReport(financialReport)
+        }
+    }, [financialReport])
+    
     React.useEffect(() => {
         if ((localPage + 1) === page) {
             getNextDocument()
@@ -204,47 +209,48 @@ const FinancialReport: React.FC<{
         // }
     }
 
+    console.log('this is the display financial report', displayFinancialReport)
+
     React.useEffect(() => {
         const testString = new RegExp(selectedFilter, "i")
-        const newDisplay = demoFinancialReport.filter(item => testString.test(item[filterFinanceOptions[selectedFilter as any]] as any))
-        setDisplayFinancialReport([...newDisplay])
+        const newDisplay = financialReport.filter(item => testString.test(item[filterFinanceOptions[selectedFilter as any]] as any))
+        // setDisplayFinancialReport([...newDisplay])
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedFilter])
 
     return (
-        <>
-            <Stack spacing={5} mt={7}
-                divider={<StackDivider borderColor="gray.200" />}>
-                <HStack m={{ md: 7 }} justify="space-between">
-                    <Flex align="center">
-                        <Heading color="tertiary"
-                            mr={["1", "10"]} fontSize={[".7rem", "1.5rem"]} >
-                            Transaction History
-                        </Heading>
+        <Stack spacing={5} mt={7}
+            divider={<StackDivider borderColor="gray.200" />}>
+            <HStack m={{ md: 7 }} justify="space-between">
+                <Flex align="center">
+                    <Heading color="tertiary"
+                        mr={["1", "10"]} fontSize={[".7rem", "1.5rem"]} >
+                        Transaction History
+                    </Heading>
 
-                        <Icon as={FaFilter} color="tertiary" onClick={handleToggle}
-                        />
-                    </Flex>
-                    {
-                        displayFinancialReport.length &&
-                        <Button variant="link" color="tertiary" fontWeight="800"
-                            fontFamily="MontserratBold" onClick={handleFinancialDownload}
-                            textDecoration="underline" fontSize="0.875rem" >
-                            Download Excel File
-                    </Button>
-                    }
-                </HStack>
-                <Table rowLength={displayFinancialReport.length}
-                    numSelected={0} filterOptions={filterFinanceOptions}
-                    heading={[null, null, "Name", "Type", "Transaction ID", "Date", "Amount"]} >
-                    {
-                        displayFinancialReport.map((item, idx) => (
-                            <TableRow key={idx} isLoaded={true} fields={item} />
-                        ))
-                    }
-                </Table>
-            </Stack>
-        </>
+                    <Icon as={FaFilter} color="tertiary" onClick={handleToggle}
+                    />
+                </Flex>
+                {
+                    displayFinancialReport.length &&
+                    <Button variant="link" color="tertiary" fontWeight="800"
+                        fontFamily="MontserratBold" onClick={handleFinancialDownload}
+                        textDecoration="underline" fontSize="0.875rem" >
+                        Download Excel File
+                </Button>
+                }
+            </HStack>
+            <Table rowLength={displayFinancialReport.length}
+                numSelected={0} filterOptions={filterFinanceOptions}
+                heading={[null, "ID", "Name", "Target Amount", "Description"]} >
+                    {displayFinancialReport.map((item, idx) => (
+                        <TableRow key={idx} isLoaded={true} fields={[
+                            <Checkbox />,
+                            item.churchDonationID, item.donationName, item.targetAmount, item.donationDescription.substring(0,50)
+                        ]} />
+                    ))}
+            </Table>
+        </Stack>
     )
 })
 
@@ -273,11 +279,10 @@ const MemberReport: React.FC<{
         return () => {
             downloadFile(churchMember.map(item => {
                 return ({
-                    id: item.id,
+                    id: item.churchMemberID,
                     username: item.username,
                     phoneNumber: item.phoneNumber,
-                    email: item.email,
-                    address: item.home_address
+                    email: item.email
                 })
             }), "church member")
         }
@@ -294,7 +299,7 @@ const MemberReport: React.FC<{
 
     const getNextDocument = () => {
         if (localChurchMember.length && churchMember.length) {
-            const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[localChurchMember.length - 1].personId)
+            const foundIdx = churchMember.findIndex(item => item.churchMemberID === localChurchMember[localChurchMember.length - 1].churchMemberID)
             if (foundIdx) {
                 setLocalChurchMember(churchMember.slice(foundIdx + 1, foundIdx + rowsPerPage + 1))
             }
@@ -303,7 +308,7 @@ const MemberReport: React.FC<{
 
     const getPreviousDocument = () => {
         if (localChurchMember.length && churchMember.length) {
-            const foundIdx = churchMember.findIndex(item => item.personId === localChurchMember[0].personId)
+            const foundIdx = churchMember.findIndex(item => item.churchMemberID === localChurchMember[0].churchMemberID)
             if (foundIdx) {
                 const start = foundIdx - rowsPerPage
                 const end = foundIdx
@@ -364,7 +369,7 @@ const MemberReport: React.FC<{
                 {displayChurchMember.map((item, idx) => (
                     <TableRow key={idx} isLoaded={true} fields={[
                         <Checkbox />, <Avatar name="Dan Abrahmov" size={!notBaseBreakpoint ? "sm" : "md"} src="https://bit.ly/dan-abramov" />,
-                        item.fullname, item.email, item.phoneNumber, item.status, item.role
+                        item.username, item.email, item.phoneNumber, item.status === 1 ? 'Active' : 'Deactivated', item.role
                     ]} />
                 ))}
             </Table>
@@ -380,7 +385,6 @@ const Reports = () => {
     const dispatch = useDispatch()
     const notBaseBreakpoint = breakpoint !== "base"
     const [filter, setFilter] = React.useState("")
-    const [demoFinancialReport, setDemoFinancialReport] = React.useState([])
     const [inputText, setInputText] = React.useState("")
     const [churchMember, setChurchMember] = React.useState<IChurchMember[]>([])
     const [churchTransaction, setChurchTransaction] = React.useState<any[]>([])
@@ -403,7 +407,6 @@ const Reports = () => {
             })
             .then(payload => {
                 setChurchMember(payload.data.records)
-                // setChurchMember(payload.data.records)
             }).catch(err => {
                 if (!axios.isCancel(err)) {
                     toast({
@@ -459,7 +462,6 @@ const Reports = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
     return (
         <Flex className={classes.root} direction={{ base: "column", md: "row" }}>
             <Tabs width={{ base: "100%", md: "90%" }} pr={{ md: "5" }} isLazy >
@@ -498,7 +500,7 @@ const Reports = () => {
                             />
                         </HStack>
                         <TableContextProvider>
-                            <FinancialReport inputValue={inputText} demoFinancialReport={demoFinancialReport} />
+                            <FinancialReport inputValue={inputText} financialReport={churchTransaction} />
                         </TableContextProvider>
                     </TabPanel>
                     <TabPanel mt={{ sm: "3", md: "10" }} ml={{ md: "3" }}>

@@ -201,16 +201,10 @@ const AddStaff: React.FC<IAddStaff> = ({ updateStaff, closeDialog }) => {
             email,
             firstname,
             lastname,
-            country:church.country,
             state:church.state,
             city:church.city,
-            personTypeID: 3,
-            enteredBy: "ChurchAdmin",
             role,
-            churchId: Number(church.churchID),
-            isDataCapture: false,
-            societies: [],
-            societyPosition: []
+            churchID: Number(church.churchID),
         }
         createStaff(newChurchStaff).then(payload => {
             actions.setSubmitting(false)

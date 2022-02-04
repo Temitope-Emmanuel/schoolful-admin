@@ -770,9 +770,8 @@ const Finance = () => {
                                     <ActivityCard>
                                     <FinanceActivity isLoaded={Boolean(item.churchDonationID)}
                                         text={item.donationDescription} 
-                                        subHeading={`Account:${item.donationName}`}
-                                        moreHeading={`Target Amount:₦${item.targetAmount}`}
-                                        heading={item.donationName} />
+                                        heading={`Account:${item.donationName}`}
+                                        moreHeading={`Target Amount:₦${item.targetAmount}`}/>
                                 </ActivityCard>
                                 </WrapItem>
                             )):

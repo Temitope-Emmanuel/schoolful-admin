@@ -103,7 +103,7 @@ export const getUserByRoleAndChurchId = async({
     cancelToken?:CancelTokenSource
 }):Promise<IResponse<PaginatedResult<IChurchMember>>> => {
     try{
-        const url = `${baseUrl}/getUserByRoleAndChurchId?role=${role}&churchId=${churchId}&page=${page}&count=${count}`
+        const url = `${baseUrl}/getUserByRoleAndChurchId/${role}/${churchId}`
         const response = await axios.get(url,{
             cancelToken:cancelToken?.token
         })

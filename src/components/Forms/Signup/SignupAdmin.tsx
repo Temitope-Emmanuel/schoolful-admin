@@ -304,11 +304,7 @@ const SignupAdmin = () => {
             genderID:(genderID as any).value,
             state,
             city,
-            personTypeID: 3,
-            enteredBy: "ChurchAdmin",
-            churchId: churchID,
-            societies: [],
-            societyPosition: []
+            churchID,
         }
 
         await createStaff(newUser).then(payloadData => {

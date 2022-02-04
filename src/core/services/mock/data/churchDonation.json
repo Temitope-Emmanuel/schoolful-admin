@@ -1,70 +1,70 @@
 [
     {
         "churchDonationID": 1,
-        "donationName": "vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet",
+        "donationName": "vitae ipsum",
         "donationDescription": "Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
         "churchID": 371,
         "targetAmount": 60794
     },
     {
         "churchDonationID": 2,
-        "donationName": "sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse",
+        "donationName": "sed augue",
         "donationDescription": "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis. Donec semper sapien a libero.",
         "churchID": 785,
         "targetAmount": 27473
     },
     {
         "churchDonationID": 3,
-        "donationName": "justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum",
+        "donationName": "justo blandit",
         "donationDescription": "Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti.",
         "churchID": 895,
         "targetAmount": 15569
     },
     {
         "churchDonationID": 4,
-        "donationName": "vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula",
+        "donationName": "vulputate justo",
         "donationDescription": "Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.",
         "churchID": 246,
         "targetAmount": 19623
     },
     {
         "churchDonationID": 5,
-        "donationName": "turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris",
+        "donationName": "vivamus tortor",
         "donationDescription": "Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.",
         "churchID": 501,
         "targetAmount": 59748
     },
     {
         "churchDonationID": 6,
-        "donationName": "venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede",
+        "donationName": "venenatis lacinia",
         "donationDescription": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
         "churchID": 186,
         "targetAmount": 76174
     },
     {
         "churchDonationID": 7,
-        "donationName": "primis in faucibus orci luctus et ultrices posuere cubilia curae",
+        "donationName": "ultrices posuere",
         "donationDescription": "Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
         "churchID": 913,
         "targetAmount": 39671
     },
     {
         "churchDonationID": 8,
-        "donationName": "felis eu sapien cursus vestibulum proin eu mi nulla ac enim",
+        "donationName": "cursus vestibulum",
         "donationDescription": "Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl.",
         "churchID": 362,
         "targetAmount": 58933
     },
     {
         "churchDonationID": 9,
-        "donationName": "duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam",
+        "donationName": "convallis nunc",
         "donationDescription": "Donec posuere metus vitae ipsum. Aliquam non mauris.",
         "churchID": 868,
         "targetAmount": 28922
     },
     {
         "churchDonationID": 10,
-        "donationName": "vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes",
+        "donationName": "vulputate luctus",
         "donationDescription": "Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
         "churchID": 506,
         "targetAmount": 44064

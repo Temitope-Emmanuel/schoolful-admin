@@ -2,6 +2,7 @@ import axios, { CancelTokenSource } from "axios";
 import { Payment, PaymentResponse } from "core/models/Payment";
 import { IResponse } from "core/models/Response";
 import { Payment as PaymentEnum } from "core/enums/Payment";
+import { IDonation } from "core/models/Donation";
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Payment`;
 
@@ -78,7 +79,7 @@ export const getChurchOnlyDonationTransactions = async ({
     page: number;
     take: number;
     cancelToken?: CancelTokenSource
-}): Promise<IResponse<any>> => {
+}): Promise<IResponse<IDonation[]>> => {
   try {
     const url = `${baseUrl}/GetChurchOnlyDonationTransactions/${churchId}`;
     const response = await axios.get(url,{

@@ -96,7 +96,7 @@ export const updateChurch = async (updateChurch:IChurchResponse) => {
 }
 export const getChurchMember = async (churchId:number):Promise<IResponse<IChurchMember[]>> => {
     try{
-        const url = `${baseUrl}/GetChurchMember?churchId=${churchId}`
+        const url = `${baseUrl}/GetChurchMemberByChurchID/${churchId}`
         const response = await axios.get(url)
         return response.data
     }catch(err){

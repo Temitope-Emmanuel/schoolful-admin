@@ -2,6 +2,7 @@ import MockAdapter from "axios-mock-adapter/types"
 import { ChurchStatus } from "core/enums/Church"
 import denomination from '../data/denomination.json'
 import churchBankAccount from '../data/churchAccount.json'
+import churchMember from '../data/churchMember.json'
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/Church`
 
@@ -54,6 +55,21 @@ export const churchMock = (mock: MockAdapter) => {
     isSuccessful:true,
     message:'',
     data:churchBankAccount
+  })
+
+  // Get Church Member
+  const getChurchMemberUrl = `${baseUrl}/GetChurchMemberByChurchID`;
+  mock.onGet(new RegExp(`${getChurchMemberUrl}/*`)).reply(200, {
+    status:200,
+    isSuccessful:true,
+    message:'',
+    data:{
+      currentPage:1,
+      pageSize:1,
+      records:churchMember,
+      totalPages:1,
+      totalRecords:1
+    }
   })
 }
 
