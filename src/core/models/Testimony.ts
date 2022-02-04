@@ -3,11 +3,10 @@ export type TestimonyType = "General" | "Thanksgiven"
 
 export interface ITestimony {
     testimonyID?:number;
-    testimonyTile:string;
+    testimonyTitle:string;
     testimonyDetail:string
-    personId:string;
-    testimonyType: TestimonyType;
-    churchId:number;
+    personID:string;
+    churchID:number;
     dateEntered:Date;
     timeLapsed?:string;
 }

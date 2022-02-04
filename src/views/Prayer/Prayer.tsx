@@ -164,16 +164,14 @@ const Prayer = () => {
     // const currentChurch = useSelector((state:AppState) => state.system.currentChurch)
     const defaultPrayer: IPrayer = {
         prayerName: "",
-        prayerdetail: "",
-        denominationID: 0,
-        denomination: ""
+        prayerDetail: ""
     }
     const defaultPrayerRequest: IPrayerRequest = {
-        prayerTile: "",
+        prayerTitle: "",
         prayerDetail: "",
-        churchId: 0,
-        dateEntered: new Date(),
-        personId: "",
+        churchID: 0,
+        createdAt: new Date(),
+        personID: "",
         fullName: "",
         pictureUrl: "",
         timeLapsed: "",
@@ -186,24 +184,17 @@ const Prayer = () => {
             prayerRequestID: 0
         }]
     }
-    const defaultReading = {
-        name: "",
-        verse: "",
-        content: ""
-    }
     const defaultTestimony: ITestimony = {
-        churchId: 0,
+        churchID: 0,
         dateEntered: new Date(),
-        personId: "",
-        testimonyTile: "",
-        testimonyType: "General",
+        personID: "",
+        testimonyTitle: "",
         testimonyDetail: "",
         timeLapsed: ""
     }
     const [prayer, setPrayer] = React.useState<IPrayer[]>(new Array(10).fill(defaultPrayer))
     const [prayerRequest, setPrayerRequest] = React.useState<IPrayerRequest[]>(new Array(10).fill(defaultPrayerRequest))
     const [churchTestimony, setChurchTestimony] = React.useState<ITestimony[]>(new Array(10).fill(defaultTestimony))
-    const [dailyReading, setDailyReading] = React.useState<any>(new Array(10).fill(defaultReading))
     const [tabIndex, setTabIndex] = React.useState(1)
     const handleTabChange = (event: number) => {
         setTabIndex(event)
@@ -212,10 +203,11 @@ const Prayer = () => {
     const apiChurchTestimony = (cancelToken: CancelTokenSource) => () => {
         getTestimony({ churchId: Number(params.churchId), testimonyType: "General" }, cancelToken).then(payload => {
             const newChurchTestimony = payload.data.map((item) => {
-                // const timeLapsedInMilli = (new Date()).getTime() - (new Date(item.dateEntered)).getTime()
-                // const timeLapsed = String(Math.round(timeLapsedInMilli / (1000 * 3600 * 24)))
+                const timeLapsedInMilli = (new Date()).getTime() - (new Date(item.dateEntered)).getTime()
+                const timeLapsed = String(Math.round(timeLapsedInMilli / (1000 * 3600 * 24)))
                 return ({
                     ...item,
+                    timeLapsed,
                     dateEntered:new Date(item.dateEntered)
                 })
             })
@@ -250,43 +242,15 @@ const Prayer = () => {
             })
         }
 
-        const getDailyReadingApi = async () => {
-            const currentDate = (new Date()).toLocaleDateString().split("/")
-            const padString = (str: string) => {
-                return str.length >= 2 ? str : `0${str}`
-            }
-            const formatDate = `${currentDate[2]}-${padString(currentDate[0])}-${padString(currentDate[1])}`
-            await getDailyReading(formatDate, cancelToken).then(payload => {
-                const { readings } = payload.data
-
-                const dailyReadings = readings.map((item: any) => {
-                    const newContent = item.content.replace(/[1-9][0-9]*/g, (text: string) => (
-                        `<br/> ${text} &nbsp;`
-                    ))
-                    return ({
-                        ...item,
-                        content: newContent
-                    })
-                })
-                setDailyReading(dailyReadings)
-            }).catch(err => {
-                if (!axios.isCancel(err)) {
-                    toast({
-                        title: "Unable to get Daily Reading",
-                        subtitle: `Error:${err}`,
-                        messageType: MessageType.ERROR
-                    })
-                }
-            })
-        }
         const getChurchPrayerRequest = () => {
             getPrayerRequest(params.churchId, cancelToken).then(payload => {
                 const newPrayerRequest = payload.data.map(item => {
-                    const timeLapsedInMilli = (new Date()).getTime() - (new Date(item.dateEntered)).getTime()
-                    const timeLapsed = String(Math.round(timeLapsedInMilli / (1000 * 3600 * 24)))
+                    const timeLapsedInMilli = (new Date()).getTime() - (new Date(item.createdAt)).getTime()
+                    console.log('this is the time lapsed', {timeLapsedInMilli})
+                    // const timeLapsed = String(Math.round(timeLapsedInMilli / (1000 * 3600 * 24)))
                     return ({
                         ...item,
-                        timeLapsed,
+                        // timeLapsed,
                         hasPrayed: Boolean(item.prayedPrayerRequests!.find(item => item.fullName === currentUser.fullname))
                     })
                 })
@@ -304,7 +268,6 @@ const Prayer = () => {
         getChurchPrayerRequest()
         getChurchTestimony()
         getChurchPrayer()
-        getDailyReadingApi()
         return () => {
             cancelToken.cancel()
         }
@@ -386,11 +349,9 @@ const Prayer = () => {
                         </Tab>
                     <Tab _selected={{ ...selected, shadow: " -3px 0px 6px #00000029" }}
                         px={["2", "5"]} py="3" >
-                        Daily Verse
-                        </Tab>
+                        Thanksgiving
+                    </Tab>
                 </TabList>
-
-
                 <TabPanels mb={{ base: "5rem", md: "10rem" }}
                     className={classes.tabContainer}>
                     <TabPanel mt="3">
@@ -398,8 +359,8 @@ const Prayer = () => {
                             spacing={3} className={classes.prayerContainer}>
                             {prayerRequest.length > 0 && prayerRequest.map((item, idx) => (
                                 <DetailCard title={item.fullName} key={item.prayerRequestID || idx}
-                                    subtitle={item.prayerTile}
-                                    image={item.pictureUrl} timing={item.dateEntered}
+                                    subtitle={item.prayerTitle}
+                                    image={item.pictureUrl} timing={new Date(item.createdAt)}
                                     body={item.prayerDetail} isLoaded={Boolean(item.prayerRequestID)}
                                 >
                                     <HStack width="100%" justify="space-between">
@@ -421,8 +382,7 @@ const Prayer = () => {
                                             boxSize="1rem" icon={<FaPrayingHands />} />
                                     </HStack>
                                 </DetailCard>
-                            )) 
-                            }
+                            ))}
                         </SimpleGrid>
                         {prayerRequest.length <= 0 && 
                         <NoContent>
@@ -437,7 +397,7 @@ const Prayer = () => {
                         <Wrap spacing={6}>
                             {churchTestimony.length > 0 && churchTestimony.map((item, idx) => (
                                 <WrapItem key={item.testimonyID || idx} bgColor="white">
-                                    <DetailCard title="Bismark Achodo" timing={item.dateEntered}
+                                    <DetailCard title="Bismark Achodo" timing={new Date(item.dateEntered)}
                                         image="https://bit.ly/ryan-florence" isLoaded={Boolean(item.testimonyID)}
                                         smallText={(new Date(item.dateEntered)).toLocaleDateString()}
                                         body={item.testimonyDetail}
@@ -479,7 +439,7 @@ const Prayer = () => {
                                     <Skeleton key={item.prayerID || idx} isLoaded={Boolean(item.prayerID)}>
                                         <DetailCard title={item.prayerName} key={item.prayerID || idx}
                                             smallText={"JOHN 3:16"}
-                                            body={item.prayerdetail}
+                                            body={item.prayerDetail}
                                         >
                                             <HStack width="100%" justify="space-between">
                                                 <AvatarGroup size="sm" max={3}>
@@ -501,31 +461,7 @@ const Prayer = () => {
                         </VStack>
                     </TabPanel>
                     <TabPanel mt="3">
-                        <RadioGroup onChange={setOptions} value={options}>
-                        </RadioGroup>
-                        <Button>
-                            <Link to={`/church/${params.churchId}/prayer/verse/create`} >
-                                Add verse of the day
-                                    </Link>
-                        </Button>
-                        <SimpleGrid minChildWidth="17.5rem" alignItems={{ base: "center", md: "flex-start" }} gridGap=".5rem"
-                            spacing={3} className={classes.prayerContainer}>
-                            {dailyReading.map((item: any, idx: number) => (
-                                <Skeleton key={idx} isLoaded={Boolean(item.verse)}>
-                                    <DetailCard
-                                        title={item.name} key={idx}
-                                        smallText={item.verse}
-                                        body={""}
-                                    >
-                                        <Text dangerouslySetInnerHTML={{ __html: item.content }} />
-                                        {/* <HStack width="100%" justify="flex-start">
-                                                    <Icon as={BiEdit} />
-                                                    <Icon as={RiDeleteBinLine} />
-                                                </HStack> */}
-                                    </DetailCard>
-                                </Skeleton>
-                            ))}
-                        </SimpleGrid>
+                        <p>This is for thanksgiving</p>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

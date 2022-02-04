@@ -15,6 +15,7 @@ import useParams from "utils/params"
 import useToast from "utils/Toast"
 import { MessageType } from "core/enums/MessageType"
 import {CreateLayout} from "layouts"
+import { IPrayer } from "core/models/Prayer"
 
 
 interface IForm {
@@ -60,11 +61,9 @@ const Create = () => {
 
     const handleSubmit = async (values: IForm, {...action}: any) => {
         action.setSubmitting(true)
-            const newPrayer = {
+            const newPrayer: IPrayer = {
                 prayerName:values.name,
-                prayerdetail:values.detail,
-                denominationID:currentChurch.denominationId || 3,
-                denomination:currentChurch.denomination || "Pentecostal"
+                prayerDetail:values.detail
             }
             addPrayer(newPrayer).then(payload => {
                 action.setSubmitting(false)

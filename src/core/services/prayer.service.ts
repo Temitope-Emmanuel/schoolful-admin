@@ -18,7 +18,7 @@ export const addPrayer = async (newPrayer:IPrayer):Promise<IResponse<IPrayer>> =
 }
 export const getPrayer = async (denominationId:number,cancelToken:CancelTokenSource):Promise<IResponse<IPrayer[]>> => {
     try{
-        const url = `${baseUrl}/GetPrayer?denomination=${denominationId}`
+        const url = `${baseUrl}/GetPrayer`
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
         })
@@ -29,7 +29,7 @@ export const getPrayer = async (denominationId:number,cancelToken:CancelTokenSou
 }
 export const getDailyReading = async (dateString:string,cancelToken:CancelTokenSource):Promise<IResponse<any>> => {
     try{
-        const url = `${baseUrl}/GetDailyReading?date=${dateString}`
+        const url = `${baseUrl}/GetDailyReading/${dateString}`
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
         })
@@ -51,7 +51,7 @@ export const getPreviousDailyReading = async (dateString:Date):Promise<IResponse
 // Prayer Request
 export const getPrayerRequest = async (churchId:string,cancelToken:CancelTokenSource):Promise<IResponse<IPrayerRequest[]>> => {
     try{
-        const url = `${baseUrl}/GetPrayerRequest?churchId=${churchId}`
+        const url = `${baseUrl}/GetPrayerRequest/${churchId}`
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
         })
@@ -88,7 +88,7 @@ export const deletePrayerRequest = async (prayerId:number):Promise<IResponse<IPr
     }
 }
 export const prayPrayerRequest = async (arg:string):Promise<IResponse<null>> => {
-    const url = `${baseUrl}/PrayPrayerRequest?`.concat(arg)
+    const url = `${baseUrl}/PrayPrayerRequest`
     try{
         const response = await axios.get(url)
         return response.data
@@ -114,7 +114,7 @@ interface IGetTestimony {
 }
 
 export const getTestimony = async (arg:IGetTestimony,cancelToken:CancelTokenSource):Promise<IResponse<ITestimony[]>> => {
-    const url = `${baseUrl}/GetTestimony?churchId=${arg.churchId}&testimonyType=${arg.testimonyType}`
+    const url = `${baseUrl}/GetTestimony/${arg.churchId}`
     try{
         const response = await axios.get(url,{
             cancelToken:cancelToken.token
@@ -149,7 +149,7 @@ interface IChangeTestimonyStatus {
     testimonyStatus:TestimonyStatusType
 }
 export const ChangeTestimonyStatus = async (arg:IChangeTestimonyStatus):Promise<IResponse<null>> => {
-    const url = `${baseUrl}/ChangeTestimonyStatus?testimonyId=${arg.testimonyId}&testimonyStatus=${arg.testimonyStatus}`
+    const url = `${baseUrl}/ChangeTestimonyStatus`
     try{
         const response = await axios.put(url)
         return response.data

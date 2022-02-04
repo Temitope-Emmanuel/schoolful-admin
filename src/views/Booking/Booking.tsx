@@ -164,11 +164,10 @@ export const ReviewBooking: React.FC<IReviewBooking> = ({ handleReject,close }) 
 
 const Booking = () => {
     const defaultTestimony: ITestimony = {
-        churchId: 0,
+        churchID: 0,
         dateEntered: new Date(),
-        personId: "",
-        testimonyTile: "",
-        testimonyType: "General",
+        personID: "",
+        testimonyTitle: "",
         testimonyDetail: ""
     }
     const currentUser = useSelector((state: AppState) => state.system.currentUser)
@@ -270,7 +269,7 @@ const Booking = () => {
                                 {churchTestimony.length > 0 && churchTestimony.map((item, idx) => (
                                     <DetailCard title="Bismark Achodo" key={item.testimonyID || idx} timing={item.dateEntered}
                                         image="https://bit.ly/ryan-florence"
-                                        subtitle={item.testimonyTile} isLoaded={Boolean(item.testimonyID)}
+                                        subtitle={item.testimonyTitle} isLoaded={Boolean(item.testimonyID)}
                                         smallText={(new Date(item.dateEntered)).toLocaleDateString()}
                                         body={item.testimonyDetail}
                                     >
