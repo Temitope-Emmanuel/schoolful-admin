@@ -165,8 +165,7 @@ interface ICommentOnTestimony {
 }
 
 export const CommentOnTestimony = async (arg:ICommentOnTestimony):Promise<IResponse<null>> => {
-    const url = `${baseUrl}/CommentOnTestimony?testimonyId=${arg.testimonyId}&comment=${encodeURI(arg.comment)}&personId=${arg.personId}`
-    console.log(url)
+    const url = `${baseUrl}/CommentOnTestimony`
     try{
         const response = await axios.post(url)
         return response.data

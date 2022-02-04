@@ -104,62 +104,6 @@ const selected = {
     marginBottom: "0"
 }
 
-interface IReviewBooking {
-    handleReject(comment: string): void
-    close():void
-}
-
-export const ReviewBooking: React.FC<IReviewBooking> = ({ handleReject,close }) => {
-    interface IReviewForm {
-        reason: string
-    }
-    const initialValue = {
-        reason: ""
-    }
-    const handleSubmit = (values: IReviewForm, { ...actions }: any) => {
-        actions.setSubmitting(true)
-        handleReject(values.reason)
-        close()
-    }
-    const validationSchema = Yup.object({
-        reason: Yup.string().min(3, "Reason for rejecting is too short").required()
-    })
-    return (
-        <ModalContent alignItems="center" bgColor="bgColor2" py={5} >
-            <ModalHeader textAlign="center" mt={5} mb={6} color="primary">
-                Reason for Rejecting
-            </ModalHeader>
-            <ModalCloseButton border="2px solid rgba(0,0,0,.5)"
-                outline="none" borderRadius="50%" opacity={.5} />
-            <Formik
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-                initialValues={initialValue}
-            >
-                {(formikProps: FormikProps<IReviewForm>) => (
-                    <>
-                        <ModalBody maxW="md" width="75%" >
-                            <Field name="reason" >
-                                {({ field }: FieldProps) => (
-                                    <Textarea rows={7} width="100%" placeholder="Enter details for this Event" {...field} />
-                                )}
-                            </Field>
-                        </ModalBody>
-                        <ModalFooter justifyContent="center">
-                            <Button px="12"
-                            disabled={formikProps.isSubmitting || !formikProps.dirty || !formikProps.isValid}
-                            onClick={(formikProps.handleSubmit as any)}>
-                                Proceed
-                        </Button>
-                        </ModalFooter>
-                    </>
-                )}
-            </Formik>
-        </ModalContent>
-    )
-}
-
-
 
 
 const Booking = () => {
@@ -174,9 +118,9 @@ const Booking = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const params = useParams()
-    const [open, setOpen] = React.useState(false)
     const toast = useToast()
     const [churchTestimony, setChurchTestimony] = React.useState<ITestimony[]>(new Array(10).fill(defaultTestimony))
+    const [open, setOpen] = React.useState(false)
     const [currentTestimony, setCurrentTestimony] = React.useState<ITestimony>(defaultTestimony)
     const [tabIndex, setTabIndex] = React.useState(0)
     const handleTabChange = (event: number) => {
@@ -264,10 +208,9 @@ const Booking = () => {
                     <TabPanels mb={{ base: "5rem", md: "10rem" }}
                         className={classes.tabContainer}>
                         <TabPanel mt="3">
-
                             <SimpleGrid minChildWidth="17.5rem" alignItems={{ base: "center", md: "flex-start" }} gridGap="1.5rem" className={classes.prayerContainer}>
                                 {churchTestimony.length > 0 && churchTestimony.map((item, idx) => (
-                                    <DetailCard title="Bismark Achodo" key={item.testimonyID || idx} timing={item.dateEntered}
+                                    <DetailCard title="Bismark Achodo" key={item.testimonyID || idx} timing={new Date(item.dateEntered)}
                                         image="https://bit.ly/ryan-florence"
                                         subtitle={item.testimonyTitle} isLoaded={Boolean(item.testimonyID)}
                                         smallText={(new Date(item.dateEntered)).toLocaleDateString()}
@@ -296,10 +239,6 @@ const Booking = () => {
                     </TabPanels>
                 </Tabs>
             </Flex>
-            <Dialog open={open} size="xl" close={handleToggle}>
-                <ReviewBooking close={() => setOpen(false)}
-                 handleReject={rejectTestimony(currentUser.id, currentTestimony.testimonyID as number)} />
-            </Dialog>
         </>
     )
 }

@@ -64,6 +64,14 @@ export const prayerMock = (mock: MockAdapter) => {
         message:'',
         data:[]
     })
+
+    // Comment on testimony
+    mock.onPost(`${baseUrl}/CommentOnTestimony`).reply(200, {
+        status:200,
+        isSuccessful:true,
+        message:'',
+        data:[]
+    })
 }
 
 // export const addPrayer = async (newPrayer:IPrayer):Promise<IResponse<IPrayer>> => {
