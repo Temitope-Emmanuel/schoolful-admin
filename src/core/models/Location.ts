@@ -1,14 +1,11 @@
 import { IChurch } from "./Church";
-import { IDataCaptureSetting } from "./DataCaptureSetting";
 import {IPerson} from "./Person"
 
 export interface IState {
     state:string;
-    person:IPerson[];
     city:ICity[];
     church:IChurch;
     country:string;
-    dataCaptureSetting:IDataCaptureSetting;
     name: string;
     capital: string;
 }

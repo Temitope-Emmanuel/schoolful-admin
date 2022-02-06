@@ -511,7 +511,7 @@ const TextDialog: React.FC<ITextDialog> = ({ sermon }) => {
 const Media = () => {
     const defaultSermon: ISermon = {
         title: "",
-        churchId: 0,
+        churchID: 0,
         author: "",
         mediaType: "text",
         featureDateFrom: new Date(),

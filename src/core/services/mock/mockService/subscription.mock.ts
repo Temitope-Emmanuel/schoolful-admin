@@ -25,26 +25,3 @@ export const subscriptionMock = (mock: MockAdapter) => {
   })
 
 }
-
-// export const getSubscriptionById = async(subscriptionId:string,cancelToken?:CancelTokenSource):Promise<IResponse<ISubscription[]>> => {
-//     try{
-//         const url = `${baseUrl}/getSubscriptionById?Id${subscriptionId}`
-//         const response = await axios.get(url,{
-//             ...(cancelToken && {cancelToken:cancelToken.token})
-//         })
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
-// export const getSubscriptionByChurchId = async(churchId:string,cancelToken?:CancelTokenSource):Promise<IResponse<SubscriptionByChurch[]>> => {
-//     try{
-//         const url = `${baseUrl}/getSubscriptionsByChurchId?churchId=${churchId}`
-//         const response = await axios.get(url,{
-//             ...(cancelToken && {cancelToken:cancelToken.token})
-//         })
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }

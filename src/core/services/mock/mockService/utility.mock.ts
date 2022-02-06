@@ -38,32 +38,3 @@ export const utilityMock = (mock: MockAdapter) => {
     data:banks
   })
 }
-
-// export const getGroupPosition = async ():Promise<IResponse<ILeaderPosition[]>> => {
-//     try{
-//         const url = `${baseUrl}/getallLeadersPosition`
-//         const response = await axios.get(url)
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
-
-// export const getCity = async (stateId:number):Promise<IResponse<ICity[]>> => {
-//     try{
-//         const url = `${baseUrl}/city/${stateId}`
-//         const response = await axios.get(url)
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
-// export const getBanks = async ():Promise<IResponse<IBank[]>> => {
-//     try{
-//         const url = `${baseUrl}/GetBanks`
-//         const response = await axios.get(url)
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }

@@ -137,7 +137,7 @@ const Content = () => {
 
 
     const saveSermonToDraft = (values: IForm) => () => {
-        sermonDraftHelper.saveSermonToLocalStorage({ ...values, churchId: Number(params.churchId), mediaType: 'text' }, toast)
+        sermonDraftHelper.saveSermonToLocalStorage({ ...values, churchID: Number(params.churchId), mediaType: 'text' }, toast)
         history.push(`/church/${params.churchId}/media`)
     }
 

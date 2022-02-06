@@ -7,7 +7,7 @@ export interface ISermon {
     featureDateFrom:Date;
     featureDateTo:Date;
     sermonContent:string;
-    churchId:number;
+    churchID:number;
     mediaType: 'video' | 'audio' | 'text';
     mediaUrl?:string;
 }

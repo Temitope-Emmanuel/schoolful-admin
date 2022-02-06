@@ -21,38 +21,3 @@ export const donationMock = (mock: MockAdapter) => {
         data:(churchDonation as any)[3]
     })  
 }
-
-// export const AddDonation = async(newDonation:IDonation):Promise<IResponse<IDonation>> => {
-//     try{
-//         const url = `${baseUrl}/AddDonation`
-//         const config:AxiosRequestConfig = {headers:{"Content-Type":"application/json-patch+json"}}
-//         const response = await axios.post(url,newDonation,config)
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
-
-// export const GetDonationByChurch = async (churchId:number,cancelToken:CancelTokenSource):Promise<IResponse<IDonation[]>> => {
-//     try{
-//         const url = `${baseUrl}/GetDonationByChurch/${churchId}`
-//         const response = await axios.get(url,{
-//             cancelToken:cancelToken.token
-//         })
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
-
-// export const GetDonationTransactionByChurch = async (churchId:number,cancelToken:CancelTokenSource):Promise<IResponse<IDonation>> => {
-//     try{
-//         const url = `${baseUrl}/GetDonationTransactionsByChurch?churchId=${churchId}`
-//         const response = await axios.get(url,{
-//             cancelToken:cancelToken.token
-//         })
-//         return response.data
-//     }catch(err){
-//         throw err
-//     }
-// }
