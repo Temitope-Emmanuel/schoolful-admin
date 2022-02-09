@@ -123,7 +123,7 @@ const ManageCard: React.FC<IManageCard> = ({ heading,isLoaded, memberAmt,role,up
                     <Flex align="center"
                     >
                         <Icon as={RiDeleteBin6Line} />
-                        <Text cursor="pointer" disabled={!submitting} onClick={handleDelete} >
+                        <Text cursor="pointer" onClick={handleDelete} >
                             Delete
                         </Text>
                     </Flex>

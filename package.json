@@ -65,7 +65,7 @@
     "redux-thunk": "^2.3.0",
     "rrule": "^2.6.4",
     "save": "^2.4.0",
-    "socket.io-client": "^4.0.1",
+    "socket.io-client": "^4.4.1",
     "tinymce": "^5.6.2",
     "typescript": "^3.9.5",
     "web-vitals": "^0.2.2",
@@ -106,6 +106,7 @@
     "@types/react-time-picker": "^4.0.0",
     "@types/recharts": "^1.8.16",
     "@types/redux-logger": "^3.0.8",
+    "@types/socket.io-client": "^3.0.0",
     "@types/tinymce": "^4.6.0",
     "@types/yup": "^0.29.8"
   }

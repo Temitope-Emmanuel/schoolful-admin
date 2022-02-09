@@ -352,7 +352,8 @@ const CustomDateCreator: React.FC<ICustomDateCreator> = ({ customForm, close, ha
                                             </Text>
                                             <HStack {...group}>
                                                 {dateMapped.map((value) => {
-                                                    const radio = getRadioProps({ value,enterKeyHint:"" })
+                                                    // const radio = getRadioProps({ value,enterKeyHint:"" })
+                                                    const radio = getRadioProps({ value })
                                                     return (
                                                         <DateIcon key={value} {...radio}>
                                                             {value.substring(1, 0)}

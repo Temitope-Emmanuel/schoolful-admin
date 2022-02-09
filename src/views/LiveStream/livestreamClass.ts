@@ -1,6 +1,5 @@
 import {ToastFunc} from "utils/Toast"
 import io,{Socket} from "socket.io-client"
-import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 
 
 interface videoSizeDetail {
@@ -45,7 +44,7 @@ class LiveStream {
     private toast:ToastFunc;
     private videoRef:HTMLVideoElement;
     public audiobitrate:number;
-    private socket:Socket<DefaultEventsMap, DefaultEventsMap> | undefined;
+    private socket:Socket<any, any> | undefined;
     // private checkedRef:HTMLInputElement;
     private state:"stopped" | "ready" | "streaming" | "paused" | "testing" | "live" | "complete" ;
     private liveStreamUrl = process.env.REACT_APP_LIVESTREAM_API || ""
@@ -58,7 +57,7 @@ class LiveStream {
         this.videoRef = videoRef;
         this.audiobitrate = audiobitrate;
         this.connectToServer()
-        // this.socket = io(this.liveStreamUrl,socketOptions)
+        this.socket = io(this.liveStreamUrl,socketOptions)
         // this.checkedRef = checkedRef;
         this.state = state
         this.constraint = constraint ||  {
@@ -91,7 +90,7 @@ class LiveStream {
             this.videoRef.muted = true;
             this.videoRef.srcObject = stream
         }else{
-            (this.videoRef as any).src = window.URL.createObjectURL(stream)
+            (this.videoRef as any).src = window.URL.createObjectURL(stream as any)
         }
         const that = this
         this.videoRef.addEventListener("loadedmetadata",function(e){
@@ -107,11 +106,11 @@ class LiveStream {
         if(!this.socket){
             return;
         }
-        navigator.getUserMedia = (navigator.mediaDevices.getUserMedia ||
+        (navigator as any).getUserMedia = (navigator.mediaDevices.getUserMedia ||
             (navigator.mediaDevices as any).mozGetUserMedia || 
             (navigator.mediaDevices as any).mszGetUserMedia || 
             (navigator.mediaDevices as any).webkitGetUserMedia)
-        if(!navigator.getUserMedia){
+        if(!(navigator as any).getUserMedia){
             return this.toast({
                 messageType:"info",
                 title:"No user media Available",
@@ -178,12 +177,12 @@ class LiveStream {
         if(this.socket.connected){
             this.alert("Successfully connected to rtmp server")
         }
-        this.socket.on("connect_timeout", (timeout) => {
+        this.socket.on("connect_timeout", (timeout: any) => {
             this.alert("state on connection timeout= " + timeout);
             // output_message.innerHTML = "Connection timed out";
             // recordingCircle.style.fill = "gray";
         });
-        this.socket.on("error", (error) => {
+        this.socket.on("error", (error: any) => {
             this.alert("state on connection error= " + error);
             // output_message.innerHTML = "Connection error";
             // recordingCircle.style.fill = "gray";
@@ -195,14 +194,14 @@ class LiveStream {
             // recordingCircle.style.fill = "gray";
         });
     
-        this.socket.on("message",  (m) => {
+        this.socket.on("message",  (m: any) => {
             this.alert(JSON.stringify(m,null,2))
             this.alert("state on message= " + this.state);
             this.alert("recv server message");
             this.alert("SERVER:" + m);
         });
 
-        this.socket.on("fatal", (m) => {
+        this.socket.on("fatal", (m: any) => {
             this.alert("Fatal ERROR: unexpected:" + m);
             //alert('Error:'+m);
             console.log("fatal socket error!!", m);
@@ -227,7 +226,7 @@ class LiveStream {
             //should reload?
         });
     
-        this.socket.on("ffmpeg_stderr", (m) => {
+        this.socket.on("ffmpeg_stderr", (m: any) => {
             //this is the ffmpeg output for each frame
             this.alert("FFMPEG:" + m);
         });
