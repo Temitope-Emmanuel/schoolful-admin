@@ -1,7 +1,7 @@
 
 # Welcome to Schoolful-admin
 
-This is a project that comes with awesome functionality, built with react and using chakra-ui with material-ui (a bit overkill), there is also a livestreaming service althought you'll have to setup an RTMP server. You can reach out to me if you need any extra help, the codebase is about 2 years old so something might need minor changes but it should still be good to go. Happy hacking :) 
+This is a project (admin part) that comes with awesome functionality, built with react and using chakra-ui with material-ui (a bit overkill), there is also a livestreaming service althought you'll have to setup an RTMP server. You can reach out to me if you need any extra help, the codebase is about 2 years old so something might need minor changes but it should still be good to go. Happy hacking :) 
 
 https://www.loom.com/share/9bfd414ce0cb4cea90c9512e4c41b05d
 ## This guide should help you get started
