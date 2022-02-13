@@ -3,9 +3,9 @@ import {theme} from "@chakra-ui/react"
 
 const {colors} = theme;
 
-export const primary = "#B603C9"
-export const bgColor = "#F9F5F9"
-export const bgColor2 = "#F3F3F3"
+export const primary = "#23C4AD"
+export const bgColor = "#2C2C60"
+export const bgColor2 = "#2C2C60"
 export const buttonBackground = "#151C4D1A"
 export const avatarBg = "#CCCCCC"
 export const inputColor = "#00000099"

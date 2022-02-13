@@ -182,7 +182,7 @@ const Header:React.FC<IProps> = props => {
         </MenuButton>
       </Box>
         <MenuList display="flex" flexDirection="column">
-          <MenuItem as={Link} to="/signup/admin" color="primary">Find Your Church</MenuItem>
+          <MenuItem as={Link} to="/signup/admin" color="primary">Find Your School</MenuItem>
           <MenuItem color="primary">About us</MenuItem>
           <MenuItem color="primary">Contact us</MenuItem>
           {

@@ -1,7 +1,7 @@
 export {default as BackgroundImage} from "./Long-Distance-Moving.jpg"
 export {default as FinanceSVG} from "./Finance.svg"
 export {default as LandingImage} from "./LandingImage.png"
-export {default as Logo} from "./Logo.svg"
+export {default as Logo} from "./Logo.png"
 export {default as BibleImage} from "./Bible.png"
 export {default as BibleImage2x} from "./Bible@2x.png"
 export {default as UserAdmin} from "./userAdmin.svg"

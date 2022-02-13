@@ -20,6 +20,7 @@ import {
 } from "assets/images"
 import { HiOutlineMail } from "react-icons/hi"
 import { primary } from "theme/palette"
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa"
 
 
 
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => (
             }
         },
         churchImageContainer: {
-            backgroundImage: `url(${LandingImage})`,
+            backgroundImage: `url(${Logo})`,
             justifyContent: "center",
             alignItems: "center",
             backgroundRepeat: "no-repeat",
@@ -348,11 +349,11 @@ const useStyles = makeStyles((theme: Theme) => (
 const Home = () => {
     const classes = useStyles()
     const dashboardMenu = [
-        { icon: PrayerHand, title: "Prayer Wall" },
-        { icon: Bible, title: "Bible" },
-        { icon: Sermon, title: "Sermon" },
-        { icon: Giving, title: "Giving" },
-        { icon: Activity, title: "Church Activity" },
+        { icon: PrayerHand, title: "Assignment" },
+        { icon: Bible, title: "Online Class" },
+        { icon: Sermon, title: "Lecture" },
+        { icon: Giving, title: "Classwork" },
+        { icon: Activity, title: "Activity" },
         { icon: Reflection, title: "Daily Reflection" },
         { icon: Groups, title: "Groups" },
         { icon: Announcement, title: "Announcement" },
@@ -368,32 +369,31 @@ const Home = () => {
                         <Heading color="white" textAlign="center"
                             maxWidth="xl"
                             fontSize={["3xl", "4xl", "5xl", "5rem"]}>
-                            Bringing the <Box as="span" color="primary">Church</Box> online
+                            Bringing the <Box as="span" color="primary">School</Box> online
                         </Heading>
                         <Stack direction={["column", "row"]}
                          className={classes.adminButtonContainer}>
                             <Text color="primary">
-                                Are you a church Admin?
+                                Are you a school Admin?
                             </Text>
                             <Link to="/signup/admin" >
                                 <Button>
-                                    Add Your Church
+                                    Add Your School
                                 </Button>
                             </Link>
                         </Stack>
                         <ChakraLink as={Link} to={"/signup/admin"} cursor="pointer"
                             textDecoration="underline" fontSize={[".9rem", "1.3rem"]} color="white">
-                            Are you a church member? Find your church
+                            Are you looking for your school ?
                         </ChakraLink>
                     </VStack>
                 </Flex>
                 <VStack className={classes.administratorContainer}>
                     <Heading color="tertiary" fontSize={["2rem", "3rem", "4rem"]} >
-                        Church Administration Made Easy
+                        School Administration Made Easy
                 </Heading>
                 <Text color="tertiary">
-                Looking for better ways to reach and engage your church members? Do not worry we have got you covered, The faithfuls is a robust church management solution with all you need to constantly spread the Gospel of Christ across the Globe.
-
+                    Looking for better ways to reach and engage your school members? Do not worry we have got you covered, The faithfuls is a robust church management solution with all you need to constantly spread the Gospel of Christ across the Globe.
                 </Text>
                     <Link to="/signup/admin" >
                         <Button className={classes.button}>
@@ -404,11 +404,11 @@ const Home = () => {
                 <Stack className={classes.appContainer} flexDirection={{ base: "column", md: "row" }}>
                     <VStack bgColor="#FFEBCC" mr={{ md: "3" }} >
                         <Heading color="tertiary" fontSize={["2.3rem", "2.5rem"]}>
-                            Church App For Members
-                </Heading>
+                            School App For Members
+                        </Heading>
                     <Text color="tertiary">
-                    We have built a robust mobile application for church members to search and join their churches online, members can participate in church activities online, available for Android and IOS users.
-                </Text>
+                        We have built a robust mobile application for school members to search and join their schools online, members can participate in school activities online, available for Android and IOS users.
+                    </Text>
                         <Stack className={classes.storeContainer}>
                             <Image w="12rem" src={PlayStore} />
                             <Image w="10rem" src={AppStore} />
@@ -417,17 +417,11 @@ const Home = () => {
                     </VStack>
                     <VStack bgColor="#FACCFF" ml={{ md: "3" }}>
                         <Heading color="tertiary" fontSize={["2.3rem", "2.5rem"]}>
-                            Manage Church Activities
+                            Manage School Activities
                     </Heading>
                     <Text color="tertiary" zIndex={5}>
-                    As a church administrator, you can create accounts for your churches, fellowships and special congregations, kindly note that your church will be verified before it becomes active and accessible for members to join, please dont create a church if you are not authorized to manage a church.
+                        As a school administrator, you can create accounts for your churches, fellowships and special congregations, kindly note that your church will be verified before it becomes active and accessible for members to join, please dont create a church if you are not authorized to manage a church.
                     </Text>
-
-                        <Button zIndex={5} className={classes.button}>
-                            <Link to="/signup/admin" >
-                                Get Started Now
-                            </Link>
-                        </Button>
                         <Image className={classes.absoluteImage} src={ChurchMemberDesktop} />
                     </VStack>
                 </Stack>
@@ -439,14 +433,14 @@ const Home = () => {
                     <VStack align="flex-start">
                         <Heading color="tertiary" textAlign="left"
                             fontSize={["2rem", "3rem", "4rem"]} fontWeight={600}>
-                            Church <br /> on the go
+                            School <br /> on the go
                 </Heading>
                     <Text color="tertiary" textAlign="left" maxW="sm">
-                    No more excuses, join the faithfuls today
+                    No more excuses, join the schoolful today
                 </Text>
                         <Link to='/signup/member?find-church' >
                             <Button className={classes.button}>
-                                Find Your Church
+                                Find Your School
                     </Button>
                         </Link>
                         <Stack className={classes.storeContainer} flexDirection={['column', "row"]}>
@@ -473,7 +467,7 @@ const Home = () => {
                         </SimpleGrid>
                         <Link to='/signup/member?find-church' >
                             <Button className={classes.button}>
-                                Find Your Church
+                                Find Your School
                         </Button>
                         </Link>
                     </VStack>
@@ -491,7 +485,7 @@ const Home = () => {
                                     2,000+
                             </Text>
                                 <Text color="tertiary">
-                                    Churches
+                                    School
                             </Text>
                             </VStack>
                             <VStack>
@@ -499,7 +493,7 @@ const Home = () => {
                                     40,000+
                             </Text>
                                 <Text color="tertiary">
-                                    Church Members
+                                    Members
                             </Text>
                         </VStack>
                     </HStack>
@@ -510,33 +504,23 @@ const Home = () => {
                 <Stack width={["95%", "75%"]} flexDirection={{base:'column',md:'row'}}>
                     <VStack>
                         <Image src={Logo} />
-                        {/* <Text color="primary">
-                            But I must explain to you how all this mistaken idea of denouncing
-                            pleasure and praising pain was born and I will give you a complete account of the.
-                    </Text>
-                            <Text color="whitesmoke" className={classes.middleText}>
-                                1st Floor, Leasing House,C & I Leasing Drive, Off Bisola Durosinmi
-                                Etti Drive, Off Admiralty Way, Lekki Phase 1, Lagos, Nigeria
-                    </Text>
-                            <VStack align="flex-start">
-                                <Text color="whitesmoke">
-                                    +234-1-342-9192
+                        <Text color="whitesmoke" className={classes.middleText}>
+                            1st Floor, Leasing House,C & I Leasing Drive, Off Bisola Durosinmi
+                            Etti Drive, Off Admiralty Way, Lekki Phase 1, Lagos, Nigeria
                         </Text>
-                                <Text color="whitesmoke">
-                                    info@thefaithfuls.com
-                        </Text>
-                            </VStack>
-                            <HStack spacing={3} className={classes.socialContainer}>
-                                <Icon as={FaFacebookF} />
-                                <Icon as={FaTwitter} />
-                                <Icon as={FaLinkedinIn} />
-                            </HStack>
+                        <VStack align="flex-start">
+                            <Text color="whitesmoke">
+                                +234-1-342-9192
+                            </Text>
+                            <Text color="whitesmoke">
+                                info@thefaithfuls.com
+                            </Text>
                         </VStack>
                         <HStack spacing={3} className={classes.socialContainer}>
                             <Icon as={FaFacebookF} />
                             <Icon as={FaTwitter} />
                             <Icon as={FaLinkedinIn} />
-                        </HStack> */}
+                        </HStack>
                     </VStack>
                     <VStack>
                         <Text>Menu</Text>
