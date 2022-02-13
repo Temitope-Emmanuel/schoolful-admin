@@ -531,7 +531,7 @@ const Create = () => {
         const scheduleObj:ISchedule =  {
             time,
             attendee:[],
-            recurrence:`DTSTART;TZID=Africa/Lagos:${newTime.startDate}\n${schedule.rule}`
+            recurrence:`DTSTART:${newTime.startDate}\n${schedule.rule}`
         }
 
         if(repeat === "MONTHLY"){
@@ -604,7 +604,7 @@ const Create = () => {
             <VStack pl={{ base: 2, md: 12 }} pt={{ md: 6 }}
                 className={classes.root} >
                 <Text textStyle="styleh5">
-                    New Church Activity
+                    New School Activity
                 </Text>
                 <CreateLayout>
                 <Formik

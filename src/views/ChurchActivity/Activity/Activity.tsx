@@ -182,18 +182,20 @@ const Activity = () => {
             func()
         }
     }
+
+    console.log({calendarEvent})
     
     return(
         <VStack width="100%" mt="3" className={classes.root} >
             <HStack>
                 <Link to={`/church/${params.churchId}/activity/create`} >
                     <Button>
-                        Add church activity
+                        Add school activity
                     </Button>              
                 </Link>
                 <Link to={`/church/${params.churchId}/event/create`} >
                     <Button variant="outline" >
-                        Add church event
+                        Add school event
                     </Button>              
                 </Link>
             </HStack>

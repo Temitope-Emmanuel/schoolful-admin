@@ -1,5 +1,5 @@
 import axios,{AxiosRequestConfig,CancelTokenSource} from "axios"
-import {IActivity, ISchedule} from "core/models/Activity"
+import {IActivity} from "core/models/Activity"
 import {IResponse} from "core/models/Response"
 import {IEvent} from "core/models/Event"
 
@@ -8,6 +8,7 @@ const baseUrl = process.env.REACT_APP_SERVER_URL
 export const createActivity = async (arg:IActivity<string>):Promise<IResponse<IActivity<string>>> => {
     const url = `${baseUrl}/Activity/CreateActivity`
     try{
+        console.log('this is the arg', {arg})
         const response = await axios.post(url,arg)
         return response.data
     }catch(err){

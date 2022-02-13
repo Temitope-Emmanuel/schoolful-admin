@@ -1,6 +1,6 @@
 import { VStack,Image,Icon,Text } from "@chakra-ui/react"
 import { makeStyles, createStyles } from "@material-ui/core/styles"
-import { LandingImage } from "assets/images"
+import { Logo } from "assets/images"
 import React from "react"
 import { FiShare2 } from "react-icons/fi"
 
@@ -39,7 +39,7 @@ const MediaCard:React.FC<IMedia> = ({title,showShare=false,image,...props}) => {
     return(
         <VStack className={classes.root} {...props}>
             <Image src={image} boxSize='100%'
-             objectFit="cover" fallbackSrc={LandingImage} />
+             objectFit="cover" fallbackSrc={Logo} />
             {showShare &&
             <Icon boxSize="2.2rem" as={FiShare2}
                 bgColor="primary" color="white" />

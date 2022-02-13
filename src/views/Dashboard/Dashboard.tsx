@@ -344,10 +344,10 @@ const Dashboard = () => {
                         <Box/>
                         <VStack height={["17rem", "13rem"]} >
                             <Heading as="h5" fontWeight={400} mb="3">
-                                {`${currentChurch.name ? currentChurch.name : "Church"} Banner`}
+                                {`${currentChurch.name ? currentChurch.name : "School"} Banner`}
                             </Heading>
                             <Text>
-                                share Church URL
+                                share School URL
                             <Icon as={FiLink2} color="primary" />
                             </Text>
                         </VStack>
@@ -360,16 +360,16 @@ const Dashboard = () => {
                             <Flex p={4} className={`${classes.verificationContainer} ${classes.boxShadownContainer}`}>
                                 <VStack align="flex-start" >
                                     <Heading textStyle="h6" fontSize="1.5rem">
-                                        Complete your church profile
+                                        Complete your school profile
                                     </Heading>
                                     <Link to={`/church/${params.churchId}/update`}
                                         className={classes.routerLink} opacity={.5}
                                         color="tertiary">
-                                        Click here to complete church profile
+                                        Click here to complete school profile
                                     </Link>
                                     <Button width="84%" py="5" >
                                         <RouterLink to={`/church/${params.churchId}/verify`} >
-                                            Verify your Church
+                                            Verify your School
                                         </RouterLink>
                                     </Button>
                                 </VStack>
@@ -396,7 +396,7 @@ const Dashboard = () => {
                         <Flex flex={5} flexShrink={3} className={`${classes.chartContainer} ${classes.boxShadownContainer}`}
                             pt="3" pl="2" direction="column">
                             <Text color="#707070" fontSize=".9rem" >
-                                Church Activities
+                                School Activities
                             </Text>
                             <Chart data={chartData} />
                         </Flex>
@@ -404,17 +404,12 @@ const Dashboard = () => {
                             bgColor="#F0F4FF"
                             pt="3" pl={{md:"2"}} flex={3} divider={<StackDivider bgColor="gray.500" />}>
                             <VStack align="flex-start" ml={{md:6}} h="80%" justifyContent="space-between" >
-                                <DashboardCard heading="Church Name" color="primary">
+                                <DashboardCard heading="School Name" color="primary">
                                     <Text color="#151C4D" mt="0px !important" fontSize="1rem" >
                                         {currentChurch.name}
                                     </Text>
                                 </DashboardCard>
-                                <DashboardCard heading="Head pastor/Pariah priest" color="yellow.300">
-                                    <Text color="#151C4D" mt="0px !important" fontSize="1rem" >
-                                        {currentChurch.priestName}
-                                    </Text>
-                                </DashboardCard>
-                                <DashboardCard heading="Church Verification Status" color="green.500">
+                                <DashboardCard heading="School Verification Status" color="green.500">
                                     <HStack>
                                         <DotIcon color={currentChurch.status === ChurchStatus.ACTIVE ? "#68D391" : "#151C4D"} />
                                         <Text color="tertiary" mt="0px !important" fontSize="1rem" >

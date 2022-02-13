@@ -1,5 +1,6 @@
 import MockAdapter from "axios-mock-adapter/types"
-
+import activity from "../data/activity.json"
+import event from "../data/event.json"
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}`
 
 export const activityMock = (mock: MockAdapter) => {
@@ -10,7 +11,7 @@ export const activityMock = (mock: MockAdapter) => {
     status:200,
     isSuccessful:true,
     message:'',
-    data:[]
+    data:activity
   })
 
   // Get Event
@@ -19,7 +20,7 @@ export const activityMock = (mock: MockAdapter) => {
     status:200,
     isSuccessful:true,
     message:'',
-    data:[]
+    data:event
   })
 
   mock.onPost(`${baseUrl}/Activity/CreateActivity`).reply(200, {

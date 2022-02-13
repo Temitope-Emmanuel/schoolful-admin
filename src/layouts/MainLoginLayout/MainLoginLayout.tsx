@@ -2,7 +2,6 @@ import React from "react"
 import {Box,Flex ,FlexProps } from "@chakra-ui/react"
 import {BibleImage2x} from "assets/images"
 
-
 interface IProps extends FlexProps {
     children:any;
 }

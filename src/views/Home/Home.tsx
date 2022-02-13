@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react"
 import { Button } from "components/Button"
 import { Header } from "components/Header"
-import { LandingImage } from 'assets/images'
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import { Divider } from "@material-ui/core"
 import {

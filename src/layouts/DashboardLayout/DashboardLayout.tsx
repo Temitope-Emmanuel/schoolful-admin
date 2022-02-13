@@ -125,12 +125,12 @@ interface IProps {
 
 export const dashboardMenu = [
   { icon: MdDashboard, name: "Dashboard", link: "/dashboard" },
-  { icon: BsCalendar, name: "Church Activities", link: "/activity" },
+  { icon: BsCalendar, name: "School Activities", link: "/activity" },
   { icon: RiGroupFill, name: "Groups", link: "/groups" },
   { icon: MdPermMedia, name: "Media/Content", link: "/media" },
   { icon: MdCastConnected, name: "Post Ads", link: "/ads" },
   { icon: BsFillCollectionPlayFill, name: "Subscription", link: "/subscription" },
-  { icon: IoMdWallet, name: "Church Finance", link: "/finance" },
+  { icon: IoMdWallet, name: "School Finance", link: "/finance" },
   { icon: AiFillFile, name: "Reports", link: "/report" },
   // { icon: FaUserAlt, name: "User Manager", link: "/manager" },
   { icon: MdAnnouncement, name: "Announcement", link: "/announcement" },
